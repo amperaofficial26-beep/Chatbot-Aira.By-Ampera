@@ -93,8 +93,8 @@ except Exception as _llm_exc:  # pragma: no cover
 
 
 st.set_page_config(
-    page_title="Aira - Asisten AI Lokal",
-    page_icon="💠",
+    page_title="Aira - Asisten AI-Chatbot By Ampera",
+    page_icon="💮",
     layout="centered",
     initial_sidebar_state="expanded",
 )
@@ -711,19 +711,19 @@ def render_pcb_layer() -> None:
 # Konstanta
 # ---------------------------------------------------------------------------
 
-APP_TITLE = "Aira - Asisten AI Lokal"
-APP_TAGLINE = "Asisten AI lokal · ramah, privat, dan siap bantu di perangkatmu"
+APP_TITLE = "Aira - Asisten AI-Chatbot By Ampera"
+APP_TAGLINE = "Asisten AI-Chatbot By Ampera · Chatbot AI pintar siap bantu di perangkatmu"
 WELCOME_TEXT = (
-    "Hai, aku **Aira**. Asisten AI lokal yang ramah dan siap bantu—mulai dari "
+    "Hai, aku **Aira**. Asisten AI-Chatbot By Ampera · Chatbot AI pintar siap bantu—mulai dari "
     "error Android, APK bandel, RAM mepet, sampai pertanyaan sehari-hari.\n\n"
-    "Tulis aja keluhannya, atau pilih salah satu contoh di bawah. Percakapan "
+    "Tulis aja keluhannya, atau pilih salah satu contoh di sidebar. Percakapan "
     "kita jalan di perangkatmu, bukan di cloud."
 )
 IDENTITY_REPLY = (
-    "Aku **Aira**. Asisten AI lokal yang ramah, santai, dan siap bantu. "
+    "Aku **Aira**. Asisten AI-Chatbot Buatan Ampera.ai, santai, dan siap bantu. "
     "Aku dirancang untuk berjalan privat di perangkatmu.\n\n"
     "Bisa aku bantu urusan teknis (terutama Android), penjelasan sistem, "
-    "atau pertanyaan umum. Panggil aja Aira kapan pun kamu butuh."
+    "atau pertanyaan umum. Panggil aja Aira kapan pun kamu butuhya...."
 )
 EXAMPLE_PROMPTS = [
     "Siapa kamu?",
@@ -809,8 +809,8 @@ def _greeting_reply(normalized: str) -> str:
     if "malam" in normalized:
         return "Selamat malam! Aku Aira. Masih semangat—mau dibantu apa?"
     if "kabar" in normalized:
-        return "Kabar baik. Aku Aira, siap sedia bantu kamu. Ada kendala atau pertanyaan?"
-    return f"Halo, selamat {waktu}! Aku Aira, asisten AI kamu. Mau tanya sesuatu atau lagi ada yang error?"
+        return "Kabar ya..? Alahmdulillah... Aira sehat, Aira siap sedia bantu kamu. Ada kendala atau pertanyaan?"
+    return f"Halo, selamat {waktu}! Aku Aira, asisten AI-Chatbot Dari Ampera. Mau tanya sesuatu atau mau ngobrol santai"
 
 
 def detect_intent_bypass(user_input: str) -> Optional[str]:
@@ -951,7 +951,7 @@ def build_wa_row(role: str, inner_html: str, photo: Dict[str, str]) -> str:
     if role == "user":
         return (
             f'<div class="wa-row right"><div class="wa-bubble wa-user">{inner_html}</div>'
-            f'<div class="wa-avatar wa-avatar-user">🙂</div></div>'
+            f'<div class="wa-avatar wa-avatar-user">😎</div></div>'
         )
     return (
         f'<div class="wa-row left">{aira_avatar_html(photo)}'
@@ -1131,9 +1131,9 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
     done: List[str] = []
 
     # tahap 1–2 dulu, biar kelihatan "jeda berpikir"
-    show_think(box, photo, stages[0][0], done, 0.38)
+    show_think(box, photo, stages[0][0], done, 0.85)
     done.append(stages[0][0])
-    show_think(box, photo, stages[1][0], done, 0.34)
+    show_think(box, photo, stages[1][0], done, 0.85)
     done.append(stages[1][0])
 
     if bypass_reply:
@@ -1144,9 +1144,9 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
             "bypass": True, "resolved_query": text, "context": "(dilewati — intent sapaan/identitas)"
         }
     else:
-        show_think(box, photo, stages[2][0], done, 0.22)
+        show_think(box, photo, stages[2][0], done, 0.85)
         done.append(stages[2][0])
-        show_think(box, photo, stages[3][0], done, 0.12)
+        show_think(box, photo, stages[3][0], done, 0.85)
         try:
             answer, resolved, context = run_rag_pipeline(text, last_bot, llm)
         except Exception as exc:
@@ -1154,9 +1154,9 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
             answer = f"Ada kendala teknis saat memproses jawaban: `{exc.__class__.__name__}`"
             resolved, context = text, ""
         if not answer:
-            answer = "Hmm, aku belum tau jawabannya. Bisa coba tanyakan dengan kalimat lain?"
+            answer = "Hmm, Aira belum tau jawabannya. Bisa coba tanyakan dengan kalimat lain?"
         done.append(stages[3][0])
-        show_think(box, photo, stages[4][0], done, 0.22)
+        show_think(box, photo, stages[4][0], done, 0.85)
         st.session_state.last_debug = {"bypass": False, "resolved_query": resolved, "context": context}
 
     stream_reply(box, photo, answer)
@@ -1199,7 +1199,7 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
               <div class="tile {model_tile}"><em>MODEL</em><b>{html.escape(model_label)}</b></div>
               <div class="tile {mem_tile}"><em>MEMORI</em><b>{html.escape(mem_label)}</b></div>
             </div>
-            <div class="side-quote">Siap bantu error Android, APK, RAM, dan pertanyaan harian — privat di perangkatmu.</div>
+            <div class="side-quote">Siap bantu masalah Android, APK, RAM, atau ngobrol santai — privat di perangkatmu.</div>
             <div class="side-panel">
               <div class="side-panel-h">SISTEM</div>
               <div class="kv"><span>Mode</span><b>{html.escape(str(mode))}</b></div>
@@ -1211,7 +1211,7 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
         if not photo.get("path"):
             st.caption("Taruh `aira.jpg` di folder yang sama dengan `app.py`.")
 
-        if st.button("✦  Percakapan Baru", use_container_width=True, key="btn_reset"):
+        if st.button("✦  Obrolan Baru", use_container_width=True, key="btn_reset"):
             reset_conversation()
             st.rerun()
 
@@ -1254,7 +1254,7 @@ def render_history(photo: Dict[str, str]) -> None:
 
 
 def render_footer() -> None:
-    st.markdown('<p class="aira-foot">Aira · Asisten AI Lokal · Ampera Official</p>', unsafe_allow_html=True)
+    st.markdown('<p class="aira-foot">Aira · Asisten AI-Chatbot By · Ampera Official</p>', unsafe_allow_html=True)
 
 
 def render_splash(logo: Dict[str, str]) -> None:
@@ -1282,7 +1282,7 @@ def render_splash(logo: Dict[str, str]) -> None:
             <div class="splash-halo">{mark}</div>
             <div class="splash-brand">AMPERA OFFICIAL</div>
             <div class="boot">
-              <div>&gt; boot ampera.core .............. <b>OK</b></div>
+              <div>&gt; boot ampera.Engine .............. <b>OK</b></div>
               <div>&gt; link neural bus ............... <b>OK</b></div>
               <div>&gt; handshake aira.persona ........ <b>GRANTED</b></div>
               <div>&gt; welcome sequence .............. <b>READY</b></div>
