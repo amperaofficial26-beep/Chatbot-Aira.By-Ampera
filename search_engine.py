@@ -5,8 +5,9 @@ import os
 from typing import Any, Dict, List, Optional
 from rank_bm25 import BM25Okapi
 
-# Variabel lokasi knowledge base yang dicari oleh app.py
+# Variabel & Konstanta yang dibutuhkan oleh app.py
 DEFAULT_KB_PATH = "knowledge.json"
+NO_MEMORY_MSG = "Tidak ada memori atau konteks spesifik yang ditemukan."
 
 _knowledge_data: List[Dict[str, Any]] = []
 _bm25_index: Optional[BM25Okapi] = None
