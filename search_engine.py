@@ -22,15 +22,6 @@ Dependensi:
     pip install rank_bm25
 """
 
-from __future__ import annotations
-
-import json
-import os
-import re
-import sys
-from functools import lru_cache
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
-
 
 # ---------------------------------------------------------------------------
 # Konstanta path & konfigurasi default
