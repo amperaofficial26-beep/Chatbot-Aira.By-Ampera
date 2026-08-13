@@ -4,6 +4,8 @@ import json
 import os
 from typing import Any, Dict, List, Optional
 from rank_bm25 import BM25Okapi
+# Tambahkan definisi variabel ini di search_engine.py
+DEFAULT_KB_PATH = "path/to/your/knowledge_base.json"  # atau lokasi file KB kamu
 
 _knowledge_data: List[Dict[str, Any]] = []
 _bm25_index: Optional[BM25Okapi] = None
