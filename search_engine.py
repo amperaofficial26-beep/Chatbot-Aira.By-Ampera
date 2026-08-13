@@ -7,11 +7,9 @@ import sys
 from functools import lru_cache
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 search_engine.py
-================
+"""
 Mesin pencari memori (Retriever) untuk chatbot Aira.
 
 Alur singkat:
