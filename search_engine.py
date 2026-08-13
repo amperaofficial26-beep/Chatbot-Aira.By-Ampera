@@ -34,7 +34,7 @@ def load_knowledge_base(filepath: str = DEFAULT_KB_PATH) -> List[Dict[str, Any]]
         
     return _knowledge_data
 
-# Alias nama fungsi agar kompatibel dengan app.py
+# Alias nama fungsi
 load_knowledge = load_knowledge_base
 
 def search_knowledge(query: str, top_k: int = 3, **kwargs) -> str:
@@ -62,7 +62,7 @@ def search_knowledge(query: str, top_k: int = 3, **kwargs) -> str:
     return "\n".join(results)
 
 def search_knowledge_detailed(query: str, **kwargs):
-    """Fungsi pembantu agar kompatibel dengan pemanggilan app.py."""
+    """Fungsi pembantu untuk app.py."""
     return search_knowledge(query)
 
 def resolve_query(query: str, *args, **kwargs) -> str:
