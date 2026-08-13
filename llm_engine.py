@@ -8,6 +8,9 @@ def load_model():
         raise ValueError("GROQ_API_KEY belum diatur di Secrets Streamlit!")
     return Groq(api_key=api_key)
 
+# Alias agar kompatibel dengan app.py kamu
+load_model_or_mock = load_model
+
 def generate_aira_response(llm_client, user_input, context="", history=None):
     """Membangkitkan respons Aira lewat Groq API."""
     system_prompt = (
