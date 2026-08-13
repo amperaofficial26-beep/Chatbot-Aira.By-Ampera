@@ -1,8 +1,12 @@
 import os
 from groq import Groq
 
-# Variabel yang dibutuhkan oleh app.py
+# Variabel & Exception Class yang dibutuhkan oleh app.py
 DEFAULT_MODEL_PATH = "qwen-2.5-72b-instruct"
+
+class ModelNotFoundError(Exception):
+    """Custom exception agar app.py tidak error."""
+    pass
 
 def find_gguf_models(*args, **kwargs):
     """Fungsi pembantu agar app.py tidak error saat mencari model lokal."""
