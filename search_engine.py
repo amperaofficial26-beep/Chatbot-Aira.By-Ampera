@@ -4,13 +4,14 @@ import json
 import os
 from typing import Any, Dict, List, Optional
 from rank_bm25 import BM25Okapi
-# Tambahkan definisi variabel ini di search_engine.py
-DEFAULT_KB_PATH = "path/to/your/knowledge_base.json"  # atau lokasi file KB kamu
+
+# Variabel lokasi knowledge base yang dicari oleh app.py
+DEFAULT_KB_PATH = "knowledge.json"
 
 _knowledge_data: List[Dict[str, Any]] = []
 _bm25_index: Optional[BM25Okapi] = None
 
-def load_knowledge_base(filepath: str = "knowledge.json") -> List[Dict[str, Any]]:
+def load_knowledge_base(filepath: str = DEFAULT_KB_PATH) -> List[Dict[str, Any]]:
     """Memuat file knowledge.json dan membuat indeks pencarian BM25."""
     global _knowledge_data, _bm25_index
     if not os.path.exists(filepath):
@@ -32,7 +33,7 @@ def load_knowledge_base(filepath: str = "knowledge.json") -> List[Dict[str, Any]
         
     return _knowledge_data
 
-# Alias nama fungsi agar sesuai dengan yang dicari app.py
+# Alias nama fungsi agar kompatibel dengan app.py
 load_knowledge = load_knowledge_base
 
 def search_knowledge(query: str, top_k: int = 3, **kwargs) -> str:
