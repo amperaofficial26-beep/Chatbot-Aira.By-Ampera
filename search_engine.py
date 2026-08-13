@@ -1051,7 +1051,7 @@ def search_knowledge_detailed(
 # ---------------------------------------------------------------------------
 
 def _print_case(title: str, payload: Dict[str, Any]) -> None:
-    """Helper tampilan rapi untuk blok __main__."""
+    
     line = "=" * 72
     print(f"\n{line}\n{title}\n{line}")
     print(f"Query asli     : {payload['original_query']}")
