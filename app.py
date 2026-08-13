@@ -75,7 +75,151 @@ except Exception as _llm_exc:  # pragma: no cover - fallback runtime
             "Cek instalasi llama-cpp-python dan file GGUF di folder models/ ya."
         )
 
+# ---------------------------------------------------------------------------
+# CSS — Tampilan Cyberpunk Anime Glassmorphism (Aira v2)
+# ---------------------------------------------------------------------------
 
+def set_ui_style() -> None:
+    st.markdown(
+        """
+        <style>
+        /* ==========================================================
+           1. BACKGROUND CIRCUIT BOARD (PCB) DENGAN EFEK GLOW BERJALAN
+           ========================================================== */
+        .stApp {
+            background-color: #050814;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
+                linear-gradient(rgba(5, 8, 20, 0.85), rgba(5, 8, 20, 0.85)),
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300f3ff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2v40h-2V0zm-40 40h40v2H0v-2zM20 0v80h2V0h-2zm40 0v80h2V0h-2z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            animation: circuitPulse 12s infinite alternate ease-in-out;
+        }
+
+        @keyframes circuitPulse {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            50% { filter: hue-rotate(180deg) brightness(1.2); }
+            100% { filter: hue-rotate(360deg) brightness(1); }
+        }
+
+        /* ==========================================================
+           2. EFEK MUNCUL PERLAHAN (FADE-IN & SLIDE-UP) UNTUK CHAT
+           ========================================================== */
+        @keyframes smoothAppear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        [data-testid="stChatMessage"] {
+            animation: smoothAppear 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border-radius: 20px !important;
+            padding: 16px !important;
+            margin-bottom: 14px !important;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* ==========================================================
+           3. GELEMBUNG CHAT WHATSAPP STYLE (KIRI: AIRA, KANAN: USER)
+           ========================================================== */
+        /* Kotak Pesan Aira (Kiri - Glassmorphism Biru Anime) */
+        [data-testid="stChatMessage"]:nth-child(odd) {
+            background: rgba(20, 25, 45, 0.75) !important;
+            border: 1px solid rgba(0, 243, 255, 0.25) !important;
+            border-left: 5px solid #00f3ff !important;
+            margin-right: 20% !important;
+            border-top-left-radius: 4px !important;
+        }
+
+        /* Kotak Pesan User (Kanan - Glassmorphism Pink Anime) */
+        [data-testid="stChatMessage"]:nth-child(even) {
+            background: rgba(45, 20, 55, 0.75) !important;
+            border: 1px solid rgba(255, 0, 128, 0.25) !important;
+            border-right: 5px solid #ff0080 !important;
+            margin-left: 20% !important;
+            border-top-right-radius: 4px !important;
+        }
+
+        /* ==========================================================
+           4. TOMBOL DENGAN EFEK GLOW DAN TIMBUL SAAT HOVER
+           ========================================================== */
+        div.stButton > button {
+            background: rgba(15, 22, 36, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(0, 243, 255, 0.4) !important;
+            color: #00f3ff !important;
+            border-radius: 14px !important;
+            font-weight: 600 !important;
+            padding: 10px 24px !important;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        div.stButton > button:hover {
+            transform: translateY(-4px) scale(1.03) !important;
+            background: rgba(0, 243, 255, 0.15) !important;
+            border-color: #00f3ff !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.8), inset 0 0 10px rgba(0, 243, 255, 0.4) !important;
+        }
+
+        /* ==========================================================
+           5. KOTAK INPUT PESAN ALA GEMINI (LONJONG & NEON BERPUTAR)
+           ========================================================== */
+        @keyframes neonRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        [data-testid="stChatInput"] {
+            border-radius: 35px !important;
+            background: linear-gradient(60deg, #00f3ff, #ff0080, #7928ca, #00f3ff) !important;
+            background-size: 300% 300% !important;
+            animation: neonRotate 6s linear infinite !important;
+            padding: 2px !important;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+        }
+
+        [data-testid="stChatInput"] > div {
+            background-color: #080c14 !important;
+            border-radius: 33px !important;
+            backdrop-filter: blur(10px);
+        }
+
+        [data-testid="stChatInput"] textarea {
+            color: #ffffff !important;
+            border-radius: 33px !important;
+        }
+
+        /* Elemen Pendukung UI */
+        .aira-chip {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .aira-chip.ok { background: rgba(0, 243, 255, 0.16); color: #00f3ff; }
+        .aira-chip.warn { background: rgba(255, 184, 0, 0.18); color: #ffb800; }
+        .aira-chip.err { background: rgba(255, 0, 128, 0.14); color: #ff0080; }
+        .aira-foot { color: rgba(160, 175, 200, 0.7); font-size: 0.8rem; text-align: center; margin-top: 0.75rem; }
+
+        html, body, [class*="css"] {
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif !important;
+            color: #e2e8f0 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 # ---------------------------------------------------------------------------
 # Konfigurasi halaman — HARUS menjadi perintah Streamlit pertama
 # ---------------------------------------------------------------------------
@@ -271,152 +415,6 @@ def history_for_llm(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
     if len(trimmed) > MAX_HISTORY_FOR_LLM:
         trimmed = trimmed[-MAX_HISTORY_FOR_LLM:]
     return trimmed
-
-# ---------------------------------------------------------------------------
-# CSS — Tampilan Cyberpunk Anime Glassmorphism (Aira v2)
-# ---------------------------------------------------------------------------
-set_ui_style()
-def set_ui_style() -> None:
-    st.markdown(
-        """
-        <style>
-        /* ==========================================================
-           1. BACKGROUND CIRCUIT BOARD (PCB) DENGAN EFEK GLOW BERJALAN
-           ========================================================== */
-        .stApp {
-            background-color: #050814;
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
-                linear-gradient(rgba(5, 8, 20, 0.85), rgba(5, 8, 20, 0.85)),
-                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300f3ff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2v40h-2V0zm-40 40h40v2H0v-2zM20 0v80h2V0h-2zm40 0v80h2V0h-2z'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: cover;
-            animation: circuitPulse 12s infinite alternate ease-in-out;
-        }
-
-        @keyframes circuitPulse {
-            0% { filter: hue-rotate(0deg) brightness(1); }
-            50% { filter: hue-rotate(180deg) brightness(1.2); }
-            100% { filter: hue-rotate(360deg) brightness(1); }
-        }
-
-        /* ==========================================================
-           2. EFEK MUNCUL PERLAHAN (FADE-IN & SLIDE-UP) UNTUK CHAT
-           ========================================================== */
-        @keyframes smoothAppear {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        [data-testid="stChatMessage"] {
-            animation: smoothAppear 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            backdrop-filter: blur(16px) !important;
-            -webkit-backdrop-filter: blur(16px) !important;
-            border-radius: 20px !important;
-            padding: 16px !important;
-            margin-bottom: 14px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        /* ==========================================================
-           3. GELEMBUNG CHAT WHATSAPP STYLE (KIRI: AIRA, KANAN: USER)
-           ========================================================== */
-        /* Kotak Pesan Aira (Kiri - Glassmorphism Biru Anime) */
-        [data-testid="stChatMessage"]:nth-child(odd) {
-            background: rgba(20, 25, 45, 0.75) !important;
-            border: 1px solid rgba(0, 243, 255, 0.25) !important;
-            border-left: 5px solid #00f3ff !important;
-            margin-right: 20% !important;
-            border-top-left-radius: 4px !important;
-        }
-
-        /* Kotak Pesan User (Kanan - Glassmorphism Pink Anime) */
-        [data-testid="stChatMessage"]:nth-child(even) {
-            background: rgba(45, 20, 55, 0.75) !important;
-            border: 1px solid rgba(255, 0, 128, 0.25) !important;
-            border-right: 5px solid #ff0080 !important;
-            margin-left: 20% !important;
-            border-top-right-radius: 4px !important;
-        }
-
-        /* ==========================================================
-           4. TOMBOL DENGAN EFEK GLOW DAN TIMBUL SAAT HOVER
-           ========================================================== */
-        div.stButton > button {
-            background: rgba(15, 22, 36, 0.8) !important;
-            backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(0, 243, 255, 0.4) !important;
-            color: #00f3ff !important;
-            border-radius: 14px !important;
-            font-weight: 600 !important;
-            padding: 10px 24px !important;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        div.stButton > button:hover {
-            transform: translateY(-4px) scale(1.03) !important;
-            background: rgba(0, 243, 255, 0.15) !important;
-            border-color: #00f3ff !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.8), inset 0 0 10px rgba(0, 243, 255, 0.4) !important;
-        }
-
-        /* ==========================================================
-           5. KOTAK INPUT PESAN ALA GEMINI (LONJONG & NEON BERPUTAR)
-           ========================================================== */
-        @keyframes neonRotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
-        [data-testid="stChatInput"] {
-            border-radius: 35px !important;
-            background: linear-gradient(60deg, #00f3ff, #ff0080, #7928ca, #00f3ff) !important;
-            background-size: 300% 300% !important;
-            animation: neonRotate 6s linear infinite !important;
-            padding: 2px !important;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-        }
-
-        [data-testid="stChatInput"] > div {
-            background-color: #080c14 !important;
-            border-radius: 33px !important;
-            backdrop-filter: blur(10px);
-        }
-
-        [data-testid="stChatInput"] textarea {
-            color: #ffffff !important;
-            border-radius: 33px !important;
-        }
-
-        /* Elemen Pendukung UI */
-        .aira-chip {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-        }
-        .aira-chip.ok { background: rgba(0, 243, 255, 0.16); color: #00f3ff; }
-        .aira-chip.warn { background: rgba(255, 184, 0, 0.18); color: #ffb800; }
-        .aira-chip.err { background: rgba(255, 0, 128, 0.14); color: #ff0080; }
-        .aira-foot { color: rgba(160, 175, 200, 0.7); font-size: 0.8rem; text-align: center; margin-top: 0.75rem; }
-
-        html, body, [class*="css"] {
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif !important;
-            color: #e2e8f0 !important;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
 
 # ---------------------------------------------------------------------------
 # Resource yang di-cache (model GGUF TIDAK boleh di-load ulang tiap Enter)
