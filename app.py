@@ -1,20 +1,3 @@
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-app.py
-======
-Antarmuka utama (UI) + hub logika Chatbot Aira.
-
-Menyatukan:
-    - search_engine.py  -> resolve_query(), search_knowledge()
-    - llm_engine.py     -> load_model(), generate_aira_response()
-    - Streamlit         -> chat UI, session memory, sidebar status
-
-Jalankan:
-    streamlit run app.py
-"""
-
 from __future__ import annotations
 
 import os
@@ -23,9 +6,6 @@ import sys
 import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
-
-
-# Streamlit harus diimpor sebelum perintah UI apa pun.
 import streamlit as st
 
 
@@ -292,70 +272,137 @@ def history_for_llm(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
         trimmed = trimmed[-MAX_HISTORY_FOR_LLM:]
     return trimmed
 
+def set_ui_style():
+    st.set_page_config(page_title="Aira - Cyberpunk AI Assistant", page_icon="⚡", layout="centered")
 
-# ---------------------------------------------------------------------------
-# CSS — tampilan chat yang bersih
-# ---------------------------------------------------------------------------
+    st.markdown("""
+    <style>
+    /* ==========================================================
+       1. BACKGROUND CIRCUIT BOARD (PCB) DENGAN EFEK GLOW BERJALAN
+       ========================================================== */
+    .stApp {
+        background-color: #050814;
+        background-image: 
+            radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
+            linear-gradient(rgba(5, 8, 20, 0.85), rgba(5, 8, 20, 0.85)),
+            url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300f3ff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2v40h-2V0zm-40 40h40v2H0v-2zM20 0v80h2V0h-2zm40 0v80h2V0h-2z'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: cover;
+        animation: circuitPulse 12s infinite alternate ease-in-out;
+    }
 
-def inject_css() -> None:
-    st.markdown(
-        """
-        <style>
-        :root {
-            --aira-accent: #2bb6a8;
-            --aira-accent-2: #1d7a72;
-        }
-        .stApp {
-            background:
-                radial-gradient(1200px 400px at 10% -10%, rgba(43, 182, 168, 0.10), transparent 50%),
-                radial-gradient(900px 360px at 100% 0%, rgba(70, 120, 200, 0.08), transparent 45%);
-        }
-        h1 {
-            letter-spacing: -0.03em;
-            font-weight: 700 !important;
-        }
-        [data-testid="stSidebar"] {
-            border-right: 1px solid rgba(127, 127, 127, 0.15);
-        }
-        [data-testid="stChatMessage"] {
-            border-radius: 16px;
-            padding: 0.15rem 0.1rem;
-        }
-        .aira-chip {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-        }
-        .aira-chip.ok {
-            background: rgba(43, 182, 168, 0.16);
-            color: #14756c;
-        }
-        .aira-chip.warn {
-            background: rgba(232, 168, 56, 0.18);
-            color: #8a5a00;
-        }
-        .aira-chip.err {
-            background: rgba(220, 70, 70, 0.14);
-            color: #a11;
-        }
-        .aira-foot {
-            color: rgba(120, 120, 120, 0.9);
-            font-size: 0.8rem;
-            text-align: center;
-            margin-top: 0.75rem;
-        }
-        div[data-testid="stChatInput"] textarea {
-            border-radius: 14px !important;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+    @keyframes circuitPulse {
+        0% { filter: hue-rotate(0deg) brightness(1); }
+        50% { filter: hue-rotate(180deg) brightness(1.2); }
+        100% { filter: hue-rotate(360deg) brightness(1); }
+    }
 
+    /* ==========================================================
+       2. EFEK MUNCUL PERLAHAN (FADE-IN & SLIDE-UP) UNTUK SEMUA TEKS/CHAT
+       ========================================================== */
+    @keyframes smoothAppear {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
+    [data-testid="stChatMessage"] {
+        animation: smoothAppear 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border-radius: 20px !important;
+        padding: 16px !important;
+        margin-bottom: 14px !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    /* ==========================================================
+       3. GELEMBUNG CHAT WHATSAPP STYLE (KIRI: AIRA, KANAN: USER)
+       ========================================================== */
+    /* Kotak Pesan Aira (Kiri - Glassmorphism Biru/Ungu Anime) */
+    [data-testid="stChatMessage"]:nth-child(odd) {
+        background: rgba(20, 25, 45, 0.75) !important;
+        border: 1px solid rgba(0, 243, 255, 0.25) !important;
+        border-left: 5px solid #00f3ff !important;
+        margin-right: 20% !important;
+        border-top-left-radius: 4px !important;
+    }
+
+    /* Kotak Pesan User (Kanan - Glassmorphism Neon Pink/Aksen Anime) */
+    [data-testid="stChatMessage"]:nth-child(even) {
+        background: rgba(45, 20, 55, 0.75) !important;
+        border: 1px solid rgba(255, 0, 128, 0.25) !important;
+        border-right: 5px solid #ff0080 !important;
+        margin-left: 20% !important;
+        border-top-right-radius: 4px !important;
+    }
+
+    /* ==========================================================
+       4. TOMBOL DENGAN EFEK GLOW DAN TIMBUL SAAT DISENTUH KURSOR
+       ========================================================== */
+    div.stButton > button {
+        background: rgba(15, 22, 36, 0.8) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(0, 243, 255, 0.4) !important;
+        color: #00f3ff !important;
+        border-radius: 14px !important;
+        font-weight: 600 !important;
+        padding: 10px 24px !important;
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    div.stButton > button:hover {
+        transform: translateY(-4px) scale(1.03) !important;
+        background: rgba(0, 243, 255, 0.15) !important;
+        border-color: #00f3ff !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 25px rgba(0, 243, 255, 0.8), inset 0 0 10px rgba(0, 243, 255, 0.4) !important;
+    }
+
+    /* ==========================================================
+       5. KOTAK INPUT PESAN ALA GEMINI (PANJANG LONJONG & NEON BERPUTAR)
+       ========================================================== */
+    @keyframes neonRotate {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+    }
+
+    /* Wrapper luar untuk efek garis neon berputar */
+    [data-testid="stChatInput"] {
+        border-radius: 35px !important;
+        background: linear-gradient(60deg, #00f3ff, #ff0080, #7928ca, #00f3ff) !important;
+        background-size: 300% 300% !important;
+        animation: neonRotate 6s linear infinite !important;
+        padding: 2px !important; /* Ketebalan garis neon berputar */
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    }
+
+    /* Kotak dalam input (Warna hitam legam khas Gemini) */
+    [data-testid="stChatInput"] > div {
+        background-color: #080c14 !important;
+        border-radius: 33px !important;
+        backdrop-filter: blur(10px);
+    }
+
+    [data-testid="stChatInput"] textarea {
+        color: #ffffff !important;
+    }
+
+    /* Styling Teks Umum agar Konsisten */
+    html, body, [class*="css"] {
+        font-family: 'Segoe UI', Roboto, Helvetica, sans-serif !important;
+        color: #e2e8f0 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Panggil fungsi ini di baris paling atas app.py
+set_ui_style()
 # ---------------------------------------------------------------------------
 # Resource yang di-cache (model GGUF TIDAK boleh di-load ulang tiap Enter)
 # ---------------------------------------------------------------------------
