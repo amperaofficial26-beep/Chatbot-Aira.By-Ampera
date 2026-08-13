@@ -3,7 +3,7 @@
 """
 app.py
 ======
-Aira · UI ringan: PCB artwork + chat WA + splash Ampera Official
+Aira · UI ringan: PCB ungu-pink + sidebar glass + splash cinematic
 """
 
 from __future__ import annotations
@@ -99,7 +99,7 @@ st.set_page_config(
 
 
 # ---------------------------------------------------------------------------
-# CSS ringan
+# CSS
 # ---------------------------------------------------------------------------
 
 def set_ui_style() -> None:
@@ -109,11 +109,12 @@ def set_ui_style() -> None:
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap');
 
         :root {
-            --bg: #03050c;
+            --bg: #07030f;
             --cyan: #00f3ff;
-            --pink: #ff0080;
-            --text: #e6edf7;
-            --muted: #8ea0b8;
+            --pink: #ff2ea6;
+            --violet: #a855f7;
+            --text: #f1e9ff;
+            --muted: #b5a4c9;
         }
 
         html, body, [data-testid="stAppViewContainer"], .stApp {
@@ -136,45 +137,49 @@ def set_ui_style() -> None:
             max-width: 780px;
         }
 
+        /* ---------- PCB ungu / pink ---------- */
         .pcb-layer {
             position: fixed; inset: 0; z-index: 0;
             pointer-events: none; overflow: hidden;
-            contain: strict; opacity: .72;
+            contain: strict; opacity: .78;
         }
         .pcb-layer svg { width: 100%; height: 100%; display: block; }
         .pcb-tr {
-            fill: none; stroke: #1a8f86; stroke-width: 1.7;
+            fill: none; stroke: #8b5cf6; stroke-width: 1.7;
             stroke-linecap: square; stroke-linejoin: miter;
         }
+        .pcb-tr.alt { stroke: #ec4899; }
         .pcb-glow {
             fill: none; stroke-linecap: square; stroke-linejoin: miter;
-            stroke-width: 2.2; stroke-dasharray: 28 220;
+            stroke-width: 2.3; stroke-dasharray: 28 220;
             animation: traceDraw 8s linear infinite;
         }
-        .pcb-glow.c { stroke: #00e7f2; }
+        .pcb-glow.c { stroke: #d946ef; }
         .pcb-glow.p { stroke: #ff4db8; animation-direction: reverse; animation-duration: 10s; }
-        .pcb-pad { fill: #03050c; stroke: #2ec8be; stroke-width: 1.3; }
-        .pcb-hole { fill: #2ec8be; }
+        .pcb-pad { fill: #07030f; stroke: #e879f9; stroke-width: 1.3; }
+        .pcb-hole { fill: #f0abfc; }
         .element-container:has(.pcb-layer) {
             position: fixed !important; inset: 0; height: 0 !important;
             margin: 0 !important; overflow: visible !important;
         }
         @keyframes traceDraw { to { stroke-dashoffset: -248; } }
 
+        /* ---------- header ---------- */
         .app-head { display: flex; align-items: center; gap: 14px; margin: 6px 0 18px; }
         .app-logo {
             width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center;
-            background: #000; border: 1px solid rgba(0,243,255,.45);
-            box-shadow: 0 0 16px rgba(0,243,255,.22);
-            font-family: Orbitron, sans-serif; font-weight: 700; color: var(--cyan);
+            background: #000; border: 1px solid rgba(236,72,153,.5);
+            box-shadow: 0 0 16px rgba(168,85,247,.28);
+            font-family: Orbitron, sans-serif; font-weight: 700; color: #f0abfc;
         }
         .app-logo span { color: var(--pink); font-size: .72rem; }
         .app-head h1 {
             font-family: Orbitron, sans-serif !important; font-size: 1.55rem;
-            margin: 0 !important; color: #f5fbff !important;
+            margin: 0 !important; color: #ffe9fb !important;
         }
         .app-head p { margin: 2px 0 0; color: var(--muted); font-size: .86rem; }
 
+        /* ---------- chat WA ---------- */
         .wa-thread { display: flex; flex-direction: column; gap: 10px; }
         .wa-row { display: flex; align-items: flex-end; gap: 8px; width: 100%; }
         .wa-row.left { justify-content: flex-start; }
@@ -183,16 +188,13 @@ def set_ui_style() -> None:
             width: 36px; height: 36px; border-radius: 50%; flex: 0 0 36px;
             background-size: cover; background-position: center;
         }
-        .wa-avatar-aira {
-            border: 2px solid var(--cyan);
-            background-color: #04161b;
-        }
+        .wa-avatar-aira { border: 2px solid #e879f9; background-color: #1a0820; }
         .wa-avatar-user {
             display: grid; place-items: center; background: #16081a;
             border: 2px solid var(--pink);
         }
         .wa-fallback {
-            display: grid; place-items: center; color: var(--cyan);
+            display: grid; place-items: center; color: #f0abfc;
             font-family: Orbitron, sans-serif; font-weight: 700;
         }
         .wa-bubble {
@@ -201,38 +203,39 @@ def set_ui_style() -> None:
         }
         .wa-bubble strong { color: #fff; }
         .wa-bubble code {
-            background: rgba(0,0,0,.35); padding: 1px 5px; border-radius: 5px; color: var(--cyan);
+            background: rgba(0,0,0,.35); padding: 1px 5px; border-radius: 5px; color: #f0abfc;
         }
         .wa-aira {
-            background: #132c40; color: #e8f4ff;
+            background: #2a1540; color: #f6eaff;
             border-radius: 16px 16px 16px 5px;
-            border: 1px solid rgba(0,243,255,.22);
+            border: 1px solid rgba(168,85,247,.35);
         }
         .wa-user {
-            background: #321436; color: #ffeaf6;
+            background: #3a1030; color: #ffeaf6;
             border-radius: 16px 16px 5px 16px;
-            border: 1px solid rgba(255,0,128,.28);
+            border: 1px solid rgba(255,46,166,.35);
         }
 
         .clog {
-            min-width: 230px; background: #02060b;
-            border: 1px solid rgba(0,243,255,.28); border-radius: 10px;
+            min-width: 230px; background: #0b0612;
+            border: 1px solid rgba(236,72,153,.35); border-radius: 10px;
             font-family: "Share Tech Mono", monospace;
         }
         .clog-top {
             display: flex; align-items: center; gap: 6px; padding: 6px 10px;
-            background: #071018; border-bottom: 1px solid rgba(0,243,255,.15);
+            background: #16081d; border-bottom: 1px solid rgba(168,85,247,.2);
         }
         .clog-dot { width: 8px; height: 8px; border-radius: 50%; }
         .clog-dot.r { background: #ff5f57; }
         .clog-dot.y { background: #febc2e; }
         .clog-dot.g { background: #28c840; }
-        .clog-title { margin-left: 6px; color: var(--cyan); font-size: .72rem; letter-spacing: .08em; }
+        .clog-title { margin-left: 6px; color: #f0abfc; font-size: .72rem; letter-spacing: .08em; }
         .clog-body { padding: 8px 10px 10px; }
-        .clog-line { color: #7dffe3; font-size: .78rem; line-height: 1.55; }
+        .clog-line { color: #f5c2ff; font-size: .78rem; line-height: 1.55; }
         .clog-gt { color: var(--pink); margin-right: 4px; }
-        .clog-cursor { display: inline-block; color: var(--cyan); animation: blink .8s step-end infinite; }
+        .clog-cursor { display: inline-block; color: #f0abfc; animation: blink .8s step-end infinite; }
 
+        /* input */
         [data-testid="stBottom"],
         [data-testid="stBottomBlockContainer"],
         [data-testid="stChatInputContainer"],
@@ -246,7 +249,7 @@ def set_ui_style() -> None:
         }
         [data-testid="stChatInput"]::before {
             content: ""; position: absolute; inset: -2px; border-radius: 999px;
-            background: conic-gradient(from var(--spin), #00f3ff, #7c3aed, #ff0080, #00f3ff);
+            background: conic-gradient(from var(--spin), #a855f7, #ff2ea6, #f0abfc, #a855f7);
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
             padding: 2px; animation: spinBorder 3.2s linear infinite;
@@ -256,77 +259,286 @@ def set_ui_style() -> None:
         [data-testid="stChatInput"] textarea,
         [data-testid="stChatInput"] [data-baseweb="textarea"],
         [data-testid="stChatInput"] [data-baseweb="base-input"] {
-            background: #000 !important; color: #eaf4ff !important;
+            background: #000 !important; color: #f6eaff !important;
             border: none !important; border-radius: 999px !important;
         }
-        [data-testid="stChatInput"] textarea::placeholder { color: #6d7f96 !important; }
+        [data-testid="stChatInput"] textarea::placeholder { color: #8b7798 !important; }
         @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 
+        /* ---------- SIDEBAR hidup ---------- */
+        [data-testid="stSidebar"] {
+            background:
+                radial-gradient(circle at 20% 0%, rgba(236,72,153,.18), transparent 42%),
+                radial-gradient(circle at 90% 80%, rgba(168,85,247,.16), transparent 40%),
+                rgba(10,4,18,.96) !important;
+            border-right: 1px solid rgba(236,72,153,.22) !important;
+        }
+        [data-testid="stSidebar"] * { color: var(--text); }
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { margin-bottom: .35rem; }
+        section[data-testid="stSidebar"] > div { padding-top: .6rem; }
+
+        .side-hero {
+            position: relative;
+            padding: 16px 14px 14px;
+            margin: 0 0 14px;
+            border-radius: 22px;
+            background: linear-gradient(160deg, rgba(236,72,153,.16), rgba(88,28,135,.18) 55%, rgba(0,0,0,.35));
+            border: 1px solid rgba(240,171,252,.28);
+            overflow: hidden;
+        }
+        .side-hero::after {
+            content: "";
+            position: absolute; inset: auto 0 0 0; height: 2px;
+            background: linear-gradient(90deg, transparent, #ff2ea6, #a855f7, transparent);
+        }
+        .side-ava-wrap {
+            width: 86px; height: 86px; margin: 0 auto 10px; position: relative;
+        }
+        .side-ava, .ph {
+            width: 86px; height: 86px; border-radius: 50%;
+            background-color: #140814; background-size: cover; background-position: center;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 0 0 0 2px #ff2ea6, 0 0 18px rgba(168,85,247,.45);
+        }
+        .side-ring {
+            position: absolute; inset: -6px; border-radius: 50%;
+            background: conic-gradient(from var(--spin), #ff2ea6, transparent 32%, #a855f7, transparent 68%, #ff2ea6);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
+            mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
+            animation: spinBorder 4s linear infinite;
+            pointer-events: none;
+        }
+        .ph {
+            display: grid; place-items: center;
+            font-family: Orbitron, sans-serif; color: #f0abfc; font-weight: 700; font-size: 1.4rem;
+        }
+        .side-name {
+            text-align: center; font-family: Orbitron, sans-serif;
+            font-size: 1.28rem; letter-spacing: .06em; color: #fff;
+        }
+        .side-tag {
+            text-align: center; color: #d8b4fe; font-size: .78rem; margin-top: 2px;
+        }
+        .side-online {
+            margin: 8px auto 0; width: fit-content;
+            display: flex; align-items: center; gap: 7px;
+            padding: 4px 10px; border-radius: 999px;
+            background: rgba(16, 185, 129, .12);
+            border: 1px solid rgba(52, 211, 153, .35);
+            color: #86efac; font-size: .78rem;
+        }
+        .side-online i {
+            width: 8px; height: 8px; border-radius: 50%; background: #34d399;
+            box-shadow: 0 0 8px #34d399; animation: pulseDot 1.6s ease-in-out infinite;
+        }
+
+        .side-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
+        }
+        .tile {
+            padding: 10px 10px 11px; border-radius: 16px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(240,171,252,.18);
+        }
+        .tile em {
+            display: block; font-style: normal; font-size: .68rem;
+            letter-spacing: .12em; color: #c4b5fd; margin-bottom: 4px;
+        }
+        .tile b { font-size: .86rem; color: #fff; font-weight: 700; }
+        .tile.ok { box-shadow: inset 0 0 0 1px rgba(52,211,153,.12); }
+        .tile.warn { border-color: rgba(251,191,36,.35); }
+        .tile.err { border-color: rgba(251,113,133,.4); }
+
+        .side-panel {
+            padding: 12px; border-radius: 16px; margin-bottom: 12px;
+            background: rgba(8,0,16,.45);
+            border: 1px solid rgba(168,85,247,.2);
+        }
+        .side-panel-h {
+            font-family: Orbitron, sans-serif; font-size: .72rem;
+            letter-spacing: .16em; color: #e9d5ff; margin-bottom: 8px;
+        }
+        .kv {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 7px 0; border-bottom: 1px dashed rgba(240,171,252,.12);
+            font-size: .84rem;
+        }
+        .kv:last-child { border-bottom: 0; padding-bottom: 0; }
+        .kv span { color: #c4b5fd; }
+        .kv b {
+            color: #fff; background: rgba(168,85,247,.2);
+            border: 1px solid rgba(240,171,252,.25);
+            border-radius: 999px; padding: 2px 8px; font-size: .76rem;
+        }
+        .side-quote {
+            margin: 0 0 12px; padding: 10px 12px; border-radius: 14px;
+            background: linear-gradient(90deg, rgba(255,46,166,.12), rgba(168,85,247,.08));
+            border-left: 3px solid #ff2ea6;
+            color: #f5d0fe; font-size: .8rem; line-height: 1.45;
+        }
+
+        [data-testid="stSidebar"] .stButton > button {
+            background: linear-gradient(180deg, rgba(42,12,48,.9), rgba(12,4,18,.95)) !important;
+            color: #f5d0fe !important;
+            border: 1px solid rgba(236,72,153,.35) !important;
+            border-radius: 14px !important;
+            text-align: left !important;
+            transition: transform .15s ease, box-shadow .15s ease !important;
+        }
+        [data-testid="stSidebar"] .stButton > button:hover {
+            transform: translateY(-2px) !important; color: #fff !important;
+            border-color: #ff2ea6 !important;
+            box-shadow: 0 0 16px rgba(236,72,153,.35) !important;
+        }
+        [data-testid="stSidebar"] .st-key-btn_reset button,
+        [data-testid="stSidebar"] button[kind="secondary"]:first-of-type {
+            text-align: center !important;
+            letter-spacing: .04em;
+        }
+
         .stButton > button {
-            background: #000 !important; color: var(--cyan) !important;
-            border: 1px solid rgba(0,243,255,.45) !important; border-radius: 12px !important;
+            background: #000 !important; color: #f0abfc !important;
+            border: 1px solid rgba(236,72,153,.45) !important; border-radius: 12px !important;
             transition: transform .15s ease, box-shadow .15s ease !important;
         }
         .stButton > button:hover {
             transform: translateY(-2px) !important; color: #fff !important;
-            box-shadow: 0 0 14px rgba(0,243,255,.35) !important;
+            box-shadow: 0 0 14px rgba(236,72,153,.4) !important;
         }
         button[data-testid="baseButton-primary"] {
-            min-height: 54px; font-family: Orbitron, sans-serif !important;
-            letter-spacing: .42em !important; font-size: 1.05rem !important;
+            min-height: 58px; font-family: Orbitron, sans-serif !important;
+            letter-spacing: .38em !important; font-size: 1.05rem !important;
             border-radius: 999px !important;
+            box-shadow: 0 0 24px rgba(236,72,153,.35) !important;
         }
 
-        [data-testid="stSidebar"] {
-            background: rgba(4,8,18,.94) !important;
-            border-right: 1px solid rgba(0,243,255,.14) !important;
-        }
-        [data-testid="stSidebar"] * { color: var(--text); }
-        [data-testid="stSidebar"] [data-testid="stImage"] img {
-            border-radius: 50% !important; object-fit: cover !important;
-            width: 72px !important; height: 72px !important;
-            border: 3px solid #00f3ff !important;
-        }
-        .aira-name { font-family: Orbitron, sans-serif; font-size: 1.15rem; color: #fff; }
-        .aira-online { display: flex; align-items: center; gap: 6px; color: #9fe7c4; font-size: .82rem; margin-top: 2px; }
-        .aira-online i {
-            width: 8px; height: 8px; border-radius: 50%; background: #25d366; display: inline-block;
-        }
-        .ph {
-            width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
-            background: #04161b; border: 3px solid var(--cyan);
-            font-family: Orbitron, sans-serif; color: var(--cyan); font-weight: 700;
-        }
-        .aira-chip {
-            display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: .76rem; margin: 3px 0;
-        }
-        .aira-chip.ok { background: rgba(34,211,238,.16); color: #7df0ff !important; border: 1px solid rgba(34,211,238,.4); }
-        .aira-chip.warn { background: rgba(251,191,36,.14); color: #ffe08a !important; border: 1px solid rgba(251,191,36,.4); }
-        .aira-chip.err { background: rgba(251,113,133,.14); color: #ffb3be !important; border: 1px solid rgba(251,113,133,.4); }
         .aira-foot { text-align: center; color: var(--muted) !important; font-size: .78rem; opacity: .75; margin-top: 18px; }
 
-        .splash-inner {
-            min-height: 72vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center; z-index: 2;
+        /* ---------- SPLASH cinematic ---------- */
+        .splash {
+            position: relative; z-index: 2;
+            min-height: 86vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            overflow: hidden;
+        }
+        .splash-orb {
+            position: absolute; border-radius: 50%; filter: blur(8px);
+            pointer-events: none; z-index: 0;
+        }
+        .splash-orb.a {
+            width: 280px; height: 280px; top: 8%; left: 8%;
+            background: radial-gradient(circle, rgba(168,85,247,.45), transparent 68%);
+            animation: orbFloat 7s ease-in-out infinite;
+        }
+        .splash-orb.b {
+            width: 320px; height: 320px; right: 4%; bottom: 10%;
+            background: radial-gradient(circle, rgba(255,46,166,.38), transparent 68%);
+            animation: orbFloat 8.5s ease-in-out infinite reverse;
+        }
+        .splash-scanlines {
+            position: absolute; inset: 0; pointer-events: none; z-index: 1;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,.035),
+                rgba(255,255,255,.035) 1px,
+                transparent 1px,
+                transparent 4px
+            );
+            animation: scanMove 8s linear infinite;
+        }
+        .splash-stars {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                radial-gradient(1.5px 1.5px at 12% 22%, #f0abfc 50%, transparent 51%),
+                radial-gradient(1.5px 1.5px at 78% 18%, #ff2ea6 50%, transparent 51%),
+                radial-gradient(1.2px 1.2px at 30% 70%, #c084fc 50%, transparent 51%),
+                radial-gradient(1.4px 1.4px at 88% 64%, #fff 50%, transparent 51%),
+                radial-gradient(1.2px 1.2px at 55% 40%, #f0abfc 50%, transparent 51%),
+                radial-gradient(1.3px 1.3px at 18% 86%, #ff2ea6 50%, transparent 51%),
+                radial-gradient(1.1px 1.1px at 66% 82%, #c084fc 50%, transparent 51%);
+            animation: twinkle 3.4s ease-in-out infinite;
+        }
+        .splash-core { position: relative; z-index: 3; width: min(560px, 92vw); }
+        .splash-halo {
+            width: 210px; height: 210px; margin: 0 auto 8px; position: relative;
+            animation: haloIn 1.1s cubic-bezier(.16,1,.3,1) both;
+        }
+        .splash-halo::before {
+            content: ""; position: absolute; inset: 0; border-radius: 50%;
+            background: conic-gradient(from var(--spin), #ff2ea6, #a855f7, transparent 40%, #ff2ea6);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
+            mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
+            animation: spinBorder 3.5s linear infinite;
+        }
+        .splash-halo::after {
+            content: ""; position: absolute; inset: 18px; border-radius: 50%;
+            border: 1px dashed rgba(240,171,252,.35);
+            animation: spinBorder 18s linear infinite reverse;
         }
         .splash-logo {
-            font-family: Orbitron, sans-serif; font-size: clamp(4.2rem, 12vw, 7rem);
-            font-weight: 700; color: #00f3ff; letter-spacing: -.06em; line-height: 1;
-            text-shadow: 0 0 18px #00f3ff;
+            position: absolute; inset: 0; display: grid; place-items: center;
+            font-family: Orbitron, sans-serif; font-weight: 700; line-height: .85;
+            font-size: 3.4rem; color: #ffe6fb; letter-spacing: -.05em;
+            text-shadow: 0 0 18px rgba(255,46,166,.7), 0 0 42px rgba(168,85,247,.45);
+            animation: logoPop 1.15s cubic-bezier(.16,1,.3,1) both;
         }
-        .splash-logo span { color: #ff4db8; font-size: .42em; }
-        .splash-brand { margin-top: 14px; letter-spacing: .55em; font-size: .78rem; color: #9adfff; }
-        .splash-hello { margin-top: 18px; max-width: 440px; color: #d5e6f5; font-size: 1.05rem; line-height: 1.55; }
-        .splash-scan {
-            width: min(420px, 88vw); height: 2px; margin: 26px auto 10px;
-            background: linear-gradient(90deg, transparent, #00f3ff, #ff0080, transparent);
+        .splash-logo span { color: #ff2ea6; font-size: .42em; }
+        .splash-brand {
+            margin-top: 8px; letter-spacing: .62em; font-size: .78rem; color: #e9d5ff;
+            animation: rise 0.8s 0.55s both;
+        }
+        .splash-hello {
+            margin: 16px auto 0; max-width: 440px; color: #f3e8ff;
+            font-size: 1.12rem; line-height: 1.6; animation: rise 0.8s 0.95s both;
+        }
+        .splash-hello strong { color: #fff; }
+        .boot {
+            width: min(420px, 88vw); margin: 22px auto 0; text-align: left;
+            font-size: .78rem; color: #d8b4fe; line-height: 1.7;
+        }
+        .boot div {
+            opacity: 0; transform: translateY(8px);
+            animation: bootLine .45s ease forwards;
+        }
+        .boot div:nth-child(1) { animation-delay: .35s; }
+        .boot div:nth-child(2) { animation-delay: .7s; }
+        .boot div:nth-child(3) { animation-delay: 1.05s; }
+        .boot div:nth-child(4) { animation-delay: 1.4s; }
+        .boot b { color: #86efac; }
+        .splash-hint {
+            margin-top: 8px; color: #c4b5fd; font-size: .78rem;
+            letter-spacing: .18em; animation: rise .8s 1.7s both;
         }
 
         @keyframes spinBorder { to { --spin: 360deg; } }
         @keyframes blink { 50% { opacity: 0; } }
+        @keyframes pulseDot { 50% { opacity: .35; transform: scale(.75); } }
+        @keyframes orbFloat {
+            0%,100% { transform: translate(0,0); }
+            50% { transform: translate(18px,-16px); }
+        }
+        @keyframes scanMove { to { background-position: 0 8px; } }
+        @keyframes twinkle { 50% { opacity: .45; } }
+        @keyframes haloIn {
+            from { opacity: 0; transform: scale(.55); }
+            to { opacity: 1; transform: none; }
+        }
+        @keyframes logoPop {
+            from { opacity: 0; transform: scale(.4); filter: blur(8px); }
+            to { opacity: 1; transform: none; filter: none; }
+        }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: none; }
+        }
+        @keyframes bootLine {
+            to { opacity: 1; transform: none; }
+        }
 
         @media (prefers-reduced-motion: reduce) {
-            .pcb-glow, [data-testid="stChatInput"]::before { animation: none !important; }
+            .pcb-glow, [data-testid="stChatInput"]::before,
+            .splash-halo::before, .side-ring { animation: none !important; }
         }
         </style>
         """,
@@ -335,7 +547,7 @@ def set_ui_style() -> None:
 
 
 # ---------------------------------------------------------------------------
-# PCB: banyak jalur statis, glow cuma 4 (tanpa drop-shadow)
+# PCB
 # ---------------------------------------------------------------------------
 
 def _pcb_pts(x: float, y: float, spec: str) -> List[Tuple[float, float]]:
@@ -370,7 +582,6 @@ def _d(x: float, y: float, spec: str) -> str:
     return "M " + " L ".join(f"{px:.0f} {py:.0f}" for px, py in pts)
 
 
-# Jalur PCB gaya gambar: bus paralel + belokan 45/90 + pad
 _PCB_SPECS = [
     (-20, 28, "H 680"), (-20, 42, "H 540"), (-20, 56, "H 760"),
     (-20, 70, "H 420 SE 26 H 160"), (-20, 84, "H 820"), (-20, 98, "H 380"),
@@ -445,14 +656,13 @@ _PCB_GLOW = [
 def _build_pcb() -> str:
     parts = ['<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">']
     vias: List[Tuple[int, int]] = []
-    for x, y, spec in _PCB_SPECS:
-        d = _d(x, y, spec)
-        parts.append(f'<path class="pcb-tr" d="{d}"/>')
+    for i, (x, y, spec) in enumerate(_PCB_SPECS):
+        cls = "pcb-tr alt" if i % 3 == 0 else "pcb-tr"
+        parts.append(f'<path class="{cls}" d="{_d(x, y, spec)}"/>')
         pts = _pcb_pts(x, y, spec)
         vias.append((int(pts[-1][0]), int(pts[-1][1])))
     for kind, x, y, spec in _PCB_GLOW:
         parts.append(f'<path class="pcb-glow {kind}" d="{_d(x, y, spec)}"/>')
-    # pad cukup di ujung-ujung terpilih, jangan semua
     for vx, vy in vias[::3]:
         if -20 < vx < 1620 and -20 < vy < 920:
             parts.append(f'<circle class="pcb-pad" cx="{vx}" cy="{vy}" r="4.6"/>')
@@ -631,8 +841,9 @@ def get_profile_image() -> Dict[str, str]:
 def inject_avatar_css(photo: Dict[str, str]) -> None:
     if not photo.get("b64"):
         return
+    url = f'data:{photo["mime"]};base64,{photo["b64"]}'
     st.markdown(
-        f'<style>.wa-avatar-aira{{background-image:url("data:{photo["mime"]};base64,{photo["b64"]}")!important;}}</style>',
+        f"<style>.wa-avatar-aira,.side-ava{{background-image:url('{url}')!important;}}</style>",
         unsafe_allow_html=True,
     )
 
@@ -758,7 +969,7 @@ def queue_example(prompt: str) -> None:
 
 
 # ---------------------------------------------------------------------------
-# RAG — konsol 1x saja, tanpa time.sleep (itu yang bikin nge-lag)
+# RAG
 # ---------------------------------------------------------------------------
 
 def run_rag_pipeline(user_input: str, last_bot_response: str, llm: Any) -> Tuple[str, str, str]:
@@ -828,44 +1039,56 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
 def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
     kb = get_kb_status()
     mode = model_info.get("mode", "error")
+
+    if mode == "gguf":
+        model_tile, model_label = "ok", "GGUF Siap"
+    elif mode == "mock":
+        model_tile, model_label = "warn", "KB Active"
+    else:
+        model_tile, model_label = "err", "Offline"
+
+    mem_ok = bool(kb["exists"] and kb["count"] > 0)
+    mem_tile = "ok" if mem_ok else "warn"
+    mem_label = f"{kb.get('count', 0)} Entri" if mem_ok else "Kosong"
+
+    ava = '<div class="side-ava"></div>' if photo.get("b64") else '<div class="ph">A</div>'
+
     with st.sidebar:
-        c1, c2 = st.columns([0.85, 1.7])
-        with c1:
-            if photo.get("path"):
-                st.image(photo["path"], width=72)
-            else:
-                st.markdown('<div class="ph">A</div>', unsafe_allow_html=True)
-        with c2:
-            st.markdown(
-                '<div class="aira-name">Aira</div><div class="aira-online"><i></i> online · A.ai</div>',
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            f"""
+            <div class="side-hero">
+              <div class="side-ava-wrap">
+                {ava}
+                <div class="side-ring"></div>
+              </div>
+              <div class="side-name">Aira</div>
+              <div class="side-tag">Asisten AI · Ampera Official</div>
+              <div class="side-online"><i></i> online · A.ai</div>
+            </div>
+            <div class="side-grid">
+              <div class="tile {model_tile}"><em>MODEL</em><b>{html.escape(model_label)}</b></div>
+              <div class="tile {mem_tile}"><em>MEMORI</em><b>{html.escape(mem_label)}</b></div>
+            </div>
+            <div class="side-quote">Siap bantu error Android, APK, RAM, dan pertanyaan harian — privat di perangkatmu.</div>
+            <div class="side-panel">
+              <div class="side-panel-h">SISTEM</div>
+              <div class="kv"><span>Mode</span><b>{html.escape(str(mode))}</b></div>
+              <div class="kv"><span>Knowledge</span><b>{kb.get('count', 0)}</b></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         if not photo.get("path"):
-            st.caption("Foto tidak ketemu. Taruh `aira.jpg` di folder yang sama dengan `app.py`.")
+            st.caption("Taruh `aira.jpg` di folder yang sama dengan `app.py`.")
 
-        st.caption("Status Sistem Lokal")
-        if mode == "gguf":
-            st.markdown('<span class="aira-chip ok">MODEL · GGUF Siap</span>', unsafe_allow_html=True)
-        elif mode == "mock":
-            st.markdown('<span class="aira-chip warn">MODEL · Knowledge-Base Active</span>', unsafe_allow_html=True)
-        else:
-            st.markdown('<span class="aira-chip err">MODEL · Offline</span>', unsafe_allow_html=True)
-
-        st.write("")
-        if kb["exists"] and kb["count"] > 0:
-            st.markdown(f'<span class="aira-chip ok">MEMORI · {kb["count"]} Entri</span>', unsafe_allow_html=True)
-        else:
-            st.markdown('<span class="aira-chip warn">MEMORI · knowledge.json tidak ditemukan</span>', unsafe_allow_html=True)
-
-        st.divider()
-        st.markdown("**Informasi Sistem**")
-        st.write(f"Mode: `{mode}`")
-        st.write(f"Knowledge Items: `{kb.get('count', 0)}`")
-        st.divider()
-        if st.button("🧹 Percakapan Baru", use_container_width=True):
+        if st.button("✦  Percakapan Baru", use_container_width=True, key="btn_reset"):
             reset_conversation()
             st.rerun()
-        st.markdown("**Contoh Pertanyaan**")
+
+        st.markdown(
+            '<div class="side-panel-h" style="margin:14px 0 8px;">PROMPT CEPAT</div>',
+            unsafe_allow_html=True,
+        )
         for sample in EXAMPLE_PROMPTS:
             if st.button(sample, use_container_width=True, key=f"ex_{sample}"):
                 queue_example(sample)
@@ -906,17 +1129,32 @@ def render_splash() -> None:
         [data-testid="stSidebar"],
         [data-testid="stSidebarCollapsedControl"],
         [data-testid="stHeader"] { display: none !important; }
+        [data-testid="stMainBlockContainer"] { max-width: 720px; padding-top: 0 !important; }
         </style>
-        <div class="splash-inner">
-          <div class="splash-logo">A<span>.ai</span></div>
-          <div class="splash-brand">AMPERA OFFICIAL</div>
-          <div class="splash-scan"></div>
-          <p class="splash-hello">Selamat datang di salah satu app<br><strong>Ampera Official</strong></p>
+        <div class="splash">
+          <div class="splash-orb a"></div>
+          <div class="splash-orb b"></div>
+          <div class="splash-stars"></div>
+          <div class="splash-scanlines"></div>
+          <div class="splash-core">
+            <div class="splash-halo"><div class="splash-logo">A<span>.ai</span></div></div>
+            <div class="splash-brand">AMPERA OFFICIAL</div>
+            <div class="boot">
+              <div>&gt; boot ampera.core .............. <b>OK</b></div>
+              <div>&gt; link neural bus ............... <b>OK</b></div>
+              <div>&gt; handshake aira.persona ........ <b>GRANTED</b></div>
+              <div>&gt; welcome sequence .............. <b>READY</b></div>
+            </div>
+            <p class="splash-hello">
+              Selamat datang di salah satu app<br><strong>Ampera Official</strong>
+            </p>
+            <div class="splash-hint">KETUK UNTUK MASUK</div>
+          </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    _l, mid, _r = st.columns([1, 1.15, 1])
+    _l, mid, _r = st.columns([1, 1.2, 1])
     with mid:
         if st.button("MASUK", type="primary", use_container_width=True, key="btn_masuk"):
             st.session_state.entered_app = True
