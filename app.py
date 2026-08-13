@@ -1288,7 +1288,7 @@ def render_splash(logo: Dict[str, str]) -> None:
               <div>&gt; welcome sequence .............. <b>READY</b></div>
             </div>
             <p class="splash-hello">
-              Selamat datang di salah satu app<br><strong>Ampera Official</strong>
+              Selamat datang.... di salah satu app buatan<br><strong>Ampera Official</strong>
             </p>
             <div class="splash-hint">KETUK UNTUK MASUK</div>
             {miss}
