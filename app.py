@@ -7,7 +7,7 @@ import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 import streamlit as st
-set_ui_style()
+
 
 # ---------------------------------------------------------------------------
 # Impor modul lokal (aman: UI tetap hidup meski dependensi belum lengkap)
@@ -275,7 +275,7 @@ def history_for_llm(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
 # ---------------------------------------------------------------------------
 # CSS — Tampilan Cyberpunk Anime Glassmorphism (Aira v2)
 # ---------------------------------------------------------------------------
-
+set_ui_style()
 def set_ui_style() -> None:
     st.markdown(
         """
