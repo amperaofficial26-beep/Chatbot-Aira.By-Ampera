@@ -111,116 +111,57 @@ def set_ui_style() -> None:
     st.markdown(
         """
         <style>
-        /* 1. Background Circuit Board (PCB) */
-        .stApp {
+        /* 1. Background PCB (CSS Pure - Lebih stabil di Streamlit Cloud) */
+        [data-testid="stAppViewContainer"] {
             background-color: #050814;
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 60%),
-                linear-gradient(rgba(5, 8, 20, 0.85), rgba(5, 8, 20, 0.85)),
-                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300f3ff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2v40h-2V0zm-40 40h40v2H0v-2zM20 0v80h2V0h-2zm40 0v80h2V0h-2z'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: cover;
+                radial-gradient(circle at 2px 2px, rgba(0, 243, 255, 0.25) 1.5px, transparent 0),
+                linear-gradient(rgba(0, 243, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px, 50px 50px, 50px 50px;
             animation: circuitPulse 12s infinite alternate ease-in-out;
         }
 
         @keyframes circuitPulse {
-            0% { filter: hue-rotate(0deg) brightness(1); }
-            50% { filter: hue-rotate(180deg) brightness(1.2); }
-            100% { filter: hue-rotate(360deg) brightness(1); }
-        }
-
-        /* 2. Gelembung Chat Glassmorphism */
-        @keyframes smoothAppear {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        [data-testid="stChatMessage"] {
-            animation: smoothAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            backdrop-filter: blur(16px) !important;
-            -webkit-backdrop-filter: blur(16px) !important;
-            border-radius: 20px !important;
-            padding: 16px !important;
-            margin-bottom: 14px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        /* Kotak Pesan Aira (Kiri - Cyan Anime) */
-        [data-testid="stChatMessage"]:nth-child(odd) {
-            background: rgba(20, 25, 45, 0.75) !important;
-            border: 1px solid rgba(0, 243, 255, 0.25) !important;
-            border-left: 5px solid #00f3ff !important;
-            margin-right: 15% !important;
-            border-top-left-radius: 4px !important;
-        }
-
-        /* Kotak Pesan User (Kanan - Pink Anime) */
-        [data-testid="stChatMessage"]:nth-child(even) {
-            background: rgba(45, 20, 55, 0.75) !important;
-            border: 1px solid rgba(255, 0, 128, 0.25) !important;
-            border-right: 5px solid #ff0080 !important;
-            margin-left: 15% !important;
-            border-top-right-radius: 4px !important;
-        }
-
-        /* 3. Tombol Neon Glow */
-        div.stButton > button {
-            background: rgba(15, 22, 36, 0.8) !important;
-            backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(0, 243, 255, 0.4) !important;
-            color: #00f3ff !important;
-            border-radius: 14px !important;
-            font-weight: 600 !important;
-            padding: 8px 20px !important;
-            transition: all 0.35s ease !important;
-        }
-
-        div.stButton > button:hover {
-            transform: translateY(-3px) scale(1.02) !important;
-            background: rgba(0, 243, 255, 0.15) !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.7) !important;
-        }
-
-        /* 4. Input Pesan Lonjong Ala Gemini */
-        @keyframes neonRotate {
             0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+            50% { filter: hue-rotate(90deg); }
+            100% { filter: hue-rotate(0deg); }
         }
 
+        /* 2. Chat Bubbles (Glassmorphism) */
+        [data-testid="stChatMessage"] {
+            backdrop-filter: blur(15px) !important;
+            padding: 16px !important;
+            border-radius: 20px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+            margin-bottom: 15px !important;
+        }
+
+        /* Bubble Aira (Kiri - Cyan) */
+        [data-testid="stChatMessage"]:nth-child(odd) {
+            background: rgba(20, 25, 45, 0.85) !important;
+            border-left: 6px solid #00f3ff !important;
+            margin-right: 25% !important;
+        }
+
+        /* Bubble User (Kanan - Pink) */
+        [data-testid="stChatMessage"]:nth-child(even) {
+            background: rgba(45, 20, 55, 0.85) !important;
+            border-right: 6px solid #ff0080 !important;
+            margin-left: 25% !important;
+        }
+
+        /* 3. Input & Elemen Lain */
+        [data-testid="stMainBlockContainer"] { background: transparent !important; }
+        
         [data-testid="stChatInput"] {
             border-radius: 35px !important;
-            background: linear-gradient(60deg, #00f3ff, #ff0080, #7928ca, #00f3ff) !important;
-            background-size: 300% 300% !important;
-            animation: neonRotate 6s linear infinite !important;
-            padding: 2px !important;
+            background: rgba(10, 15, 30, 0.9) !important;
+            border: 2px solid #00f3ff !important;
         }
 
-        [data-testid="stChatInput"] > div {
-            background-color: #080c14 !important;
-            border-radius: 33px !important;
-        }
-
-        [data-testid="stChatInput"] textarea {
-            color: #ffffff !important;
-        }
-
-        /* Elements Tambahan */
-        .aira-chip {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 600;
-        }
-        .aira-chip.ok { background: rgba(0, 243, 255, 0.16); color: #00f3ff; }
-        .aira-chip.warn { background: rgba(255, 184, 0, 0.18); color: #ffb800; }
-        .aira-chip.err { background: rgba(255, 0, 128, 0.14); color: #ff0080; }
-        .aira-foot { color: rgba(160, 175, 200, 0.7); font-size: 0.8rem; text-align: center; margin-top: 0.75rem; }
-
-        html, body, [class*="css"] {
-            font-family: 'Segoe UI', Roboto, sans-serif !important;
-            color: #e2e8f0 !important;
-        }
+        .stApp * { color: #e2e8f0 !important; }
         </style>
         """,
         unsafe_allow_html=True,
