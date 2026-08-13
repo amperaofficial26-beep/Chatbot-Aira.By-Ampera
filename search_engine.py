@@ -30,6 +30,9 @@ def load_knowledge_base(filepath: str = "knowledge.json") -> List[Dict[str, Any]
         
     return _knowledge_data
 
+# Alias nama fungsi agar sesuai dengan yang dicari app.py
+load_knowledge = load_knowledge_base
+
 def search_knowledge(query: str, top_k: int = 3, **kwargs) -> str:
     """Mencari informasi paling relevan dari knowledge base."""
     global _knowledge_data, _bm25_index
