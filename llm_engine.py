@@ -1,6 +1,10 @@
 import os
 from groq import Groq
 
+def find_gguf_models(*args, **kwargs):
+    """Fungsi pembantu agar app.py tidak error saat mencari model lokal."""
+    return ["qwen-2.5-72b-instruct (Groq Cloud)"]
+
 def load_model():
     """Membuka koneksi ke Groq API."""
     api_key = os.getenv("GROQ_API_KEY")
@@ -8,7 +12,7 @@ def load_model():
         raise ValueError("GROQ_API_KEY belum diatur di Secrets Streamlit!")
     return Groq(api_key=api_key)
 
-# Alias agar kompatibel dengan app.py kamu
+# Alias fungsi agar kompatibel dengan pemanggilan app.py
 load_model_or_mock = load_model
 
 def generate_aira_response(llm_client, user_input, context="", history=None):
