@@ -23,7 +23,8 @@ class GroqModelWrapper:
             raise ValueError("GROQ_API_KEY belum diatur di Secrets Streamlit!")
             
         self.client = Groq(api_key=api_key)
-        self.model_name = "qwen-2.5-72b-instruct"
+        # Menggunakan model Groq yang stabil dan tersedia
+        self.model_name = "llama-3.3-70b-versatile"
 
     def __call__(self, prompt: str, max_tokens: int = 512, **kwargs):
         try:
@@ -68,12 +69,10 @@ def generate_response(prompt: str, model: Any = None, max_tokens: int = 512, *ar
     return "Model LLM belum dimuat."
 
 def generate_aira_response(*args, **kwargs) -> str:
-    """Fungsi fleksibel untuk menangani berbagai bentuk argumen dari app.py tanpa TypeError."""
     try:
         model = kwargs.get("model") or (args[0] if len(args) > 0 else None)
         user_input = kwargs.get("user_input") or kwargs.get("prompt") or (args[1] if len(args) > 1 else None)
         
-        # Jika argumen pertama adalah string (posisi input tertukar dengan model)
         if isinstance(model, str) and not user_input:
             user_input = model
             model = None
@@ -113,4 +112,4 @@ def generate_aira_response(*args, **kwargs) -> str:
         formatted_prompt = f"System: {system_instruction}\n\nKonteks:\n{context}\n\nUser: {user_input}\nAssistant:" if context else f"System: {system_instruction}\n\nUser: {user_input}\nAssistant:"
         return generate_response(formatted_prompt, model=model, max_tokens=512)
     except Exception as e:
-        return f"Aduh, ada kendala waktu aku merangkkai jawaban. Detail teknis: {type(e).__name__} ({e})."
+        return f"Aduh, ada kendala waktu aku merangkai jawaban. Detail teknis: {type(e).__name__} ({e})."
