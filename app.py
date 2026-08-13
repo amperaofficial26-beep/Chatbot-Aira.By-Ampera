@@ -170,12 +170,12 @@ def set_ui_style() -> None:
             width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center;
             background: #000; border: 1px solid rgba(236,72,153,.5);
             box-shadow: 0 0 16px rgba(168,85,247,.28);
-            font-family: Orbitron, sans-serif; font-weight: 700; color: #f0abfc;
+            font-family: M PLUS Rounded 1c, sans-serif; font-weight: 700; color: #f0abfc;
             background-size: cover; background-position: center;
         }
         .app-logo span { color: var(--pink); font-size: .72rem; }
         .app-head h1 {
-            font-family: Orbitron, sans-serif !important; font-size: 1.55rem;
+            font-family: M PLUS Rounded 1c, sans-serif !important; font-size: 1.55rem;
             margin: 0 !important; color: #ffe9fb !important;
         }
         .app-head p { margin: 2px 0 0; color: var(--muted); font-size: .86rem; }
@@ -195,7 +195,7 @@ def set_ui_style() -> None:
         }
         .wa-fallback {
             display: grid; place-items: center; color: #f0abfc;
-            font-family: Orbitron, sans-serif; font-weight: 700;
+            font-family: M PLUS Rounded 1c, sans-serif; font-weight: 700;
         }
         .wa-bubble {
             max-width: min(74%, 520px); padding: 10px 13px 12px;
@@ -334,7 +334,7 @@ def set_ui_style() -> None:
         }
         .ph {
             display: grid; place-items: center;
-            font-family: Orbitron, sans-serif; color: #f0abfc; font-weight: 700; font-size: 1.4rem;
+            font-family: M PLUS Rounded 1c, sans-serif; color: #f0abfc; font-weight: 700; font-size: 1.4rem;
         }
         .side-name {
             text-align: center; font-family: Orbitron, sans-serif;
@@ -376,7 +376,7 @@ def set_ui_style() -> None:
             border: 1px solid rgba(168,85,247,.2);
         }
         .side-panel-h {
-            font-family: Orbitron, sans-serif; font-size: .72rem;
+            font-family: M PLUS Rounded 1c, sans-serif; font-size: .72rem;
             letter-spacing: .16em; color: #e9d5ff; margin-bottom: 8px;
         }
         .kv {
@@ -421,7 +421,7 @@ def set_ui_style() -> None:
             box-shadow: 0 0 14px rgba(236,72,153,.4) !important;
         }
         button[data-testid="baseButton-primary"] {
-            min-height: 58px; font-family: Orbitron, sans-serif !important;
+            min-height: 58px; font-family: M PLUS Rounded 1c, sans-serif !important;
             letter-spacing: .38em !important; font-size: 1.05rem !important;
             border-radius: 999px !important;
             box-shadow: 0 0 24px rgba(236,72,153,.35) !important;
@@ -489,7 +489,7 @@ def set_ui_style() -> None:
         }
         .splash-logo {
             position: absolute; inset: 0; display: grid; place-items: center;
-            font-family: Orbitron, sans-serif; font-weight: 700; line-height: .85;
+            font-family: M PLUS Rounded 1c, sans-serif; font-weight: 700; line-height: .85;
             font-size: 3.4rem; color: #ffe6fb; letter-spacing: -.05em;
             text-shadow: 0 0 18px rgba(255,46,166,.7);
             animation: logoPop 1.15s cubic-bezier(.16,1,.3,1) both;
