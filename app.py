@@ -3,7 +3,7 @@
 """
 app.py
 ======
-Aira · UI ringan: PCB ungu-pink + sidebar glass + splash cinematic
+Aira · UI ringan: PCB ungu-pink + sidebar glass + splash cinematic + logo Ampera
 """
 
 from __future__ import annotations
@@ -137,7 +137,6 @@ def set_ui_style() -> None:
             max-width: 780px;
         }
 
-        /* ---------- PCB ungu / pink ---------- */
         .pcb-layer {
             position: fixed; inset: 0; z-index: 0;
             pointer-events: none; overflow: hidden;
@@ -164,13 +163,13 @@ def set_ui_style() -> None:
         }
         @keyframes traceDraw { to { stroke-dashoffset: -248; } }
 
-        /* ---------- header ---------- */
         .app-head { display: flex; align-items: center; gap: 14px; margin: 6px 0 18px; }
         .app-logo {
             width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center;
             background: #000; border: 1px solid rgba(236,72,153,.5);
             box-shadow: 0 0 16px rgba(168,85,247,.28);
             font-family: Orbitron, sans-serif; font-weight: 700; color: #f0abfc;
+            background-size: cover; background-position: center;
         }
         .app-logo span { color: var(--pink); font-size: .72rem; }
         .app-head h1 {
@@ -179,7 +178,6 @@ def set_ui_style() -> None:
         }
         .app-head p { margin: 2px 0 0; color: var(--muted); font-size: .86rem; }
 
-        /* ---------- chat WA ---------- */
         .wa-thread { display: flex; flex-direction: column; gap: 10px; }
         .wa-row { display: flex; align-items: flex-end; gap: 8px; width: 100%; }
         .wa-row.left { justify-content: flex-start; }
@@ -235,7 +233,6 @@ def set_ui_style() -> None:
         .clog-gt { color: var(--pink); margin-right: 4px; }
         .clog-cursor { display: inline-block; color: #f0abfc; animation: blink .8s step-end infinite; }
 
-        /* input */
         [data-testid="stBottom"],
         [data-testid="stBottomBlockContainer"],
         [data-testid="stChatInputContainer"],
@@ -265,7 +262,6 @@ def set_ui_style() -> None:
         [data-testid="stChatInput"] textarea::placeholder { color: #8b7798 !important; }
         @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 
-        /* ---------- SIDEBAR hidup ---------- */
         [data-testid="stSidebar"] {
             background:
                 radial-gradient(circle at 20% 0%, rgba(236,72,153,.18), transparent 42%),
@@ -297,8 +293,6 @@ def set_ui_style() -> None:
         .side-ava, .ph {
             width: 86px; height: 86px; border-radius: 50%;
             background-color: #140814; background-size: cover; background-position: center;
-            border: 3px solid transparent;
-            background-clip: padding-box;
             box-shadow: 0 0 0 2px #ff2ea6, 0 0 18px rgba(168,85,247,.45);
         }
         .side-ring {
@@ -332,7 +326,6 @@ def set_ui_style() -> None:
             width: 8px; height: 8px; border-radius: 50%; background: #34d399;
             box-shadow: 0 0 8px #34d399; animation: pulseDot 1.6s ease-in-out infinite;
         }
-
         .side-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
         }
@@ -346,10 +339,8 @@ def set_ui_style() -> None:
             letter-spacing: .12em; color: #c4b5fd; margin-bottom: 4px;
         }
         .tile b { font-size: .86rem; color: #fff; font-weight: 700; }
-        .tile.ok { box-shadow: inset 0 0 0 1px rgba(52,211,153,.12); }
         .tile.warn { border-color: rgba(251,191,36,.35); }
         .tile.err { border-color: rgba(251,113,133,.4); }
-
         .side-panel {
             padding: 12px; border-radius: 16px; margin-bottom: 12px;
             background: rgba(8,0,16,.45);
@@ -391,12 +382,6 @@ def set_ui_style() -> None:
             border-color: #ff2ea6 !important;
             box-shadow: 0 0 16px rgba(236,72,153,.35) !important;
         }
-        [data-testid="stSidebar"] .st-key-btn_reset button,
-        [data-testid="stSidebar"] button[kind="secondary"]:first-of-type {
-            text-align: center !important;
-            letter-spacing: .04em;
-        }
-
         .stButton > button {
             background: #000 !important; color: #f0abfc !important;
             border: 1px solid rgba(236,72,153,.45) !important; border-radius: 12px !important;
@@ -415,7 +400,7 @@ def set_ui_style() -> None:
 
         .aira-foot { text-align: center; color: var(--muted) !important; font-size: .78rem; opacity: .75; margin-top: 18px; }
 
-        /* ---------- SPLASH cinematic ---------- */
+        /* ---------- SPLASH ---------- */
         .splash {
             position: relative; z-index: 2;
             min-height: 86vh; display: flex; flex-direction: column;
@@ -445,7 +430,6 @@ def set_ui_style() -> None:
                 transparent 1px,
                 transparent 4px
             );
-            animation: scanMove 8s linear infinite;
         }
         .splash-stars {
             position: absolute; inset: 0; z-index: 0; pointer-events: none;
@@ -455,13 +439,12 @@ def set_ui_style() -> None:
                 radial-gradient(1.2px 1.2px at 30% 70%, #c084fc 50%, transparent 51%),
                 radial-gradient(1.4px 1.4px at 88% 64%, #fff 50%, transparent 51%),
                 radial-gradient(1.2px 1.2px at 55% 40%, #f0abfc 50%, transparent 51%),
-                radial-gradient(1.3px 1.3px at 18% 86%, #ff2ea6 50%, transparent 51%),
-                radial-gradient(1.1px 1.1px at 66% 82%, #c084fc 50%, transparent 51%);
+                radial-gradient(1.3px 1.3px at 18% 86%, #ff2ea6 50%, transparent 51%);
             animation: twinkle 3.4s ease-in-out infinite;
         }
         .splash-core { position: relative; z-index: 3; width: min(560px, 92vw); }
         .splash-halo {
-            width: 210px; height: 210px; margin: 0 auto 8px; position: relative;
+            width: 230px; height: 230px; margin: 0 auto 8px; position: relative;
             animation: haloIn 1.1s cubic-bezier(.16,1,.3,1) both;
         }
         .splash-halo::before {
@@ -472,7 +455,7 @@ def set_ui_style() -> None:
             animation: spinBorder 3.5s linear infinite;
         }
         .splash-halo::after {
-            content: ""; position: absolute; inset: 18px; border-radius: 50%;
+            content: ""; position: absolute; inset: 16px; border-radius: 50%;
             border: 1px dashed rgba(240,171,252,.35);
             animation: spinBorder 18s linear infinite reverse;
         }
@@ -480,10 +463,17 @@ def set_ui_style() -> None:
             position: absolute; inset: 0; display: grid; place-items: center;
             font-family: Orbitron, sans-serif; font-weight: 700; line-height: .85;
             font-size: 3.4rem; color: #ffe6fb; letter-spacing: -.05em;
-            text-shadow: 0 0 18px rgba(255,46,166,.7), 0 0 42px rgba(168,85,247,.45);
+            text-shadow: 0 0 18px rgba(255,46,166,.7);
             animation: logoPop 1.15s cubic-bezier(.16,1,.3,1) both;
         }
         .splash-logo span { color: #ff2ea6; font-size: .42em; }
+        .splash-logo-img {
+            position: absolute; inset: 28px; border-radius: 50%;
+            background: #08030e center/contain no-repeat;
+            box-shadow: 0 0 28px rgba(255,46,166,.35);
+            animation: logoPop 1.15s cubic-bezier(.16,1,.3,1) both;
+            z-index: 2;
+        }
         .splash-brand {
             margin-top: 8px; letter-spacing: .62em; font-size: .78rem; color: #e9d5ff;
             animation: rise 0.8s 0.55s both;
@@ -492,7 +482,6 @@ def set_ui_style() -> None:
             margin: 16px auto 0; max-width: 440px; color: #f3e8ff;
             font-size: 1.12rem; line-height: 1.6; animation: rise 0.8s 0.95s both;
         }
-        .splash-hello strong { color: #fff; }
         .boot {
             width: min(420px, 88vw); margin: 22px auto 0; text-align: left;
             font-size: .78rem; color: #d8b4fe; line-height: 1.7;
@@ -510,6 +499,9 @@ def set_ui_style() -> None:
             margin-top: 8px; color: #c4b5fd; font-size: .78rem;
             letter-spacing: .18em; animation: rise .8s 1.7s both;
         }
+        .splash-miss {
+            margin-top: 8px; color: #f9a8d4; font-size: .72rem; opacity: .8;
+        }
 
         @keyframes spinBorder { to { --spin: 360deg; } }
         @keyframes blink { 50% { opacity: 0; } }
@@ -518,7 +510,6 @@ def set_ui_style() -> None:
             0%,100% { transform: translate(0,0); }
             50% { transform: translate(18px,-16px); }
         }
-        @keyframes scanMove { to { background-position: 0 8px; } }
         @keyframes twinkle { 50% { opacity: .45; } }
         @keyframes haloIn {
             from { opacity: 0; transform: scale(.55); }
@@ -532,9 +523,7 @@ def set_ui_style() -> None:
             from { opacity: 0; transform: translateY(14px); }
             to { opacity: 1; transform: none; }
         }
-        @keyframes bootLine {
-            to { opacity: 1; transform: none; }
-        }
+        @keyframes bootLine { to { opacity: 1; transform: none; } }
 
         @media (prefers-reduced-motion: reduce) {
             .pcb-glow, [data-testid="stChatInput"]::before,
@@ -736,6 +725,7 @@ _IDENTITY_RE = re.compile(
 _PUNCT_RE = re.compile(r"[\"'`~!@#$%^&*()_+\-={}\[\]|\\:;<>?,./]+")
 _SPACE_RE = re.compile(r"\s+")
 MAX_HISTORY_FOR_LLM = 12
+_IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
 
 
 def _normalize_intent_text(text: str) -> str:
@@ -803,49 +793,94 @@ def history_for_llm(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
 
 
 # ---------------------------------------------------------------------------
-# Foto + bubble
+# Gambar: profil Aira + logo Ampera
 # ---------------------------------------------------------------------------
 
-def find_profile_file() -> str:
-    roots = [_BASE_DIR, os.path.join(_BASE_DIR, "assets"), os.getcwd()]
-    names = ("aira.jpg", "aira.jpeg", "aira.png", "aira.webp", "Aira.jpg", "Aira.JPG")
-    for root in roots:
+def _asset_roots() -> List[str]:
+    return [_BASE_DIR, os.path.join(_BASE_DIR, "assets"), os.getcwd()]
+
+
+def _read_image(path: str) -> Dict[str, str]:
+    ext = os.path.splitext(path)[1].lower()
+    mime = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".webp": "image/webp",
+    }.get(ext, "image/jpeg")
+    with open(path, "rb") as fh:
+        raw = fh.read()
+    return {"mime": mime, "b64": base64.b64encode(raw).decode("ascii"), "path": path}
+
+
+def _scan_image(exact_names: Tuple[str, ...], *needles: str) -> str:
+    needles_l = [n.lower() for n in needles]
+    for root in _asset_roots():
         if not root or not os.path.isdir(root):
             continue
-        for name in names:
+        for name in exact_names:
             path = os.path.join(root, name)
             if os.path.isfile(path):
                 return os.path.abspath(path)
         try:
             for fn in os.listdir(root):
                 low = fn.lower()
-                if low.startswith("aira") and low.endswith((".jpg", ".jpeg", ".png", ".webp")):
+                if not low.endswith(_IMG_EXT):
+                    continue
+                if all(n in low for n in needles_l):
                     return os.path.abspath(os.path.join(root, fn))
         except OSError:
             pass
     return ""
 
 
+def find_profile_file() -> str:
+    names = ("aira.jpg", "aira.jpeg", "aira.png", "aira.webp", "Aira.jpg", "Aira.JPG")
+    return _scan_image(names, "aira")
+
+
+def find_logo_file() -> str:
+    names = (
+        "logo ampera.jpg",
+        "logo ampera.jpeg",
+        "logo ampera.png",
+        "logo ampera.webp",
+        "logo_ampera.jpg",
+        "logo_ampera.png",
+        "logo-ampera.jpg",
+        "Logo Ampera.jpg",
+        "logoampera.jpg",
+        "ampera.jpg",
+        "ampera.png",
+    )
+    path = _scan_image(names, "logo", "ampera")
+    if path:
+        return path
+    return _scan_image(names, "ampera")
+
+
 @st.cache_data(show_spinner=False)
 def get_profile_image() -> Dict[str, str]:
     path = find_profile_file()
-    if not path:
-        return {"mime": "", "b64": "", "path": ""}
-    ext = os.path.splitext(path)[1].lower()
-    mime = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}.get(ext, "image/jpeg")
-    with open(path, "rb") as fh:
-        raw = fh.read()
-    return {"mime": mime, "b64": base64.b64encode(raw).decode("ascii"), "path": path}
+    return _read_image(path) if path else {"mime": "", "b64": "", "path": ""}
 
 
-def inject_avatar_css(photo: Dict[str, str]) -> None:
-    if not photo.get("b64"):
-        return
-    url = f'data:{photo["mime"]};base64,{photo["b64"]}'
-    st.markdown(
-        f"<style>.wa-avatar-aira,.side-ava{{background-image:url('{url}')!important;}}</style>",
-        unsafe_allow_html=True,
-    )
+@st.cache_data(show_spinner=False)
+def get_logo_image() -> Dict[str, str]:
+    path = find_logo_file()
+    return _read_image(path) if path else {"mime": "", "b64": "", "path": ""}
+
+
+def inject_media_css(photo: Dict[str, str], logo: Dict[str, str]) -> None:
+    rules = []
+    if photo.get("b64"):
+        url = f'data:{photo["mime"]};base64,{photo["b64"]}'
+        rules.append(f".wa-avatar-aira,.side-ava{{background-image:url('{url}')!important;}}")
+    if logo.get("b64"):
+        url = f'data:{logo["mime"]};base64,{logo["b64"]}'
+        rules.append(f".splash-logo-img,.app-logo.has-img{{background-image:url('{url}')!important;}}")
+    if rules:
+        st.markdown(f"<style>{''.join(rules)}</style>", unsafe_allow_html=True)
 
 
 def md_lite(text: str) -> str:
@@ -1050,7 +1085,6 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
     mem_ok = bool(kb["exists"] and kb["count"] > 0)
     mem_tile = "ok" if mem_ok else "warn"
     mem_label = f"{kb.get('count', 0)} Entri" if mem_ok else "Kosong"
-
     ava = '<div class="side-ava"></div>' if photo.get("b64") else '<div class="ph">A</div>'
 
     with st.sidebar:
@@ -1095,11 +1129,16 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
                 st.rerun()
 
 
-def render_header() -> None:
+def render_header(logo: Dict[str, str]) -> None:
+    mark = (
+        '<div class="app-logo has-img" title="Ampera Official"></div>'
+        if logo.get("b64")
+        else '<div class="app-logo">A<span>.ai</span></div>'
+    )
     st.markdown(
         f"""
         <div class="app-head">
-          <div class="app-logo">A<span>.ai</span></div>
+          {mark}
           <div>
             <h1>{html.escape(APP_TITLE.split(" - ")[0])}</h1>
             <p>{html.escape(APP_TAGLINE)}</p>
@@ -1122,14 +1161,21 @@ def render_footer() -> None:
     st.markdown('<p class="aira-foot">Aira · Asisten AI Lokal · Ampera Official</p>', unsafe_allow_html=True)
 
 
-def render_splash() -> None:
+def render_splash(logo: Dict[str, str]) -> None:
+    if logo.get("b64"):
+        mark = '<div class="splash-logo-img" title="Ampera Official"></div>'
+        miss = ""
+    else:
+        mark = '<div class="splash-logo">A<span>.ai</span></div>'
+        miss = '<div class="splash-miss">Logo belum ketemu. Taruh file <b>logo ampera.jpg</b> di folder app.</div>'
+
     st.markdown(
-        """
+        f"""
         <style>
         [data-testid="stSidebar"],
         [data-testid="stSidebarCollapsedControl"],
-        [data-testid="stHeader"] { display: none !important; }
-        [data-testid="stMainBlockContainer"] { max-width: 720px; padding-top: 0 !important; }
+        [data-testid="stHeader"] {{ display: none !important; }}
+        [data-testid="stMainBlockContainer"] {{ max-width: 720px; padding-top: 0 !important; }}
         </style>
         <div class="splash">
           <div class="splash-orb a"></div>
@@ -1137,7 +1183,7 @@ def render_splash() -> None:
           <div class="splash-stars"></div>
           <div class="splash-scanlines"></div>
           <div class="splash-core">
-            <div class="splash-halo"><div class="splash-logo">A<span>.ai</span></div></div>
+            <div class="splash-halo">{mark}</div>
             <div class="splash-brand">AMPERA OFFICIAL</div>
             <div class="boot">
               <div>&gt; boot ampera.core .............. <b>OK</b></div>
@@ -1149,6 +1195,7 @@ def render_splash() -> None:
               Selamat datang di salah satu app<br><strong>Ampera Official</strong>
             </p>
             <div class="splash-hint">KETUK UNTUK MASUK</div>
+            {miss}
           </div>
         </div>
         """,
@@ -1166,17 +1213,20 @@ def main() -> None:
     render_pcb_layer()
     init_session_state()
 
+    logo = get_logo_image()
+    inject_media_css({"mime": "", "b64": "", "path": ""}, logo)
+
     if not st.session_state.entered_app:
-        render_splash()
+        render_splash(logo)
         return
 
     ensure_runtime_ready()
     photo = get_profile_image()
-    inject_avatar_css(photo)
+    inject_media_css(photo, logo)
     model_info = get_cached_llm()
 
     render_sidebar(model_info, photo)
-    render_header()
+    render_header(logo)
     render_history(photo)
 
     typed = st.chat_input("Tulis pesan untuk Aira…")
