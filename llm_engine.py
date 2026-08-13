@@ -2,54 +2,45 @@ from __future__ import annotations
 
 import os
 from typing import Any, Dict, List, Optional
-from groq import Groq
 
-# Variabel & Class pembantu yang dicari app.py
-DEFAULT_MODEL_PATH = "qwen-2.5-72b-instruct"
+DEFAULT_MODEL_PATH = "qwen2.5-3b-instruct-q4_k_m.gguf"
 
 class ModelNotFoundError(Exception):
-    """Custom exception untuk app.py"""
+    """Custom exception untuk menangani model yang tidak ditemukan."""
     pass
 
-def find_gguf_models(*args, **kwargs):
-    """Fungsi pembantu agar app.py tidak error."""
-    return [DEFAULT_MODEL_PATH]
+def find_gguf_models(directory: str = ".") -> List[str]:
+    """Mencari file model berformat .gguf di direktori."""
+    if not os.path.exists(directory):
+        return [DEFAULT_MODEL_PATH]
+    models = [f for f in os.listdir(directory) if f.endswith(".gguf")]
+    return models if models else [DEFAULT_MODEL_PATH]
 
-def load_model():
-    """Membuka koneksi ke Groq API."""
-    api_key = os.getenv("GROQ_API_KEY")
-    if not api_key:
-        raise ValueError("GROQ_API_KEY belum diatur di Secrets Streamlit!")
-    return Groq(api_key=api_key)
+def load_model(model_path: str = DEFAULT_MODEL_PATH):
+    """Memuat model GGUF secara lokal menggunakan llama-cpp-python."""
+    target_path = model_path if os.path.exists(model_path) else DEFAULT_MODEL_PATH
+    if not os.path.exists(target_path):
+        raise ModelNotFoundError(f"File model {target_path} tidak ditemukan.")
+    try:
+        from llama_cpp import Llama
+        return Llama(model_path=target_path, n_ctx=2048, verbose=False)
+    except Exception as e:
+        raise RuntimeError(f"Gagal memuat model GGUF: {e}")
 
-# Alias fungsi
+# Alias fungsi wajib agar app.py tidak error
 load_model_or_mock = load_model
 
-def generate_aira_response(llm_client, user_input: str, context: str = "", history: list = None) -> str:
-    """Fungsi pemanggil model Groq yang dicari oleh app.py."""
-    system_prompt = (
-        "Kamu adalah Aira, asisten AI yang ramah, santai, dan cerdas. "
-        "Jawab pertanyaan pengguna dalam Bahasa Indonesia yang natural. "
-        "Gunakan konteks berikut jika relevan.\n\n"
-        f"Konteks Memori:\n{context if context else 'Tidak ada memori spesifik.'}"
-    )
+def generate_response(prompt: str, model: Any = None, max_tokens: int = 512, **kwargs) -> str:
+    """Menghasilkan respons teks dari model lokal."""
+    if model is not None:
+        try:
+            output = model(prompt, max_tokens=max_tokens, stop=["User:", "\n\n"], echo=False)
+            return output["choices"][0]["text"].strip()
+        except Exception as e:
+            return f"Error saat menghasilkan respons: {e}"
+    return "Model LLM belum dimuat."
 
-    messages = [{"role": "system", "content": system_prompt}]
-    
-    if history:
-        for msg in history[-3:]:
-            messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
-            
-    messages.append({"role": "user", "content": user_input})
-
-    response = llm_client.chat.completions.create(
-        model="qwen-2.5-72b-instruct",
-        messages=messages,
-        temperature=0.7,
-        max_tokens=512
-    )
-    
-    return response.choices[0].message.content
-
-# Alias cadangan jika app.py memanggil nama ini
-generate_response = generate_aira_response
+def generate_aira_response(model, user_input: str, context: str = "", history: list = None, **kwargs) -> str:
+    """Fungsi pembantu generator respons Aira."""
+    formatted_prompt = f"Konteks:\n{context}\n\nPertanyaan: {user_input}\nJawaban:" if context else f"Pertanyaan: {user_input}\nJawaban:"
+    return generate_response(formatted_prompt, model=model)
