@@ -3,7 +3,7 @@
 """
 app.py
 ======
-Aira · Cyberpunk UI + PCB artwork + WhatsApp chat + splash Ampera Official
+Aira · UI ringan: PCB artwork + chat WA + splash Ampera Official
 """
 
 from __future__ import annotations
@@ -13,7 +13,6 @@ import html
 import os
 import re
 import sys
-import time
 import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
@@ -91,10 +90,6 @@ except Exception as _llm_exc:  # pragma: no cover
         )
 
 
-# ---------------------------------------------------------------------------
-# Halaman
-# ---------------------------------------------------------------------------
-
 st.set_page_config(
     page_title="Aira - Asisten AI Lokal",
     page_icon="💠",
@@ -104,7 +99,7 @@ st.set_page_config(
 
 
 # ---------------------------------------------------------------------------
-# CSS
+# CSS ringan
 # ---------------------------------------------------------------------------
 
 def set_ui_style() -> None:
@@ -126,23 +121,10 @@ def set_ui_style() -> None:
             color: var(--text);
             font-family: "Share Tech Mono", "Segoe UI", sans-serif;
         }
-
         [data-testid="stHeader"],
         [data-testid="stToolbar"],
         [data-testid="stDecoration"] { background: transparent !important; }
         #MainMenu, footer { visibility: hidden; }
-
-        [data-testid="stAppViewContainer"]::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(ellipse 70% 50% at 15% 10%, rgba(0,70,60,.16), transparent 55%),
-                radial-gradient(ellipse 60% 45% at 88% 90%, rgba(70,0,45,.12), transparent 50%),
-                #03050c;
-        }
 
         [data-testid="stMain"], [data-testid="stMainBlockContainer"] {
             background: transparent !important;
@@ -154,61 +136,45 @@ def set_ui_style() -> None:
             max-width: 780px;
         }
 
-        /* PCB */
-        .pcb-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .pcb-layer {
+            position: fixed; inset: 0; z-index: 0;
+            pointer-events: none; overflow: hidden;
+            contain: strict; opacity: .72;
+        }
         .pcb-layer svg { width: 100%; height: 100%; display: block; }
         .pcb-tr {
-            fill: none; stroke: rgba(0,230,210,.40); stroke-width: 2.05;
-            stroke-linecap: round; stroke-linejoin: miter;
+            fill: none; stroke: #1a8f86; stroke-width: 1.7;
+            stroke-linecap: square; stroke-linejoin: miter;
         }
         .pcb-glow {
-            fill: none; stroke-linecap: round; stroke-linejoin: miter;
-            stroke-width: 2.5; stroke-dasharray: 34 240;
-            animation: traceDraw 6.4s linear infinite;
+            fill: none; stroke-linecap: square; stroke-linejoin: miter;
+            stroke-width: 2.2; stroke-dasharray: 28 220;
+            animation: traceDraw 8s linear infinite;
         }
-        .pcb-glow.c { stroke: #00f3ff; filter: drop-shadow(0 0 5px #00f3ff) drop-shadow(0 0 12px rgba(0,243,255,.45)); }
-        .pcb-glow.p { stroke: #ff4db8; filter: drop-shadow(0 0 5px #ff0080) drop-shadow(0 0 12px rgba(255,0,128,.4)); animation-direction: reverse; }
-        .pcb-glow.g { stroke: #ffe08a; filter: drop-shadow(0 0 5px #fbbf24); }
-        .pcb-glow.d1 { animation-delay: -1.1s; animation-duration: 5.2s; }
-        .pcb-glow.d2 { animation-delay: -2.6s; animation-duration: 7.4s; }
-        .pcb-glow.d3 { animation-delay: -4.0s; animation-duration: 8.6s; }
-        .pcb-glow.d4 { animation-delay: -5.5s; animation-duration: 6.0s; }
-        .pcb-glow.d5 { animation-delay: -0.6s; animation-duration: 9.2s; }
-        .pcb-pad { fill: #03050c; stroke: rgba(0,243,255,.75); stroke-width: 1.55; }
-        .pcb-hole { fill: rgba(0,243,255,.55); }
+        .pcb-glow.c { stroke: #00e7f2; }
+        .pcb-glow.p { stroke: #ff4db8; animation-direction: reverse; animation-duration: 10s; }
+        .pcb-pad { fill: #03050c; stroke: #2ec8be; stroke-width: 1.3; }
+        .pcb-hole { fill: #2ec8be; }
         .element-container:has(.pcb-layer) {
             position: fixed !important; inset: 0; height: 0 !important;
             margin: 0 !important; overflow: visible !important;
         }
-        @keyframes traceDraw { to { stroke-dashoffset: -280; } }
+        @keyframes traceDraw { to { stroke-dashoffset: -248; } }
 
-        /* fade teks */
-        @keyframes textIn {
-            from { opacity: 0; transform: translateY(10px); filter: blur(4px); }
-            to   { opacity: 1; transform: none; filter: none; }
-        }
-        h1, h2, h3, [data-testid="stCaption"],
-        .app-head, .aira-name, .aira-online, .wa-row, .aira-foot, .splash-inner {
-            animation: textIn .65s ease both;
-        }
-
-        /* header */
         .app-head { display: flex; align-items: center; gap: 14px; margin: 6px 0 18px; }
         .app-logo {
             width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center;
             background: #000; border: 1px solid rgba(0,243,255,.45);
-            box-shadow: 0 0 22px rgba(0,243,255,.25);
+            box-shadow: 0 0 16px rgba(0,243,255,.22);
             font-family: Orbitron, sans-serif; font-weight: 700; color: var(--cyan);
         }
         .app-logo span { color: var(--pink); font-size: .72rem; }
         .app-head h1 {
             font-family: Orbitron, sans-serif !important; font-size: 1.55rem;
             margin: 0 !important; color: #f5fbff !important;
-            text-shadow: 0 0 16px rgba(0,243,255,.3);
         }
         .app-head p { margin: 2px 0 0; color: var(--muted); font-size: .86rem; }
 
-        /* chat WA */
         .wa-thread { display: flex; flex-direction: column; gap: 10px; }
         .wa-row { display: flex; align-items: flex-end; gap: 8px; width: 100%; }
         .wa-row.left { justify-content: flex-start; }
@@ -219,12 +185,11 @@ def set_ui_style() -> None:
         }
         .wa-avatar-aira {
             border: 2px solid var(--cyan);
-            box-shadow: 0 0 10px rgba(0,243,255,.45);
             background-color: #04161b;
         }
         .wa-avatar-user {
             display: grid; place-items: center; background: #16081a;
-            border: 2px solid var(--pink); box-shadow: 0 0 10px rgba(255,0,128,.35);
+            border: 2px solid var(--pink);
         }
         .wa-fallback {
             display: grid; place-items: center; color: var(--cyan);
@@ -239,23 +204,19 @@ def set_ui_style() -> None:
             background: rgba(0,0,0,.35); padding: 1px 5px; border-radius: 5px; color: var(--cyan);
         }
         .wa-aira {
-            background: linear-gradient(180deg, #16324a 0%, #102536 100%);
-            color: #e8f4ff; border-radius: 16px 16px 16px 5px;
+            background: #132c40; color: #e8f4ff;
+            border-radius: 16px 16px 16px 5px;
             border: 1px solid rgba(0,243,255,.22);
-            box-shadow: 0 8px 22px rgba(0,0,0,.28), 0 0 12px rgba(0,243,255,.08);
         }
         .wa-user {
-            background: linear-gradient(180deg, #3a1840 0%, #2a0f30 100%);
-            color: #ffeaf6; border-radius: 16px 16px 5px 16px;
+            background: #321436; color: #ffeaf6;
+            border-radius: 16px 16px 5px 16px;
             border: 1px solid rgba(255,0,128,.28);
-            box-shadow: 0 8px 22px rgba(0,0,0,.28), 0 0 12px rgba(255,0,128,.10);
         }
 
-        /* konsol */
         .clog {
             min-width: 230px; background: #02060b;
             border: 1px solid rgba(0,243,255,.28); border-radius: 10px;
-            overflow: hidden; box-shadow: inset 0 0 18px rgba(0,243,255,.08);
             font-family: "Share Tech Mono", monospace;
         }
         .clog-top {
@@ -268,11 +229,10 @@ def set_ui_style() -> None:
         .clog-dot.g { background: #28c840; }
         .clog-title { margin-left: 6px; color: var(--cyan); font-size: .72rem; letter-spacing: .08em; }
         .clog-body { padding: 8px 10px 10px; }
-        .clog-line { color: #7dffe3; font-size: .78rem; line-height: 1.55; animation: textIn .28s ease both; }
+        .clog-line { color: #7dffe3; font-size: .78rem; line-height: 1.55; }
         .clog-gt { color: var(--pink); margin-right: 4px; }
         .clog-cursor { display: inline-block; color: var(--cyan); animation: blink .8s step-end infinite; }
 
-        /* input kapsul + glow mutar */
         [data-testid="stBottom"],
         [data-testid="stBottomBlockContainer"],
         [data-testid="stChatInputContainer"],
@@ -282,15 +242,15 @@ def set_ui_style() -> None:
         [data-testid="stChatInput"] {
             position: relative !important; background: #000 !important;
             border: 0 !important; border-radius: 999px !important;
-            overflow: visible !important; box-shadow: 0 0 18px rgba(0,243,255,.12);
+            overflow: visible !important;
         }
         [data-testid="stChatInput"]::before {
-            content: ""; position: absolute; inset: -3px; border-radius: 999px; padding: 3px;
+            content: ""; position: absolute; inset: -2px; border-radius: 999px;
             background: conic-gradient(from var(--spin), #00f3ff, #7c3aed, #ff0080, #00f3ff);
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
-            animation: spinBorder 2.6s linear infinite; z-index: 0;
-            filter: drop-shadow(0 0 8px rgba(0,243,255,.55)); pointer-events: none;
+            padding: 2px; animation: spinBorder 3.2s linear infinite;
+            pointer-events: none; z-index: 0;
         }
         [data-testid="stChatInput"] > * { position: relative; z-index: 1; }
         [data-testid="stChatInput"] textarea,
@@ -302,25 +262,21 @@ def set_ui_style() -> None:
         [data-testid="stChatInput"] textarea::placeholder { color: #6d7f96 !important; }
         @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 
-        /* tombol */
         .stButton > button {
             background: #000 !important; color: var(--cyan) !important;
             border: 1px solid rgba(0,243,255,.45) !important; border-radius: 12px !important;
-            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+            transition: transform .15s ease, box-shadow .15s ease !important;
         }
         .stButton > button:hover {
-            transform: translateY(-3px) scale(1.02) !important;
-            border-color: var(--cyan) !important; color: #fff !important;
-            box-shadow: 0 0 8px rgba(0,243,255,.55), 0 0 22px rgba(0,243,255,.28), 0 10px 18px rgba(0,0,0,.35) !important;
+            transform: translateY(-2px) !important; color: #fff !important;
+            box-shadow: 0 0 14px rgba(0,243,255,.35) !important;
         }
-        .stButton > button:active { transform: translateY(0) scale(.99) !important; }
         button[data-testid="baseButton-primary"] {
             min-height: 54px; font-family: Orbitron, sans-serif !important;
             letter-spacing: .42em !important; font-size: 1.05rem !important;
-            border-radius: 999px !important; box-shadow: 0 0 24px rgba(0,243,255,.25) !important;
+            border-radius: 999px !important;
         }
 
-        /* sidebar */
         [data-testid="stSidebar"] {
             background: rgba(4,8,18,.94) !important;
             border-right: 1px solid rgba(0,243,255,.14) !important;
@@ -330,13 +286,11 @@ def set_ui_style() -> None:
             border-radius: 50% !important; object-fit: cover !important;
             width: 72px !important; height: 72px !important;
             border: 3px solid #00f3ff !important;
-            box-shadow: 0 0 0 4px rgba(0,243,255,.12), 0 0 18px rgba(0,243,255,.45) !important;
         }
         .aira-name { font-family: Orbitron, sans-serif; font-size: 1.15rem; color: #fff; }
         .aira-online { display: flex; align-items: center; gap: 6px; color: #9fe7c4; font-size: .82rem; margin-top: 2px; }
         .aira-online i {
-            width: 8px; height: 8px; border-radius: 50%; background: #25d366;
-            box-shadow: 0 0 8px #25d366; display: inline-block;
+            width: 8px; height: 8px; border-radius: 50%; background: #25d366; display: inline-block;
         }
         .ph {
             width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
@@ -351,7 +305,6 @@ def set_ui_style() -> None:
         .aira-chip.err { background: rgba(251,113,133,.14); color: #ffb3be !important; border: 1px solid rgba(251,113,133,.4); }
         .aira-foot { text-align: center; color: var(--muted) !important; font-size: .78rem; opacity: .75; margin-top: 18px; }
 
-        /* splash */
         .splash-inner {
             min-height: 72vh; display: flex; flex-direction: column;
             align-items: center; justify-content: center; text-align: center; z-index: 2;
@@ -359,37 +312,21 @@ def set_ui_style() -> None:
         .splash-logo {
             font-family: Orbitron, sans-serif; font-size: clamp(4.2rem, 12vw, 7rem);
             font-weight: 700; color: #00f3ff; letter-spacing: -.06em; line-height: 1;
-            text-shadow: 0 0 18px #00f3ff, 0 0 48px rgba(0,243,255,.55), 0 0 90px rgba(255,0,128,.25);
-            animation: logoIn 1.3s cubic-bezier(.2,.8,.2,1) both, logoFlicker 4.5s 1.6s infinite;
+            text-shadow: 0 0 18px #00f3ff;
         }
         .splash-logo span { color: #ff4db8; font-size: .42em; }
-        .splash-brand { margin-top: 14px; letter-spacing: .55em; font-size: .78rem; color: #9adfff; animation: textIn .8s .7s both; }
-        .splash-hello { margin-top: 18px; max-width: 440px; color: #d5e6f5; font-size: 1.05rem; line-height: 1.55; animation: textIn .9s 1.15s both; }
+        .splash-brand { margin-top: 14px; letter-spacing: .55em; font-size: .78rem; color: #9adfff; }
+        .splash-hello { margin-top: 18px; max-width: 440px; color: #d5e6f5; font-size: 1.05rem; line-height: 1.55; }
         .splash-scan {
             width: min(420px, 88vw); height: 2px; margin: 26px auto 10px;
             background: linear-gradient(90deg, transparent, #00f3ff, #ff0080, transparent);
-            box-shadow: 0 0 12px #00f3ff; animation: scan 2.2s ease-in-out infinite;
         }
-
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-thumb { background: rgba(0,243,255,.35); border-radius: 99px; }
 
         @keyframes spinBorder { to { --spin: 360deg; } }
         @keyframes blink { 50% { opacity: 0; } }
-        @keyframes scan { 0%,100% { transform: scaleX(.2); opacity: .4; } 50% { transform: scaleX(1); opacity: 1; } }
-        @keyframes logoIn {
-            from { opacity: 0; transform: scale(.6) rotateX(40deg); filter: blur(12px); }
-            to   { opacity: 1; transform: none; filter: none; }
-        }
-        @keyframes logoFlicker {
-            0%,92%,100% { opacity: 1; }
-            94% { opacity: .55; }
-            96% { opacity: 1; transform: translateX(1px); }
-        }
 
         @media (prefers-reduced-motion: reduce) {
-            .pcb-glow, [data-testid="stChatInput"]::before, .splash-logo,
-            h1,h2,h3,.wa-row,.app-head { animation: none !important; }
+            .pcb-glow, [data-testid="stChatInput"]::before { animation: none !important; }
         }
         </style>
         """,
@@ -398,7 +335,7 @@ def set_ui_style() -> None:
 
 
 # ---------------------------------------------------------------------------
-# PCB artwork (jalur 90/45 + pad, glow di banyak jalur)
+# PCB: banyak jalur statis, glow cuma 4 (tanpa drop-shadow)
 # ---------------------------------------------------------------------------
 
 def _pcb_pts(x: float, y: float, spec: str) -> List[Tuple[float, float]]:
@@ -428,112 +365,107 @@ def _pcb_pts(x: float, y: float, spec: str) -> List[Tuple[float, float]]:
     return pts
 
 
-def _pcb_markup() -> str:
-    traces = [
-        (-30, 32, "H 690", 1, "c d1"),
-        (-30, 46, "H 560", 1, ""),
-        (-30, 60, "H 780", 1, "c d3"),
-        (-30, 74, "H 430 SE 28 H 170", 1, "p d2"),
-        (-30, 88, "H 840", 1, ""),
-        (-30, 102, "H 390", 1, "c d4"),
-        (-30, 116, "H 610 V 34 H 150", 1, "g d1"),
-        (-30, 130, "H 500", 1, ""),
-        (-30, 144, "H 720", 1, "c d5"),
-        (-30, 158, "H 340 SE 36 H 220", 1, "p d3"),
-        (-30, 172, "H 660", 1, ""),
-        (-30, 186, "H 470", 1, "c d2"),
-        (-30, 200, "H 810", 1, ""),
-        (-30, 214, "H 300 V 48 H 260", 1, "g d4"),
-        (-30, 228, "H 590", 1, "c d1"),
-        (-30, 242, "H 450 SE 24 H 90", 1, ""),
-        (-30, 256, "H 700", 1, "p d5"),
-        (-30, 270, "H 380", 1, ""),
-        (-30, 284, "H 640 V -40 H 120", 1, "c d3"),
-        (-30, 298, "H 520", 1, ""),
-        (430, 74, "V 90 SE 40 H 80", 1, "c d2"),
-        (610, 150, "V 70 SW 30 V 40", 1, ""),
-        (720, 200, "SE 50 H 140 V 36", 1, "p d1"),
-        (300, 262, "V 80 SE 46 H 100", 1, "g d5"),
-        (120, 340, "H 260 SE 60 H 180 NE 40 H 220", 1, "c d4"),
-        (80, 370, "H 200 SE 80 V 50 H 160", 1, ""),
-        (200, 410, "H 340 NE 36 H 90 SE 50 H 130", 1, "p d2"),
-        (40, 450, "H 180 V 70 H 240 SE 30 H 80", 1, "c d1"),
-        (520, 360, "H 200 V 90 H 160 NE 44 H 70", 1, "g d3"),
-        (700, 330, "SE 70 H 180 V 40 H 90", 1, "c d5"),
-        (860, 300, "H 160 SE 36 H 200", 1, ""),
-        (940, 380, "H 220 V 60 SE 40 H 80", 1, "p d4"),
-        (400, 500, "H 280 SE 54 H 190 V 30", 1, "c d2"),
-        (160, 540, "H 210 NE 40 H 150 SE 70 H 100", 1, ""),
-        (620, 480, "V 80 H 140 SE 36 H 200", 1, "g d1"),
-        (1620, 860, "H -220 NW 48 H -140 SW 36 H -180", 1, "c d1"),
-        (1620, 838, "H -160 NW 70 H -90 SW 28 H -130", 1, "p d3"),
-        (1620, 816, "H -300 NE 40 H -120 NW 50 H -80", 1, "c d5"),
-        (1620, 794, "H -110 SW 60 H -200 NW 34 H -90", 1, "g d2"),
-        (1620, 772, "H -250 NW 30 H -160", 1, ""),
-        (1620, 750, "H -80 NW 90 H -140 SE 40 H -100", 1, "c d4"),
-        (1620, 728, "H -190 SW 44 H -70 NW 60 H -150", 1, "p d1"),
-        (1620, 706, "H -330", 1, ""),
-        (1580, 684, "H -120 NW 56 H -200 V -40 H -80", 1, "c d3"),
-        (1580, 662, "H -260 SE 30 H -90", 1, "g d5"),
-        (1540, 640, "H -90 SW 70 H -180 NE 36 H -70", 1, "p d2"),
-        (1500, 600, "H -160 NW 40 V -50 H -120", 1, "c d1"),
-        (1480, 560, "H -220 SE 48 H -80 NW 30", 1, ""),
-        (1460, 520, "H -100 NE 60 H -170 SW 40 H -60", 1, "c d4"),
-        (1520, 480, "H -240 V 36 H -90", 1, "g d3"),
-        (1560, 440, "H -180 SE 50 H -140", 1, "p d5"),
-        (1600, 400, "H -300 NW 28 H -80", 1, "c d2"),
-        (1600, 360, "H -140 SW 60 H -200", 1, ""),
-        (1580, 320, "H -90 NE 44 H -230 SE 36", 1, "c d1"),
-        (1180, 780, "NW 70 H -160 NE 40 H -90", 1, "p d4"),
-        (1100, 700, "H -130 SW 50 H -80 V 40", 1, "c d3"),
-        (1020, 620, "NE 36 H -150 SE 60 H -70", 1, "g d1"),
-        (980, 820, "H -200 NW 48 V -30 H -90", 1, "c d5"),
-        (880, 760, "SW 40 H -120 NE 70 H -60", 1, ""),
-        (820, 680, "H -90 V 80 H -140 SE 30", 1, "p d2"),
-        (-20, 780, "H 240 SE 40 H 180 V 30 H 90", 1, "c d4"),
-        (-20, 810, "H 320 NE 28 H 140", 1, ""),
-        (-20, 840, "H 180 SE 50 H 260 NW 20 H 80", 1, "p d1"),
-        (-20, 870, "H 420", 1, "g d3"),
-        (80, 720, "H 160 V 50 SE 36 H 120", 1, "c d2"),
-        (200, 680, "SE 60 H 150 V 40 H 70", 1, ""),
-        (360, 740, "H 200 NE 40 H 90 SE 30", 1, "c d5"),
-        (900, 40, "H 220 SE 36 H 160", 1, "c d2"),
-        (980, 70, "H 180 V 44 H 140", 1, ""),
-        (1040, 110, "H 260 NE 24 H 80", 1, "p d4"),
-        (1120, 150, "H 140 SE 50 H 190", 1, "c d1"),
-        (1200, 200, "H 180 V -36 H 120", 1, "g d5"),
-        (1280, 250, "SE 40 H 160 V 30", 1, ""),
-        (900, 180, "H 160 V 70 SE 30 H 80", 1, "c d3"),
-        (760, 90, "H 130 SE 46 H 70", 1, ""),
-    ]
-    extra_vias = [
-        (430, 74), (610, 150), (300, 262), (520, 360), (700, 330),
-        (1180, 780), (1100, 700), (820, 680), (200, 680), (760, 90),
-        (940, 380), (400, 500),
-    ]
-    chunks = ['<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">']
-    for x, y, spec, via, glow in traces:
+def _d(x: float, y: float, spec: str) -> str:
+    pts = _pcb_pts(x, y, spec)
+    return "M " + " L ".join(f"{px:.0f} {py:.0f}" for px, py in pts)
+
+
+# Jalur PCB gaya gambar: bus paralel + belokan 45/90 + pad
+_PCB_SPECS = [
+    (-20, 28, "H 680"), (-20, 42, "H 540"), (-20, 56, "H 760"),
+    (-20, 70, "H 420 SE 26 H 160"), (-20, 84, "H 820"), (-20, 98, "H 380"),
+    (-20, 112, "H 600 V 32 H 140"), (-20, 126, "H 490"), (-20, 140, "H 700"),
+    (-20, 154, "H 330 SE 34 H 200"), (-20, 168, "H 640"), (-20, 182, "H 450"),
+    (-20, 196, "H 790"), (-20, 210, "H 290 V 46 H 240"), (-20, 224, "H 570"),
+    (-20, 238, "H 440 SE 22 H 80"), (-20, 252, "H 680"), (-20, 266, "H 360"),
+    (-20, 280, "H 620 V -36 H 110"), (-20, 294, "H 500"),
+    (420, 70, "V 86 SE 36 H 70"), (600, 144, "V 66 SW 28 V 36"),
+    (700, 196, "SE 46 H 130 V 32"), (290, 256, "V 76 SE 42 H 90"),
+    (110, 336, "H 250 SE 54 H 170 NE 36 H 200"),
+    (70, 366, "H 190 SE 74 V 46 H 150"),
+    (190, 406, "H 320 NE 32 H 80 SE 46 H 120"),
+    (30, 446, "H 170 V 66 H 220 SE 28 H 70"),
+    (510, 356, "H 190 V 84 H 150 NE 40 H 60"),
+    (690, 326, "SE 64 H 170 V 36 H 80"),
+    (850, 296, "H 150 SE 32 H 190"),
+    (930, 376, "H 210 V 56 SE 36 H 70"),
+    (390, 496, "H 270 SE 50 H 180 V 28"),
+    (150, 536, "H 200 NE 36 H 140 SE 64 H 90"),
+    (610, 476, "V 76 H 130 SE 32 H 190"),
+    (1610, 856, "H -210 NW 44 H -130 SW 32 H -170"),
+    (1610, 834, "H -150 NW 64 H -80 SW 26 H -120"),
+    (1610, 812, "H -290 NE 36 H -110 NW 46 H -70"),
+    (1610, 790, "H -100 SW 56 H -190 NW 30 H -80"),
+    (1610, 768, "H -240 NW 28 H -150"),
+    (1610, 746, "H -70 NW 84 H -130 SE 36 H -90"),
+    (1610, 724, "H -180 SW 40 H -60 NW 54 H -140"),
+    (1610, 702, "H -320"),
+    (1570, 680, "H -110 NW 50 H -190 V -36 H -70"),
+    (1570, 658, "H -250 SE 28 H -80"),
+    (1530, 636, "H -80 SW 64 H -170 NE 32 H -60"),
+    (1490, 596, "H -150 NW 36 V -46 H -110"),
+    (1470, 556, "H -210 SE 44 H -70 NW 26"),
+    (1450, 516, "H -90 NE 54 H -160 SW 36 H -50"),
+    (1510, 476, "H -230 V 32 H -80"),
+    (1550, 436, "H -170 SE 46 H -130"),
+    (1590, 396, "H -290 NW 26 H -70"),
+    (1590, 356, "H -130 SW 54 H -190"),
+    (1570, 316, "H -80 NE 40 H -220 SE 32"),
+    (1170, 776, "NW 64 H -150 NE 36 H -80"),
+    (1090, 696, "H -120 SW 46 H -70 V 36"),
+    (1010, 616, "NE 32 H -140 SE 54 H -60"),
+    (970, 816, "H -190 NW 44 V -26 H -80"),
+    (870, 756, "SW 36 H -110 NE 64 H -50"),
+    (810, 676, "H -80 V 76 H -130 SE 26"),
+    (-10, 776, "H 230 SE 36 H 170 V 28 H 80"),
+    (-10, 806, "H 310 NE 26 H 130"),
+    (-10, 836, "H 170 SE 46 H 250 NW 18 H 70"),
+    (-10, 866, "H 400"),
+    (70, 716, "H 150 V 46 SE 32 H 110"),
+    (190, 676, "SE 54 H 140 V 36 H 60"),
+    (350, 736, "H 190 NE 36 H 80 SE 26"),
+    (890, 36, "H 210 SE 32 H 150"),
+    (970, 66, "H 170 V 40 H 130"),
+    (1030, 106, "H 250 NE 22 H 70"),
+    (1110, 146, "H 130 SE 46 H 180"),
+    (1190, 196, "H 170 V -32 H 110"),
+    (1270, 246, "SE 36 H 150 V 26"),
+    (890, 176, "H 150 V 64 SE 26 H 70"),
+    (750, 86, "H 120 SE 42 H 60"),
+]
+
+_PCB_GLOW = [
+    ("c", -20, 56, "H 760"),
+    ("p", 1610, 856, "H -210 NW 44 H -130 SW 32 H -170"),
+    ("c", 110, 336, "H 250 SE 54 H 170 NE 36 H 200"),
+    ("p", 390, 496, "H 270 SE 50 H 180 V 28"),
+]
+
+
+def _build_pcb() -> str:
+    parts = ['<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">']
+    vias: List[Tuple[int, int]] = []
+    for x, y, spec in _PCB_SPECS:
+        d = _d(x, y, spec)
+        parts.append(f'<path class="pcb-tr" d="{d}"/>')
         pts = _pcb_pts(x, y, spec)
-        d = "M " + " L ".join(f"{px:.1f} {py:.1f}" for px, py in pts)
-        chunks.append(f'<path class="pcb-tr" d="{d}"/>')
-        if glow:
-            chunks.append(f'<path class="pcb-glow {glow}" d="{d}"/>')
-        if via:
-            vx, vy = pts[-1]
-            chunks.append(f'<circle class="pcb-pad" cx="{vx:.1f}" cy="{vy:.1f}" r="5.1"/>')
-            chunks.append(f'<circle class="pcb-hole" cx="{vx:.1f}" cy="{vy:.1f}" r="1.8"/>')
-    for vx, vy in extra_vias:
-        chunks.append(f'<circle class="pcb-pad" cx="{vx}" cy="{vy}" r="5.1"/>')
-        chunks.append(f'<circle class="pcb-hole" cx="{vx}" cy="{vy}" r="1.8"/>')
-    chunks.append("</svg>")
-    return "".join(chunks)
+        vias.append((int(pts[-1][0]), int(pts[-1][1])))
+    for kind, x, y, spec in _PCB_GLOW:
+        parts.append(f'<path class="pcb-glow {kind}" d="{_d(x, y, spec)}"/>')
+    # pad cukup di ujung-ujung terpilih, jangan semua
+    for vx, vy in vias[::3]:
+        if -20 < vx < 1620 and -20 < vy < 920:
+            parts.append(f'<circle class="pcb-pad" cx="{vx}" cy="{vy}" r="4.6"/>')
+            parts.append(f'<circle class="pcb-hole" cx="{vx}" cy="{vy}" r="1.5"/>')
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+_PCB_SVG = _build_pcb()
 
 
 def render_pcb_layer() -> None:
-    st.markdown(
-        f'<div class="pcb-layer" aria-hidden="true">{_pcb_markup()}</div>',
-        unsafe_allow_html=True,
-    )
+    st.markdown(f'<div class="pcb-layer" aria-hidden="true">{_PCB_SVG}</div>', unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------------
@@ -542,28 +474,24 @@ def render_pcb_layer() -> None:
 
 APP_TITLE = "Aira - Asisten AI Lokal"
 APP_TAGLINE = "Asisten AI lokal · ramah, privat, dan siap bantu di perangkatmu"
-
 WELCOME_TEXT = (
     "Hai, aku **Aira**. Asisten AI lokal yang ramah dan siap bantu—mulai dari "
     "error Android, APK bandel, RAM mepet, sampai pertanyaan sehari-hari.\n\n"
     "Tulis aja keluhannya, atau pilih salah satu contoh di bawah. Percakapan "
     "kita jalan di perangkatmu, bukan di cloud."
 )
-
 IDENTITY_REPLY = (
     "Aku **Aira**. Asisten AI lokal yang ramah, santai, dan siap bantu. "
     "Aku dirancang untuk berjalan privat di perangkatmu.\n\n"
     "Bisa aku bantu urusan teknis (terutama Android), penjelasan sistem, "
     "atau pertanyaan umum. Panggil aja Aira kapan pun kamu butuh."
 )
-
 EXAMPLE_PROMPTS = [
     "Siapa kamu?",
     "APK gagal install, Package Installer error",
     "RAM penuh, game keluar sendiri",
     "Bedanya RAM sama storage apa?",
 ]
-
 _TECH_HINTS = {
     "apk", "xapk", "apkm", "apks", "installer", "install", "instal",
     "package", "parse", "error", "ram", "storage", "memori", "memory",
@@ -572,7 +500,6 @@ _TECH_HINTS = {
     "overheat", "throttle", "signature", "unknown", "sources", "gguf",
     "model", "bug", "crash", "force", "close", "hp", "gpu", "cpu",
 }
-
 _GREETING_EXACT = {
     "halo", "hai", "hay", "hi", "hello", "hey", "yo", "helo",
     "halo aira", "hai aira", "hay aira", "hi aira", "hello aira", "hey aira",
@@ -583,10 +510,8 @@ _GREETING_EXACT = {
     "selamat pagi aira", "selamat siang aira", "selamat sore aira",
     "selamat malam aira",
     "apa kabar", "apa kabar aira", "apakabar", "gimana kabar",
-    "gimana kabarnya", "how are you",
-    "halo halo", "hai hai",
+    "gimana kabarnya", "how are you", "halo halo", "hai hai",
 }
-
 _IDENTITY_RE = re.compile(
     r"^(?:"
     r"siapa\s+(?:kamu|kau|anda|namamu|nama\s+kamu|nama\s+anda|nama\s+mu)"
@@ -602,10 +527,6 @@ _PUNCT_RE = re.compile(r"[\"'`~!@#$%^&*()_+\-={}\[\]|\\:;<>?,./]+")
 _SPACE_RE = re.compile(r"\s+")
 MAX_HISTORY_FOR_LLM = 12
 
-
-# ---------------------------------------------------------------------------
-# Intent
-# ---------------------------------------------------------------------------
 
 def _normalize_intent_text(text: str) -> str:
     cleaned = (text or "").lower().strip()
@@ -676,28 +597,15 @@ def history_for_llm(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
 # ---------------------------------------------------------------------------
 
 def find_profile_file() -> str:
-    roots = [
-        _BASE_DIR,
-        os.path.join(_BASE_DIR, "assets"),
-        os.path.join(_BASE_DIR, "static"),
-        os.path.join(_BASE_DIR, "images"),
-        os.getcwd(),
-    ]
-    names = (
-        "aira.jpg", "aira.jpeg", "aira.png", "aira.webp",
-        "Aira.jpg", "Aira.JPG", "AIRA.jpg", "aira.JPG",
-    )
-    seen = set()
+    roots = [_BASE_DIR, os.path.join(_BASE_DIR, "assets"), os.getcwd()]
+    names = ("aira.jpg", "aira.jpeg", "aira.png", "aira.webp", "Aira.jpg", "Aira.JPG")
     for root in roots:
         if not root or not os.path.isdir(root):
             continue
         for name in names:
-            path = os.path.abspath(os.path.join(root, name))
-            if path in seen:
-                continue
-            seen.add(path)
+            path = os.path.join(root, name)
             if os.path.isfile(path):
-                return path
+                return os.path.abspath(path)
         try:
             for fn in os.listdir(root):
                 low = fn.lower()
@@ -724,13 +632,7 @@ def inject_avatar_css(photo: Dict[str, str]) -> None:
     if not photo.get("b64"):
         return
     st.markdown(
-        f"""
-        <style>
-        .wa-avatar-aira {{
-            background-image: url("data:{photo["mime"]};base64,{photo["b64"]}") !important;
-        }}
-        </style>
-        """,
+        f'<style>.wa-avatar-aira{{background-image:url("data:{photo["mime"]};base64,{photo["b64"]}")!important;}}</style>',
         unsafe_allow_html=True,
     )
 
@@ -751,8 +653,7 @@ def aira_avatar_html(photo: Dict[str, str]) -> str:
 def build_wa_row(role: str, inner_html: str, photo: Dict[str, str]) -> str:
     if role == "user":
         return (
-            f'<div class="wa-row right">'
-            f'<div class="wa-bubble wa-user">{inner_html}</div>'
+            f'<div class="wa-row right"><div class="wa-bubble wa-user">{inner_html}</div>'
             f'<div class="wa-avatar wa-avatar-user">🙂</div></div>'
         )
     return (
@@ -776,15 +677,6 @@ def render_console_html(lines: List[str]) -> str:
         '<span class="clog-dot g"></span><span class="clog-title">AIRA://logic-trace</span>'
         f'</div><div class="clog-body">{rows}<div class="clog-cursor">█</div></div></div>'
     )
-
-
-def push_console(placeholder: Any, photo: Dict[str, str], lines: List[str], delay: float = 0.16) -> None:
-    placeholder.markdown(
-        build_wa_row("assistant", render_console_html(lines), photo),
-        unsafe_allow_html=True,
-    )
-    if delay > 0:
-        time.sleep(delay)
 
 
 # ---------------------------------------------------------------------------
@@ -837,10 +729,6 @@ def warmup_retriever() -> Tuple[bool, str]:
         return False, str(exc)
 
 
-# ---------------------------------------------------------------------------
-# Session
-# ---------------------------------------------------------------------------
-
 def init_session_state() -> None:
     if "entered_app" not in st.session_state:
         st.session_state.entered_app = False
@@ -870,39 +758,24 @@ def queue_example(prompt: str) -> None:
 
 
 # ---------------------------------------------------------------------------
-# RAG
+# RAG — konsol 1x saja, tanpa time.sleep (itu yang bikin nge-lag)
 # ---------------------------------------------------------------------------
 
-def run_rag_pipeline(
-    user_input: str, last_bot_response: str, llm: Any, photo: Dict[str, str], console_box: Any
-) -> Tuple[str, str, str]:
-    logs = ["[BOOT] AIRA.CORE online"]
-    push_console(console_box, photo, logs)
-
+def run_rag_pipeline(user_input: str, last_bot_response: str, llm: Any) -> Tuple[str, str, str]:
     resolved, context = user_input, ""
-    logs.append("[PARSE] tokenize + resolve query")
-    push_console(console_box, photo, logs)
     try:
         resolved = resolve_query(user_input, last_bot_response=last_bot_response) or user_input
     except Exception:
         resolved = user_input
-    logs.append(f'[PTR] q = "{resolved.replace(chr(10), " ")[:46]}"')
-    push_console(console_box, photo, logs)
-
-    logs.append("[MEM] scan local knowledge.json")
-    push_console(console_box, photo, logs, 0.05)
     try:
         context = search_knowledge(resolved) or ""
     except Exception:
         context = ""
-    logs.append("[HIT] memory fragment locked" if context and context != NO_MEMORY_MSG else "[MISS] no specific memory")
-    push_console(console_box, photo, logs)
-
-    logs.append("[GEN] synthesize neural reply...")
-    push_console(console_box, photo, logs, 0.08)
-
     reply = generate_aira_response(
-        llm=llm, user_input=user_input, context=context, history=history_for_llm(st.session_state.messages)
+        llm=llm,
+        user_input=user_input,
+        context=context,
+        history=history_for_llm(st.session_state.messages),
     )
     return (reply or "").strip(), resolved, context
 
@@ -920,13 +793,22 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
     bypass_reply = detect_intent_bypass(text)
 
     if bypass_reply:
-        push_console(console_box, photo, ["[SYS] intent classifier"], 0.18)
-        push_console(console_box, photo, ["[SYS] intent classifier", "[OK]  bypass template"], 0.22)
+        logs = ["[SYS] intent classifier", "[OK]  bypass template"]
+        console_box.markdown(build_wa_row("assistant", render_console_html(logs), photo), unsafe_allow_html=True)
         answer = bypass_reply
-        st.session_state.last_debug = {"bypass": True, "resolved_query": text, "context": "(dilewati — intent sapaan/identitas)"}
+        st.session_state.last_debug = {
+            "bypass": True, "resolved_query": text, "context": "(dilewati — intent sapaan/identitas)"
+        }
     else:
+        logs = [
+            "[BOOT] AIRA.CORE online",
+            "[PARSE] tokenize + resolve query",
+            "[MEM] scan local knowledge.json",
+            "[GEN] synthesize neural reply...",
+        ]
+        console_box.markdown(build_wa_row("assistant", render_console_html(logs), photo), unsafe_allow_html=True)
         try:
-            answer, resolved, context = run_rag_pipeline(text, last_bot, llm, photo, console_box)
+            answer, resolved, context = run_rag_pipeline(text, last_bot, llm)
         except Exception as exc:
             traceback.print_exc()
             answer = f"Ada kendala teknis saat memproses jawaban: `{exc.__class__.__name__}`"
@@ -935,7 +817,6 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
             answer = "Hmm, aku belum tau jawabannya. Bisa coba tanyakan dengan kalimat lain?"
         st.session_state.last_debug = {"bypass": False, "resolved_query": resolved, "context": context}
 
-    time.sleep(0.12)
     console_box.markdown(build_wa_row("assistant", md_lite(answer), photo), unsafe_allow_html=True)
     st.session_state.messages.append({"role": "assistant", "content": answer})
 
@@ -947,7 +828,6 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
 def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
     kb = get_kb_status()
     mode = model_info.get("mode", "error")
-
     with st.sidebar:
         c1, c2 = st.columns([0.85, 1.7])
         with c1:
@@ -960,7 +840,6 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
                 '<div class="aira-name">Aira</div><div class="aira-online"><i></i> online · A.ai</div>',
                 unsafe_allow_html=True,
             )
-
         if not photo.get("path"):
             st.caption("Foto tidak ketemu. Taruh `aira.jpg` di folder yang sama dengan `app.py`.")
 
@@ -982,12 +861,10 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
         st.markdown("**Informasi Sistem**")
         st.write(f"Mode: `{mode}`")
         st.write(f"Knowledge Items: `{kb.get('count', 0)}`")
-
         st.divider()
         if st.button("🧹 Percakapan Baru", use_container_width=True):
             reset_conversation()
             st.rerun()
-
         st.markdown("**Contoh Pertanyaan**")
         for sample in EXAMPLE_PROMPTS:
             if st.button(sample, use_container_width=True, key=f"ex_{sample}"):
@@ -1039,16 +916,12 @@ def render_splash() -> None:
         """,
         unsafe_allow_html=True,
     )
-    left, mid, right = st.columns([1, 1.15, 1])
+    _l, mid, _r = st.columns([1, 1.15, 1])
     with mid:
         if st.button("MASUK", type="primary", use_container_width=True, key="btn_masuk"):
             st.session_state.entered_app = True
             st.rerun()
 
-
-# ---------------------------------------------------------------------------
-# Entry
-# ---------------------------------------------------------------------------
 
 def main() -> None:
     set_ui_style()
