@@ -7,10 +7,13 @@ from groq import Groq
 
 DEFAULT_MODEL_PATH = "qwen2.5-3b-instruct-q4_k_m.gguf"
 
+class ModelNotFoundError(Exception):
+    """Custom exception agar app.py tidak error saat model tidak ditemukan."""
+    pass
+
 class GroqModelWrapper:
     """Wrapper untuk Groq API yang mendukung Streamlit Secrets."""
     def __init__(self):
-        # Coba ambil API Key dari environment variable atau Streamlit Secrets
         api_key = os.getenv("GROQ_API_KEY")
         if not api_key:
             try:
@@ -52,8 +55,6 @@ def load_model(model_path: str = DEFAULT_MODEL_PATH):
             return Llama(model_path=model_path, n_ctx=2048, verbose=False)
         except Exception:
             pass
-    
-    # Otomatis gunakan Groq API
     return GroqModelWrapper()
 
 load_model_or_mock = load_model
