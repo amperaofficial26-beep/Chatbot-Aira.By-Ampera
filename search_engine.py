@@ -1,4 +1,4 @@
-```python
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -1134,4 +1134,3 @@ if __name__ == "__main__":
         last_bot_response="Sistem operasi adalah perangkat lunak inti yang mengelola hardware.",
     )
     print(ctx)
-```
