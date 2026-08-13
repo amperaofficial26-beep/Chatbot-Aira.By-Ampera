@@ -3,7 +3,8 @@
 """
 app.py
 ======
-Aira · UI ringan: PCB ungu-pink + sidebar glass + splash cinematic + logo Ampera
+Aira · PCB ungu-pink + sidebar glass + splash logo Ampera
+       + proses berpikir + teks muncul perlahan
 """
 
 from __future__ import annotations
@@ -13,6 +14,7 @@ import html
 import os
 import re
 import sys
+import time
 import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
@@ -214,24 +216,51 @@ def set_ui_style() -> None:
             border: 1px solid rgba(255,46,166,.35);
         }
 
-        .clog {
-            min-width: 230px; background: #0b0612;
-            border: 1px solid rgba(236,72,153,.35); border-radius: 10px;
+        /* ---------- proses berpikir ---------- */
+        .think {
+            min-width: 230px;
             font-family: "Share Tech Mono", monospace;
         }
-        .clog-top {
-            display: flex; align-items: center; gap: 6px; padding: 6px 10px;
-            background: #16081d; border-bottom: 1px solid rgba(168,85,247,.2);
+        .think-head {
+            display: flex; align-items: center; gap: 8px;
+            color: #e9d5ff; font-size: .72rem; letter-spacing: .14em;
+            margin-bottom: 8px;
         }
-        .clog-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .clog-dot.r { background: #ff5f57; }
-        .clog-dot.y { background: #febc2e; }
-        .clog-dot.g { background: #28c840; }
-        .clog-title { margin-left: 6px; color: #f0abfc; font-size: .72rem; letter-spacing: .08em; }
-        .clog-body { padding: 8px 10px 10px; }
-        .clog-line { color: #f5c2ff; font-size: .78rem; line-height: 1.55; }
-        .clog-gt { color: var(--pink); margin-right: 4px; }
-        .clog-cursor { display: inline-block; color: #f0abfc; animation: blink .8s step-end infinite; }
+        .think-orb {
+            width: 9px; height: 9px; border-radius: 50%;
+            background: #ff2ea6;
+            box-shadow: 0 0 8px #ff2ea6;
+            animation: pulseDot 1.1s ease-in-out infinite;
+        }
+        .think-now {
+            color: #fff; font-size: .95rem; letter-spacing: .04em;
+            min-height: 1.4em;
+        }
+        .think-now b { color: #f0abfc; font-weight: 700; }
+        .think-dots::after {
+            content: "";
+            animation: dots 1.2s steps(4, end) infinite;
+        }
+        .think-bar {
+            margin-top: 10px; height: 3px; border-radius: 99px;
+            background: rgba(240,171,252,.12); overflow: hidden;
+        }
+        .think-bar i {
+            display: block; height: 100%; width: 38%;
+            background: linear-gradient(90deg, #a855f7, #ff2ea6);
+            animation: barRun 1.15s ease-in-out infinite;
+        }
+        .think-log {
+            margin-top: 8px; color: #c4b5fd; font-size: .72rem; line-height: 1.55;
+        }
+        .think-log .done { color: #86efac; }
+        .think-log .wait { color: #f0abfc; }
+
+        .type-caret {
+            display: inline-block; width: 7px; height: .95em;
+            margin-left: 2px; background: #ff2ea6; vertical-align: -2px;
+            animation: blink .7s step-end infinite;
+        }
 
         [data-testid="stBottom"],
         [data-testid="stBottomBlockContainer"],
@@ -400,7 +429,6 @@ def set_ui_style() -> None:
 
         .aira-foot { text-align: center; color: var(--muted) !important; font-size: .78rem; opacity: .75; margin-top: 18px; }
 
-        /* ---------- SPLASH ---------- */
         .splash {
             position: relative; z-index: 2;
             min-height: 86vh; display: flex; flex-direction: column;
@@ -506,6 +534,16 @@ def set_ui_style() -> None:
         @keyframes spinBorder { to { --spin: 360deg; } }
         @keyframes blink { 50% { opacity: 0; } }
         @keyframes pulseDot { 50% { opacity: .35; transform: scale(.75); } }
+        @keyframes dots {
+            0%   { content: ""; }
+            25%  { content: "."; }
+            50%  { content: ".."; }
+            75%  { content: "..."; }
+        }
+        @keyframes barRun {
+            0%   { transform: translateX(-120%); }
+            100% { transform: translateX(280%); }
+        }
         @keyframes orbFloat {
             0%,100% { transform: translate(0,0); }
             50% { transform: translate(18px,-16px); }
@@ -527,7 +565,9 @@ def set_ui_style() -> None:
 
         @media (prefers-reduced-motion: reduce) {
             .pcb-glow, [data-testid="stChatInput"]::before,
-            .splash-halo::before, .side-ring { animation: none !important; }
+            .splash-halo::before, .side-ring, .think-bar i, .think-dots::after {
+                animation: none !important;
+            }
         }
         </style>
         """,
@@ -727,6 +767,19 @@ _SPACE_RE = re.compile(r"\s+")
 MAX_HISTORY_FOR_LLM = 12
 _IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
 
+THINK_STAGES_RAG = [
+    ("Mencerna pertanyaan", "membaca input"),
+    ("Mengurai konteks", "memetakan makna"),
+    ("Menelusuri memori", "scan knowledge"),
+    ("Berpikir", "menyusun nalar"),
+    ("Menyusun jawaban", "menulis balasan"),
+]
+THINK_STAGES_FAST = [
+    ("Mencerna sapaan", "mengenali pola"),
+    ("Berpikir", "memilih nada"),
+    ("Menyusun jawaban", "menulis balasan"),
+]
+
 
 def _normalize_intent_text(text: str) -> str:
     cleaned = (text or "").lower().strip()
@@ -793,7 +846,7 @@ def history_for_llm(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
 
 
 # ---------------------------------------------------------------------------
-# Gambar: profil Aira + logo Ampera
+# Gambar
 # ---------------------------------------------------------------------------
 
 def _asset_roots() -> List[str]:
@@ -854,9 +907,7 @@ def find_logo_file() -> str:
         "ampera.png",
     )
     path = _scan_image(names, "logo", "ampera")
-    if path:
-        return path
-    return _scan_image(names, "ampera")
+    return path or _scan_image(names, "ampera")
 
 
 @st.cache_data(show_spinner=False)
@@ -912,17 +963,56 @@ def show_wa(role: str, text: str, photo: Dict[str, str]) -> None:
     st.markdown(build_wa_row(role, md_lite(text), photo), unsafe_allow_html=True)
 
 
-def render_console_html(lines: List[str]) -> str:
-    rows = "".join(
-        f'<div class="clog-line"><span class="clog-gt">&gt;</span> {html.escape(line)}</div>'
-        for line in lines
-    )
+def render_think_html(stage: str, done: List[str], detail: str = "") -> str:
+    logs = "".join(f'<div class="done">✓ {html.escape(item)}</div>' for item in done)
+    logs += f'<div class="wait">› {html.escape(stage)}<span class="think-dots"></span></div>'
     return (
-        '<div class="clog"><div class="clog-top">'
-        '<span class="clog-dot r"></span><span class="clog-dot y"></span>'
-        '<span class="clog-dot g"></span><span class="clog-title">AIRA://logic-trace</span>'
-        f'</div><div class="clog-body">{rows}<div class="clog-cursor">█</div></div></div>'
+        '<div class="think">'
+        '<div class="think-head"><span class="think-orb"></span>AIRA · PROSES</div>'
+        f'<div class="think-now">sedang <b>{html.escape(stage.lower())}</b></div>'
+        f'<div class="think-log">{logs}</div>'
+        '<div class="think-bar"><i></i></div>'
+        "</div>"
     )
+
+
+def show_think(
+    box: Any,
+    photo: Dict[str, str],
+    stage: str,
+    done: List[str],
+    hold: float = 0.32,
+) -> None:
+    box.markdown(
+        build_wa_row("assistant", render_think_html(stage, done), photo),
+        unsafe_allow_html=True,
+    )
+    if hold > 0:
+        time.sleep(hold)
+
+
+def stream_reply(box: Any, photo: Dict[str, str], answer: str) -> None:
+    """Tampilkan jawaban perlahan, per beberapa kata — tidak nge-lag."""
+    text = answer or ""
+    tokens = re.findall(r"\S+\s*", text)
+    if len(tokens) <= 4:
+        box.markdown(build_wa_row("assistant", md_lite(text), photo), unsafe_allow_html=True)
+        return
+
+    step = 2 if len(tokens) < 70 else 4
+    acc = ""
+    for i, tok in enumerate(tokens, 1):
+        acc += tok
+        if i % step == 0 or i == len(tokens):
+            caret = "" if i == len(tokens) else '<span class="type-caret"></span>'
+            box.markdown(
+                build_wa_row("assistant", md_lite(acc) + caret, photo),
+                unsafe_allow_html=True,
+            )
+            if i != len(tokens):
+                time.sleep(0.028 if step == 2 else 0.018)
+
+    box.markdown(build_wa_row("assistant", md_lite(text), photo), unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------------
@@ -1035,24 +1125,28 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
     st.session_state.messages.append({"role": "user", "content": text})
     show_wa("user", text, photo)
 
-    console_box = st.empty()
+    box = st.empty()
     bypass_reply = detect_intent_bypass(text)
+    stages = THINK_STAGES_FAST if bypass_reply else THINK_STAGES_RAG
+    done: List[str] = []
+
+    # tahap 1–2 dulu, biar kelihatan "jeda berpikir"
+    show_think(box, photo, stages[0][0], done, 0.38)
+    done.append(stages[0][0])
+    show_think(box, photo, stages[1][0], done, 0.34)
+    done.append(stages[1][0])
 
     if bypass_reply:
-        logs = ["[SYS] intent classifier", "[OK]  bypass template"]
-        console_box.markdown(build_wa_row("assistant", render_console_html(logs), photo), unsafe_allow_html=True)
         answer = bypass_reply
+        if len(stages) > 2:
+            show_think(box, photo, stages[2][0], done, 0.28)
         st.session_state.last_debug = {
             "bypass": True, "resolved_query": text, "context": "(dilewati — intent sapaan/identitas)"
         }
     else:
-        logs = [
-            "[BOOT] AIRA.CORE online",
-            "[PARSE] tokenize + resolve query",
-            "[MEM] scan local knowledge.json",
-            "[GEN] synthesize neural reply...",
-        ]
-        console_box.markdown(build_wa_row("assistant", render_console_html(logs), photo), unsafe_allow_html=True)
+        show_think(box, photo, stages[2][0], done, 0.22)
+        done.append(stages[2][0])
+        show_think(box, photo, stages[3][0], done, 0.12)
         try:
             answer, resolved, context = run_rag_pipeline(text, last_bot, llm)
         except Exception as exc:
@@ -1061,9 +1155,11 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
             resolved, context = text, ""
         if not answer:
             answer = "Hmm, aku belum tau jawabannya. Bisa coba tanyakan dengan kalimat lain?"
+        done.append(stages[3][0])
+        show_think(box, photo, stages[4][0], done, 0.22)
         st.session_state.last_debug = {"bypass": False, "resolved_query": resolved, "context": context}
 
-    console_box.markdown(build_wa_row("assistant", md_lite(answer), photo), unsafe_allow_html=True)
+    stream_reply(box, photo, answer)
     st.session_state.messages.append({"role": "assistant", "content": answer})
 
 
