@@ -7,7 +7,7 @@ import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 import streamlit as st
-
+set_ui_style()
 
 # ---------------------------------------------------------------------------
 # Impor modul lokal (aman: UI tetap hidup meski dependensi belum lengkap)
@@ -401,8 +401,6 @@ def set_ui_style():
     </style>
     """, unsafe_allow_html=True)
 
-# Panggil fungsi ini di baris paling atas app.py
-set_ui_style()
 # ---------------------------------------------------------------------------
 # Resource yang di-cache (model GGUF TIDAK boleh di-load ulang tiap Enter)
 # ---------------------------------------------------------------------------
