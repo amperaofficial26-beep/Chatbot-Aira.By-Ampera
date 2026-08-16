@@ -279,8 +279,7 @@ def set_ui_style() -> None:
         [data-testid="stChatInput"] > * { position: relative; z-index: 1; }
         [data-testid="stChatInput"] [data-baseweb="textarea"],
         [data-testid="stChatInput"] [data-baseweb="base-input"] {
-            background: #000 !important; color: #f6eaff !important;
-            border: none !important; border-radius: 999px !important;
+
         }
         [data-testid="stChatInput"] textarea::placeholder { color: #8b7798 !important; }
         @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
