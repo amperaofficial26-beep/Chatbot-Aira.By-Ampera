@@ -264,32 +264,28 @@ def set_ui_style() -> None:
 
         [data-testid="stBottom"],
         [data-testid="stBottomBlockContainer"],
-        [data-testid="stChatInputContainer"],
-        .stChatFloatingInputContainer {
-            background: transparent !important; overflow: visible !important;
-        }
         [data-testid="stChatInput"] {
-            position: relative !important; background: #000 !important;
-            border: 0 !important; border-radius: 999px !important;
-            overflow: visible !important;
-        }
-        [data-testid="stChatInput"]::before {
-            content: ""; position: absolute; inset: -2px; border-radius: 999px;
-            background: conic-gradient(from var(--spin), #a855f7, #ff2ea6, #f0abfc, #a855f7);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            padding: 2px; animation: spinBorder 3.2s linear infinite;
-            pointer-events: none; z-index: 0;
-        }
-        [data-testid="stChatInput"] > * { position: relative; z-index: 1; }
-        [data-testid="stChatInput"] textarea,
-        [data-testid="stChatInput"] [data-baseweb="textarea"],
-        [data-testid="stChatInput"] [data-baseweb="base-input"] {
-            background: #000 !important; color: #f6eaff !important;
-            border: none !important; border-radius: 999px !important;
-        }
-        [data-testid="stChatInput"] textarea::placeholder { color: #8b7798 !important; }
-        @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+        background: rgba(15, 23, 42, 0.85) !important;
+        backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(129, 140, 248, 0.3) !important;
+        border-radius: 9999px !important;
+        padding: 4px 12px !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+           }
+           [data-testid="stChatInput"]:focus-within {
+               border-color: #818cf8 !important;
+               box-shadow: 0 0 25px rgba(129, 140, 248, 0.5) !important;
+           }
+           [data-testid="stChatInput"] textarea {
+               color: #f8fafc !important;
+           }
+           [data-testid="stChatInput"] button {
+               background: linear-gradient(135deg, #4f46e5, #3b82f6) !important;
+               border: none !important;
+               border-radius: 50% !important;
+               color: white !important;
+           }      
+           @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 
         [data-testid="stSidebar"] {
             background:
