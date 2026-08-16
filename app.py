@@ -277,7 +277,6 @@ def set_ui_style() -> None:
             pointer-events: none; z-index: 0;
         }
         [data-testid="stChatInput"] > * { position: relative; z-index: 1; }
-        [data-testid="stChatInput"] textarea,
         [data-testid="stChatInput"] [data-baseweb="textarea"],
         [data-testid="stChatInput"] [data-baseweb="base-input"] {
             background: #000 !important; color: #f6eaff !important;
