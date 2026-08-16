@@ -268,11 +268,6 @@ def set_ui_style() -> None:
         .stChatFloatingInputContainer {
             background: transparent !important; overflow: visible !important;
         }
-        [data-testid="stChatInput"] {
-            position: relative !important; background: #000 !important;
-            border: 0 !important; border-radius: 999px !important;
-            overflow: visible !important;
-        }
         [data-testid="stChatInput"]::before {
             content: ""; position: absolute; inset: -2px; border-radius: 999px;
             background: conic-gradient(from var(--spin), #a855f7, #ff2ea6, #f0abfc, #a855f7);
