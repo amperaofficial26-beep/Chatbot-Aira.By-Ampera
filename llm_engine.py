@@ -5,7 +5,7 @@ from typing import Any, List
 import streamlit as st
 from groq import Groq
 
-DEFAULT_MODEL_PATH = "qwen2.5-3b-instruct-q4_k_m.gguf"
+DEFAULT_MODEL_PATH = "groq/compound"
 
 class ModelNotFoundError(Exception):
     pass
@@ -24,7 +24,7 @@ class GroqModelWrapper:
             
         self.client = Groq(api_key=api_key)
         # Menggunakan model Groq yang stabil dan tersedia
-        self.model_name = "llama-3.3-70b-versatile"
+        self.model_name = "groq/compound"
 
     def __call__(self, prompt: str, max_tokens: int = 512, **kwargs):
         try:
@@ -48,8 +48,8 @@ def find_gguf_models(directory: str = ".", *args, **kwargs) -> List[str]:
 def load_model(model_path: str = DEFAULT_MODEL_PATH, *args, **kwargs):
     if os.path.exists(model_path):
         try:
-            from llama_cpp import Llama
-            return Llama(model_path=model_path, n_ctx=2048, verbose=False)
+            from compound import compound
+            return compound(model_path=model_path, n_ctx=2048, verbose=False)
         except Exception:
             pass
     return GroqModelWrapper()
