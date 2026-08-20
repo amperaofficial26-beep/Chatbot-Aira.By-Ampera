@@ -66,7 +66,7 @@ try:
 except Exception as _llm_exc:  # pragma: no cover
     LLM_IMPORT_ERROR = f"{_llm_exc.__class__.__name__}: {_llm_exc}"
     DEFAULT_MODEL_PATH = os.path.join(
-        _BASE_DIR, "models", "qwen2.5-3b-instruct-q4_k_m.gguf"
+        _BASE_DIR, "models", "groq/compound"
     )
 
     class ModelNotFoundError(FileNotFoundError):
