@@ -1,12 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-app.py
-======
-Aira · PCB ungu-pink + sidebar glass + splash logo Ampera
-       + proses berpikir + teks muncul perlahan
-"""
-
 from __future__ import annotations
 
 import base64
@@ -101,432 +92,790 @@ st.set_page_config(
 
 
 # ---------------------------------------------------------------------------
-# CSS
+# CSS & Styling (Dark Obsidian Glassmorphism)
 # ---------------------------------------------------------------------------
 
 def set_ui_style() -> None:
     st.markdown(
         """
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Orbitron:wght@500;600;700;800;900&display=swap');
 
         :root {
-            --bg: #07030f;
-            --cyan: #00f3ff;
-            --pink: #ff2ea6;
-            --violet: #a855f7;
-            --text: #f1e9ff;
-            --muted: #b5a4c9;
+            /* Palette Dark Obsidian Glass */
+            --bg-base: #080a10;
+            --bg-darker: #05060a;
+            --surface-glass: rgba(18, 22, 34, 0.72);
+            --surface-glass-hover: rgba(28, 34, 52, 0.85);
+            --surface-glass-active: rgba(36, 44, 68, 0.95);
+            
+            /* Glassmorphism Borders & Highlights */
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glass-bright: rgba(255, 255, 255, 0.15);
+            --border-indigo: rgba(99, 102, 241, 0.35);
+            --border-indigo-glow: rgba(99, 102, 241, 0.65);
+            --border-cyan: rgba(56, 189, 248, 0.35);
+            
+            /* Accent & Glow Colors */
+            --indigo: #6366f1;
+            --indigo-light: #818cf8;
+            --violet: #8b5cf6;
+            --violet-light: #a78bfa;
+            --cyan: #06b6d4;
+            --cyan-light: #38bdf8;
+            --pink: #ec4899;
+            --pink-light: #f472b6;
+            --emerald: #10b981;
+            --emerald-light: #34d399;
+            --amber: #f59e0b;
+            --rose: #f43f5e;
+            
+            /* Text & Typography */
+            --text-main: #f8fafc;
+            --text-sub: #cbd5e1;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+
+            /* Animations */
+            --spin: 0deg;
+        }
+
+        /* Reset & Global */
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
         html, body, [data-testid="stAppViewContainer"], .stApp {
-            background: var(--bg) !important;
-            color: var(--text);
-            font-family: "Share Tech Mono", "Segoe UI", sans-serif;
+            background-color: var(--bg-base) !important;
+            background-image: 
+                radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.14) 0px, transparent 50%),
+                radial-gradient(at 85% 20%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 50% 85%, rgba(56, 189, 248, 0.10) 0px, transparent 50%) !important;
+            background-attachment: fixed !important;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+
+        /* Hide Streamlit default decor */
         [data-testid="stHeader"],
         [data-testid="stToolbar"],
-        [data-testid="stDecoration"] { background: transparent !important; }
-        #MainMenu, footer { visibility: hidden; }
+        [data-testid="stDecoration"] { 
+            background: transparent !important; 
+        }
+        #MainMenu, footer { 
+            visibility: hidden; 
+        }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(8, 10, 16, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.25);
+            border-radius: 99px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.45);
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(99, 102, 241, 0.35);
+            color: #ffffff;
+        }
+
+        /* Container Layout */
         [data-testid="stMain"], [data-testid="stMainBlockContainer"] {
             background: transparent !important;
             position: relative;
             z-index: 1;
         }
         [data-testid="stMainBlockContainer"] {
-            padding-top: .6rem !important;
-            max-width: 780px;
+            padding-top: 1rem !important;
+            padding-bottom: 7.5rem !important;
+            max-width: 820px;
         }
 
+        /* PCB / Ambient Layer */
         .pcb-layer {
             position: fixed; inset: 0; z-index: 0;
             pointer-events: none; overflow: hidden;
-            contain: strict; opacity: .78;
+            contain: strict; opacity: 0.32;
         }
         .pcb-layer svg { width: 100%; height: 100%; display: block; }
         .pcb-tr {
-            fill: none; stroke: #8b5cf6; stroke-width: 1.7;
-            stroke-linecap: square; stroke-linejoin: miter;
+            fill: none; stroke: rgba(139, 92, 246, 0.45); stroke-width: 1.4;
+            stroke-linecap: round; stroke-linejoin: round;
         }
-        .pcb-tr.alt { stroke: #ec4899; }
+        .pcb-tr.alt { stroke: rgba(56, 189, 248, 0.4); }
         .pcb-glow {
-            fill: none; stroke-linecap: square; stroke-linejoin: miter;
-            stroke-width: 2.3; stroke-dasharray: 28 220;
-            animation: traceDraw 8s linear infinite;
+            fill: none; stroke-linecap: round; stroke-linejoin: round;
+            stroke-width: 2.2; stroke-dasharray: 32 240;
+            animation: traceDraw 10s linear infinite;
         }
-        .pcb-glow.c { stroke: #d946ef; }
-        .pcb-glow.p { stroke: #ff4db8; animation-direction: reverse; animation-duration: 10s; }
-        .pcb-pad { fill: #07030f; stroke: #e879f9; stroke-width: 1.3; }
-        .pcb-hole { fill: #f0abfc; }
+        .pcb-glow.c { stroke: #38bdf8; filter: drop-shadow(0 0 6px #38bdf8); }
+        .pcb-glow.p { stroke: #818cf8; animation-direction: reverse; animation-duration: 12s; filter: drop-shadow(0 0 6px #818cf8); }
+        .pcb-pad { fill: #080a10; stroke: #818cf8; stroke-width: 1.2; }
+        .pcb-hole { fill: #38bdf8; }
         .element-container:has(.pcb-layer) {
             position: fixed !important; inset: 0; height: 0 !important;
             margin: 0 !important; overflow: visible !important;
         }
-        @keyframes traceDraw { to { stroke-dashoffset: -248; } }
+        @keyframes traceDraw { to { stroke-dashoffset: -272; } }
 
-        .app-head { display: flex; align-items: center; gap: 14px; margin: 6px 0 18px; }
+        /* -------------------------------------------------------------------
+           Header Banner (Obsidian Glass Floating Banner)
+           ------------------------------------------------------------------- */
+        .app-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 18px;
+            margin: 4px 0 22px;
+            background: linear-gradient(135deg, rgba(22, 27, 42, 0.7) 0%, rgba(14, 18, 28, 0.8) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--border-glass-bright);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .app-head-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
         .app-logo {
-            width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center;
-            background: #000; border: 1px solid rgba(236,72,153,.5);
-            box-shadow: 0 0 16px rgba(168,85,247,.28);
-            font-family: M PLUS Rounded 1c, sans-serif; font-weight: 700; color: #f0abfc;
+            width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
+            background: #0d111a;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            font-family: 'Outfit', sans-serif; font-weight: 800; color: #c7d2fe;
             background-size: cover; background-position: center;
+            position: relative;
+            flex-shrink: 0;
         }
-        .app-logo span { color: var(--pink); font-size: .72rem; }
+        .app-logo span { color: var(--cyan-light); font-size: .75rem; margin-left: 1px; }
         .app-head h1 {
-            font-family: M PLUS Rounded 1c, sans-serif !important; font-size: 1.55rem;
-            margin: 0 !important; color: #ffe9fb !important;
+            font-family: 'Outfit', sans-serif !important; font-size: 1.45rem;
+            font-weight: 700;
+            margin: 0 !important;
+            background: linear-gradient(135deg, #ffffff 30%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
         }
-        .app-head p { margin: 2px 0 0; color: var(--muted); font-size: .86rem; }
+        .app-head p { 
+            margin: 2px 0 0; 
+            color: var(--text-muted); 
+            font-size: .84rem; 
+            font-weight: 400;
+        }
+        .app-head-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.28);
+            border-radius: 99px;
+            color: #6ee7b7;
+            font-size: 0.76rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+        .app-head-status i {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #34d399;
+            box-shadow: 0 0 8px #34d399;
+            animation: pulseDot 1.6s ease-in-out infinite;
+        }
 
-        .wa-thread { display: flex; flex-direction: column; gap: 10px; }
-        .wa-row { display: flex; align-items: flex-end; gap: 8px; width: 100%; }
+        /* -------------------------------------------------------------------
+           Chat Thread & Glassmorphism Bubbles
+           ------------------------------------------------------------------- */
+        .wa-thread { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 16px; 
+            margin-bottom: 24px;
+        }
+        .wa-row { 
+            display: flex; 
+            align-items: flex-end; 
+            gap: 10px; 
+            width: 100%; 
+            animation: bubbleFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
         .wa-row.left { justify-content: flex-start; }
         .wa-row.right { justify-content: flex-end; }
+        
         .wa-avatar {
-            width: 36px; height: 36px; border-radius: 50%; flex: 0 0 36px;
+            width: 38px; height: 38px; border-radius: 50%; flex: 0 0 38px;
             background-size: cover; background-position: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
-        .wa-avatar-aira { border: 2px solid #e879f9; background-color: #1a0820; }
+        .wa-avatar-aira { 
+            border: 2px solid rgba(129, 140, 248, 0.5); 
+            background-color: #121624; 
+            box-shadow: 0 0 14px rgba(99, 102, 241, 0.3);
+        }
         .wa-avatar-user {
-            display: grid; place-items: center; background: #16081a;
-            border: 2px solid var(--pink);
+            display: grid; place-items: center; 
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            border: 2px solid rgba(167, 139, 250, 0.5);
+            box-shadow: 0 0 14px rgba(139, 92, 246, 0.3);
+            font-size: 1.1rem;
         }
         .wa-fallback {
-            display: grid; place-items: center; color: #f0abfc;
-            font-family: M PLUS Rounded 1c, sans-serif; font-weight: 700;
+            display: grid; place-items: center; color: #c7d2fe;
+            font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.05rem;
         }
+        
         .wa-bubble {
-            max-width: min(74%, 520px); padding: 10px 13px 12px;
-            line-height: 1.5; font-size: .95rem; word-wrap: break-word;
+            max-width: min(78%, 560px); 
+            padding: 13px 17px 14px;
+            line-height: 1.62; 
+            font-size: .94rem; 
+            word-wrap: break-word;
+            position: relative;
         }
-        .wa-bubble strong { color: #fff; }
-        .wa-bubble code {
-            background: rgba(0,0,0,.35); padding: 1px 5px; border-radius: 5px; color: #f0abfc;
-        }
+        
+        /* Assistant Bubble (Obsidian Glass) */
         .wa-aira {
-            background: #2a1540; color: #f6eaff;
-            border-radius: 16px 16px 16px 5px;
-            border: 1px solid rgba(168,85,247,.35);
+            background: linear-gradient(150deg, rgba(22, 27, 42, 0.88) 0%, rgba(14, 18, 28, 0.94) 100%);
+            color: #f1f5f9;
+            border-radius: 4px 18px 18px 18px;
+            border: 1px solid var(--border-glass-bright);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
+        
+        /* User Bubble (Gradient Glass) */
         .wa-user {
-            background: #3a1030; color: #ffeaf6;
-            border-radius: 16px 16px 5px 16px;
-            border: 1px solid rgba(255,46,166,.35);
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.92) 0%, rgba(124, 58, 237, 0.92) 100%);
+            color: #ffffff;
+            border-radius: 18px 4px 18px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22);
         }
 
-        /* ---------- proses berpikir ---------- */
+        /* Bubble inner formatting */
+        .wa-bubble strong { color: #ffffff; font-weight: 600; }
+        .wa-bubble code {
+            background: rgba(99, 102, 241, 0.16); 
+            padding: 2px 6px; 
+            border-radius: 6px; 
+            color: #a5b4fc;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88em;
+            border: 1px solid rgba(99, 102, 241, 0.28);
+        }
+        .wa-user code {
+            background: rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #f3e8ff;
+        }
+        .wa-list {
+            margin: 6px 0 6px 18px;
+            padding: 0;
+        }
+        .wa-list li {
+            margin-bottom: 4px;
+            color: #e2e8f0;
+        }
+        .wa-quote {
+            margin: 8px 0;
+            padding: 6px 12px;
+            border-left: 3px solid var(--indigo-light);
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: 0 8px 8px 0;
+            color: var(--text-sub);
+            font-style: italic;
+        }
+        .wa-h3 {
+            margin: 10px 0 4px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .wa-h4 {
+            margin: 8px 0 4px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.02rem;
+            color: #c7d2fe;
+            font-weight: 600;
+        }
+        .wa-gap {
+            height: 6px;
+        }
+        .wa-code-wrap {
+            margin: 10px 0;
+            background: rgba(7, 9, 15, 0.85);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .code-lang {
+            display: block;
+            padding: 4px 10px;
+            background: rgba(99, 102, 241, 0.12);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            color: #93c5fd;
+            font-size: 0.72rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+        .wa-code-block {
+            display: block;
+            padding: 10px 12px;
+            margin: 0;
+            overflow-x: auto;
+            color: #e2e8f0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.84rem;
+            line-height: 1.5;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* -------------------------------------------------------------------
+           Proses Berpikir (AI Thinking State Component)
+           ------------------------------------------------------------------- */
         .think {
-            min-width: 230px;
-            font-family: "Share Tech Mono", monospace;
+            min-width: 250px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .think-head {
             display: flex; align-items: center; gap: 8px;
-            color: #e9d5ff; font-size: .72rem; letter-spacing: .14em;
+            color: #c7d2fe; font-size: .74rem; font-weight: 700;
+            letter-spacing: .12em;
             margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
         }
         .think-orb {
             width: 9px; height: 9px; border-radius: 50%;
-            background: #ff2ea6;
-            box-shadow: 0 0 8px #ff2ea6;
+            background: var(--indigo-light);
+            box-shadow: 0 0 10px var(--indigo-light);
             animation: pulseDot 1.1s ease-in-out infinite;
         }
         .think-now {
-            color: #fff; font-size: .95rem; letter-spacing: .04em;
+            color: #ffffff; font-size: .94rem;
             min-height: 1.4em;
         }
-        .think-now b { color: #f0abfc; font-weight: 700; }
+        .think-now b { 
+            color: var(--cyan-light); 
+            font-weight: 600; 
+            background: rgba(56, 189, 248, 0.12);
+            padding: 1px 6px;
+            border-radius: 6px;
+        }
         .think-dots::after {
             content: "";
             animation: dots 1.2s steps(4, end) infinite;
         }
         .think-bar {
             margin-top: 10px; height: 3px; border-radius: 99px;
-            background: rgba(240,171,252,.12); overflow: hidden;
+            background: rgba(255, 255, 255, 0.08); overflow: hidden;
         }
         .think-bar i {
-            display: block; height: 100%; width: 38%;
-            background: linear-gradient(90deg, #a855f7, #ff2ea6);
-            animation: barRun 1.15s ease-in-out infinite;
+            display: block; height: 100%; width: 42%;
+            background: linear-gradient(90deg, #6366f1, #38bdf8, #8b5cf6);
+            border-radius: 99px;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+            animation: barRun 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
         .think-log {
-            margin-top: 8px; color: #c4b5fd; font-size: .72rem; line-height: 1.55;
+            margin-top: 10px; color: var(--text-muted); 
+            font-size: .76rem; line-height: 1.6;
+            font-family: 'JetBrains Mono', monospace;
         }
-        .think-log .done { color: #86efac; }
-        .think-log .wait { color: #f0abfc; }
+        .think-log .done { color: #6ee7b7; display: flex; align-items: center; gap: 4px; }
+        .think-log .wait { color: #93c5fd; display: flex; align-items: center; gap: 4px; }
 
         .type-caret {
-            display: inline-block; width: 7px; height: .95em;
-            margin-left: 2px; background: #ff2ea6; vertical-align: -2px;
+            display: inline-block; width: 6px; height: 1em;
+            margin-left: 2px; background: var(--indigo-light); vertical-align: -2px;
+            border-radius: 2px;
+            box-shadow: 0 0 6px var(--indigo-light);
             animation: blink .7s step-end infinite;
         }
 
-       [data-testid="stBottom"],
+        /* -------------------------------------------------------------------
+           Chat Input Styling (Fixed Floating Glass Input)
+           ------------------------------------------------------------------- */
+        [data-testid="stBottom"],
         [data-testid="stBottomBlockContainer"],
         [data-testid="stChatInputContainer"],
         .stChatFloatingInputContainer {
-            background: transparent !important; overflow: visible !important;
+            background: transparent !important; 
+            overflow: visible !important;
         }
-        [data-testid="stChatInput"]::before {
-            content: ""; position: absolute; inset: -2px; border-radius: 999px;
-            background: conic-gradient(from var(--spin), #a855f7, #ff2ea6, #f0abfc, #a855f7);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            padding: 2px; animation: spinBorder 3.2s linear infinite;
-            pointer-events: none; z-index: 0;
-        }
-        [data-testid="stChatInput"] > * { position: relative; z-index: 1; }
-        [data-testid="stChatInput"] [data-baseweb="textarea"],
-        [data-testid="stChatInput"] [data-baseweb="base-input"] {
-
-        }
-        [data-testid="stChatInput"] textarea::placeholder { color: #8b7798 !important; }
-        @property --spin { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
         
-        [data-testid="stSidebar"] {
-            background:
-                radial-gradient(circle at 20% 0%, rgba(236,72,153,.18), transparent 42%),
-                radial-gradient(circle at 90% 80%, rgba(168,85,247,.16), transparent 40%),
-                rgba(10,4,18,.96) !important;
-            border-right: 1px solid rgba(236,72,153,.22) !important;
+        [data-testid="stChatInput"] {
+            background: rgba(18, 22, 34, 0.85) !important;
+            backdrop-filter: blur(20px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+            border: 1px solid var(--border-glass-bright) !important;
+            border-radius: 20px !important;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
         }
-        [data-testid="stSidebar"] * { color: var(--text); }
-        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { margin-bottom: .35rem; }
-        section[data-testid="stSidebar"] > div { padding-top: .6rem; }
+        [data-testid="stChatInput"]:focus-within {
+            border-color: rgba(99, 102, 241, 0.6) !important;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.35), 0 10px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+        }
+        [data-testid="stChatInput"] textarea {
+            color: var(--text-main) !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 0.94rem !important;
+        }
+        [data-testid="stChatInput"] textarea::placeholder { 
+            color: #64748b !important; 
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+        [data-testid="stChatInput"] button {
+            color: var(--indigo-light) !important;
+            transition: transform 0.2s ease, color 0.2s ease !important;
+        }
+        [data-testid="stChatInput"] button:hover {
+            color: #ffffff !important;
+            transform: scale(1.1) !important;
+        }
+
+        /* -------------------------------------------------------------------
+           Sidebar (Glassmorphism Control Center)
+           ------------------------------------------------------------------- */
+        [data-testid="stSidebar"] {
+            background: rgba(10, 13, 22, 0.88) !important;
+            backdrop-filter: blur(24px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+            border-right: 1px solid var(--border-glass) !important;
+            box-shadow: 4px 0 30px rgba(0, 0, 0, 0.4) !important;
+        }
+        [data-testid="stSidebar"] * { 
+            color: var(--text-main); 
+        }
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { 
+            margin-bottom: .35rem; 
+        }
+        section[data-testid="stSidebar"] > div { 
+            padding-top: .8rem; 
+        }
 
         .side-hero {
             position: relative;
-            padding: 16px 14px 14px;
+            padding: 18px 16px 16px;
             margin: 0 0 14px;
             border-radius: 22px;
-            background: linear-gradient(160deg, rgba(236,72,153,.16), rgba(88,28,135,.18) 55%, rgba(0,0,0,.35));
-            border: 1px solid rgba(240,171,252,.28);
+            background: linear-gradient(165deg, rgba(30, 36, 56, 0.7) 0%, rgba(16, 20, 32, 0.85) 100%);
+            border: 1px solid var(--border-glass-bright);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             overflow: hidden;
         }
         .side-hero::after {
             content: "";
             position: absolute; inset: auto 0 0 0; height: 2px;
-            background: linear-gradient(90deg, transparent, #ff2ea6, #a855f7, transparent);
+            background: linear-gradient(90deg, transparent, #6366f1, #38bdf8, transparent);
         }
         .side-ava-wrap {
             width: 86px; height: 86px; margin: 0 auto 10px; position: relative;
         }
         .side-ava, .ph {
             width: 86px; height: 86px; border-radius: 50%;
-            background-color: #140814; background-size: cover; background-position: center;
-            box-shadow: 0 0 0 2px #ff2ea6, 0 0 18px rgba(168,85,247,.45);
+            background-color: #0f1320; background-size: cover; background-position: center;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.6), 0 0 22px rgba(99, 102, 241, 0.35);
         }
         .side-ring {
             position: absolute; inset: -6px; border-radius: 50%;
-            background: conic-gradient(from var(--spin), #ff2ea6, transparent 32%, #a855f7, transparent 68%, #ff2ea6);
+            background: conic-gradient(from var(--spin), #6366f1, #38bdf8, transparent 40%, #8b5cf6, transparent 75%, #6366f1);
             -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
             mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
-            animation: spinBorder 4s linear infinite;
+            animation: spinBorder 4.5s linear infinite;
             pointer-events: none;
         }
         .ph {
             display: grid; place-items: center;
-            font-family: M PLUS Rounded 1c, sans-serif; color: #f0abfc; font-weight: 700; font-size: 1.4rem;
+            font-family: 'Outfit', sans-serif; color: #c7d2fe; font-weight: 800; font-size: 1.5rem;
         }
         .side-name {
-            text-align: center; font-family: Orbitron, sans-serif;
-            font-size: 1.28rem; letter-spacing: .06em; color: #fff;
+            text-align: center; font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; color: #ffffff;
         }
         .side-tag {
-            text-align: center; color: #d8b4fe; font-size: .78rem; margin-top: 2px;
+            text-align: center; color: var(--text-muted); font-size: .8rem; margin-top: 2px;
+            font-weight: 500;
         }
         .side-online {
             margin: 8px auto 0; width: fit-content;
             display: flex; align-items: center; gap: 7px;
-            padding: 4px 10px; border-radius: 999px;
+            padding: 4px 12px; border-radius: 999px;
             background: rgba(16, 185, 129, .12);
             border: 1px solid rgba(52, 211, 153, .35);
-            color: #86efac; font-size: .78rem;
+            color: #6ee7b7; font-size: .76rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
         }
         .side-online i {
-            width: 8px; height: 8px; border-radius: 50%; background: #34d399;
+            width: 7px; height: 7px; border-radius: 50%; background: #34d399;
             box-shadow: 0 0 8px #34d399; animation: pulseDot 1.6s ease-in-out infinite;
         }
         .side-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
         }
         .tile {
-            padding: 10px 10px 11px; border-radius: 16px;
-            background: rgba(255,255,255,.03);
-            border: 1px solid rgba(240,171,252,.18);
+            padding: 10px 12px 11px; border-radius: 16px;
+            background: rgba(22, 27, 42, 0.65);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(12px);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .tile:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-indigo);
         }
         .tile em {
             display: block; font-style: normal; font-size: .68rem;
-            letter-spacing: .12em; color: #c4b5fd; margin-bottom: 4px;
+            letter-spacing: .12em; color: var(--text-muted); margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
         }
-        .tile b { font-size: .86rem; color: #fff; font-weight: 700; }
-        .tile.warn { border-color: rgba(251,191,36,.35); }
-        .tile.err { border-color: rgba(251,113,133,.4); }
+        .tile b { font-size: .88rem; color: #ffffff; font-weight: 700; font-family: 'Outfit', sans-serif; }
+        .tile.ok b { color: #6ee7b7; }
+        .tile.warn b { color: #fcd34d; }
+        .tile.err b { color: #fca5a5; }
+        .tile.ok { border-color: rgba(52, 211, 153, 0.25); }
+        .tile.warn { border-color: rgba(251,191,36,.3); }
+        .tile.err { border-color: rgba(251,113,133,.35); }
+        
         .side-panel {
-            padding: 12px; border-radius: 16px; margin-bottom: 12px;
-            background: rgba(8,0,16,.45);
-            border: 1px solid rgba(168,85,247,.2);
+            padding: 14px; border-radius: 18px; margin-bottom: 12px;
+            background: rgba(14, 18, 28, 0.65);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(12px);
         }
         .side-panel-h {
-            font-family: M PLUS Rounded 1c, sans-serif; font-size: .72rem;
-            letter-spacing: .16em; color: #e9d5ff; margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: .72rem;
+            letter-spacing: .14em; color: #c7d2fe; margin-bottom: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
         .kv {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 7px 0; border-bottom: 1px dashed rgba(240,171,252,.12);
+            padding: 6px 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
             font-size: .84rem;
         }
         .kv:last-child { border-bottom: 0; padding-bottom: 0; }
-        .kv span { color: #c4b5fd; }
+        .kv span { color: var(--text-muted); }
         .kv b {
-            color: #fff; background: rgba(168,85,247,.2);
-            border: 1px solid rgba(240,171,252,.25);
-            border-radius: 999px; padding: 2px 8px; font-size: .76rem;
+            color: #ffffff; background: rgba(99, 102, 241, 0.18);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 999px; padding: 2px 9px; font-size: .74rem;
+            font-family: 'JetBrains Mono', monospace;
         }
         .side-quote {
-            margin: 0 0 12px; padding: 10px 12px; border-radius: 14px;
-            background: linear-gradient(90deg, rgba(255,46,166,.12), rgba(168,85,247,.08));
-            border-left: 3px solid #ff2ea6;
-            color: #f5d0fe; font-size: .8rem; line-height: 1.45;
+            margin: 0 0 12px; padding: 11px 13px; border-radius: 14px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(56, 189, 248, 0.08) 100%);
+            border-left: 3px solid var(--indigo-light);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-left-width: 3px;
+            color: #e2e8f0; font-size: .8rem; line-height: 1.48;
         }
 
+        /* Sidebar Buttons */
         [data-testid="stSidebar"] .stButton > button {
-            background: linear-gradient(180deg, rgba(42,12,48,.9), rgba(12,4,18,.95)) !important;
-            color: #f5d0fe !important;
-            border: 1px solid rgba(236,72,153,.35) !important;
-            border-radius: 14px !important;
+            background: rgba(22, 27, 42, 0.6) !important;
+            color: var(--text-sub) !important;
+            border: 1px solid var(--border-glass) !important;
+            border-radius: 12px !important;
             text-align: left !important;
-            transition: transform .15s ease, box-shadow .15s ease !important;
+            font-size: 0.84rem !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            padding: 8px 12px !important;
+            transition: all .2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
         }
         [data-testid="stSidebar"] .stButton > button:hover {
-            transform: translateY(-2px) !important; color: #fff !important;
-            border-color: #ff2ea6 !important;
-            box-shadow: 0 0 16px rgba(236,72,153,.35) !important;
+            transform: translateY(-2px) !important; 
+            color: #ffffff !important;
+            border-color: var(--border-cyan) !important;
+            background: rgba(30, 38, 58, 0.8) !important;
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.18) !important;
         }
+
+        /* Generic Buttons & Action Button */
         .stButton > button {
-            background: #000 !important; color: #f0abfc !important;
-            border: 1px solid rgba(236,72,153,.45) !important; border-radius: 12px !important;
-            transition: transform .15s ease, box-shadow .15s ease !important;
+            background: rgba(18, 22, 34, 0.8) !important; 
+            color: var(--text-main) !important;
+            border: 1px solid var(--border-glass-bright) !important; 
+            border-radius: 12px !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease !important;
         }
         .stButton > button:hover {
-            transform: translateY(-2px) !important; color: #fff !important;
-            box-shadow: 0 0 14px rgba(236,72,153,.4) !important;
+            transform: translateY(-2px) !important; 
+            color: #ffffff !important;
+            border-color: rgba(99, 102, 241, 0.5) !important;
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25) !important;
         }
         button[data-testid="baseButton-primary"] {
-            min-height: 58px; font-family: M PLUS Rounded 1c, sans-serif !important;
-            letter-spacing: .38em !important; font-size: 1.05rem !important;
+            min-height: 54px; 
+            font-family: 'Outfit', sans-serif !important;
+            font-weight: 700 !important;
+            letter-spacing: .25em !important; 
+            font-size: 1.05rem !important;
             border-radius: 999px !important;
-            box-shadow: 0 0 24px rgba(236,72,153,.35) !important;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        button[data-testid="baseButton-primary"]:hover {
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 12px 35px rgba(79, 70, 229, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
         }
 
-        .aira-foot { text-align: center; color: var(--muted) !important; font-size: .78rem; opacity: .75; margin-top: 18px; }
+        .aira-foot { 
+            text-align: center; 
+            color: var(--text-dim) !important; 
+            font-size: .8rem; 
+            margin-top: 24px;
+            font-family: 'JetBrains Mono', monospace;
+        }
 
+        /* -------------------------------------------------------------------
+           Splash Screen (Modern AI Gate)
+           ------------------------------------------------------------------- */
         .splash {
             position: relative; z-index: 2;
-            min-height: 86vh; display: flex; flex-direction: column;
+            min-height: 88vh; display: flex; flex-direction: column;
             align-items: center; justify-content: center; text-align: center;
             overflow: hidden;
+            padding: 20px 0;
         }
         .splash-orb {
-            position: absolute; border-radius: 50%; filter: blur(8px);
+            position: absolute; border-radius: 50%; filter: blur(30px);
             pointer-events: none; z-index: 0;
         }
         .splash-orb.a {
-            width: 280px; height: 280px; top: 8%; left: 8%;
-            background: radial-gradient(circle, rgba(168,85,247,.45), transparent 68%);
-            animation: orbFloat 7s ease-in-out infinite;
+            width: 320px; height: 320px; top: 10%; left: 10%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.28), transparent 68%);
+            animation: orbFloat 8s ease-in-out infinite;
         }
         .splash-orb.b {
-            width: 320px; height: 320px; right: 4%; bottom: 10%;
-            background: radial-gradient(circle, rgba(255,46,166,.38), transparent 68%);
-            animation: orbFloat 8.5s ease-in-out infinite reverse;
+            width: 360px; height: 360px; right: 8%; bottom: 12%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 68%);
+            animation: orbFloat 9.5s ease-in-out infinite reverse;
         }
-        .splash-scanlines {
-            position: absolute; inset: 0; pointer-events: none; z-index: 1;
-            background: repeating-linear-gradient(
-                to bottom,
-                rgba(255,255,255,.035),
-                rgba(255,255,255,.035) 1px,
-                transparent 1px,
-                transparent 4px
-            );
+        .splash-card {
+            position: relative; z-index: 3; 
+            width: min(580px, 94vw);
+            padding: 36px 28px 32px;
+            border-radius: 28px;
+            background: linear-gradient(165deg, rgba(22, 27, 42, 0.75) 0%, rgba(12, 16, 26, 0.88) 100%);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid var(--border-glass-bright);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+            animation: haloIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-        .splash-stars {
-            position: absolute; inset: 0; z-index: 0; pointer-events: none;
-            background-image:
-                radial-gradient(1.5px 1.5px at 12% 22%, #f0abfc 50%, transparent 51%),
-                radial-gradient(1.5px 1.5px at 78% 18%, #ff2ea6 50%, transparent 51%),
-                radial-gradient(1.2px 1.2px at 30% 70%, #c084fc 50%, transparent 51%),
-                radial-gradient(1.4px 1.4px at 88% 64%, #fff 50%, transparent 51%),
-                radial-gradient(1.2px 1.2px at 55% 40%, #f0abfc 50%, transparent 51%),
-                radial-gradient(1.3px 1.3px at 18% 86%, #ff2ea6 50%, transparent 51%);
-            animation: twinkle 3.4s ease-in-out infinite;
-        }
-        .splash-core { position: relative; z-index: 3; width: min(560px, 92vw); }
         .splash-halo {
-            width: 230px; height: 230px; margin: 0 auto 8px; position: relative;
-            animation: haloIn 1.1s cubic-bezier(.16,1,.3,1) both;
+            width: 170px; height: 170px; margin: 0 auto 12px; position: relative;
         }
         .splash-halo::before {
             content: ""; position: absolute; inset: 0; border-radius: 50%;
-            background: conic-gradient(from var(--spin), #ff2ea6, #a855f7, transparent 40%, #ff2ea6);
+            background: conic-gradient(from var(--spin), #6366f1, #38bdf8, transparent 40%, #8b5cf6, transparent 80%, #6366f1);
             -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
             mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
-            animation: spinBorder 3.5s linear infinite;
+            animation: spinBorder 4s linear infinite;
         }
         .splash-halo::after {
-            content: ""; position: absolute; inset: 16px; border-radius: 50%;
-            border: 1px dashed rgba(240,171,252,.35);
-            animation: spinBorder 18s linear infinite reverse;
+            content: ""; position: absolute; inset: 10px; border-radius: 50%;
+            border: 1px dashed rgba(129, 140, 248, 0.35);
+            animation: spinBorder 20s linear infinite reverse;
         }
         .splash-logo {
             position: absolute; inset: 0; display: grid; place-items: center;
-            font-family: M PLUS Rounded 1c, sans-serif; font-weight: 700; line-height: .85;
-            font-size: 3.4rem; color: #ffe6fb; letter-spacing: -.05em;
-            text-shadow: 0 0 18px rgba(255,46,166,.7);
+            font-family: 'Outfit', sans-serif; font-weight: 800; line-height: .85;
+            font-size: 2.8rem; color: #ffffff; letter-spacing: -.03em;
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
             animation: logoPop 1.15s cubic-bezier(.16,1,.3,1) both;
         }
-        .splash-logo span { color: #ff2ea6; font-size: .42em; }
+        .splash-logo span { color: var(--cyan-light); font-size: .45em; margin-left: 2px; }
         .splash-logo-img {
-            position: absolute; inset: 28px; border-radius: 50%;
-            background: #08030e center/contain no-repeat;
-            box-shadow: 0 0 28px rgba(255,46,166,.35);
+            position: absolute; inset: 20px; border-radius: 50%;
+            background: #080a10 center/contain no-repeat;
+            box-shadow: 0 0 28px rgba(99, 102, 241, 0.35);
             animation: logoPop 1.15s cubic-bezier(.16,1,.3,1) both;
             z-index: 2;
         }
         .splash-brand {
-            margin-top: 8px; letter-spacing: .62em; font-size: .78rem; color: #e9d5ff;
-            animation: rise 0.8s 0.55s both;
+            margin-top: 10px; 
+            letter-spacing: .35em; 
+            font-size: .8rem; 
+            color: #c7d2fe;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
         }
         .splash-hello {
-            margin: 16px auto 0; max-width: 440px; color: #f3e8ff;
-            font-size: 1.12rem; line-height: 1.6; animation: rise 0.8s 0.95s both;
+            margin: 14px auto 0; max-width: 460px; color: var(--text-main);
+            font-size: 1.12rem; line-height: 1.6;
+            font-weight: 400;
+        }
+        .splash-hello strong {
+            color: #ffffff;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .boot {
-            width: min(420px, 88vw); margin: 22px auto 0; text-align: left;
-            font-size: .78rem; color: #d8b4fe; line-height: 1.7;
+            width: min(440px, 90vw); margin: 18px auto 0; text-align: left;
+            font-size: .78rem; color: var(--text-muted); line-height: 1.7;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(8, 10, 16, 0.6);
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
         .boot div {
-            opacity: 0; transform: translateY(8px);
+            opacity: 0; transform: translateY(6px);
             animation: bootLine .45s ease forwards;
         }
-        .boot div:nth-child(1) { animation-delay: .35s; }
-        .boot div:nth-child(2) { animation-delay: .7s; }
-        .boot div:nth-child(3) { animation-delay: 1.05s; }
-        .boot div:nth-child(4) { animation-delay: 1.4s; }
-        .boot b { color: #86efac; }
+        .boot div:nth-child(1) { animation-delay: .2s; }
+        .boot div:nth-child(2) { animation-delay: .45s; }
+        .boot div:nth-child(3) { animation-delay: .7s; }
+        .boot div:nth-child(4) { animation-delay: .95s; }
+        .boot b { color: #6ee7b7; }
         .splash-hint {
-            margin-top: 8px; color: #c4b5fd; font-size: .78rem;
-            letter-spacing: .18em; animation: rise .8s 1.7s both;
+            margin-top: 12px; color: var(--text-dim); font-size: .76rem;
+            letter-spacing: .18em; font-family: 'JetBrains Mono', monospace;
         }
         .splash-miss {
-            margin-top: 8px; color: #f9a8d4; font-size: .72rem; opacity: .8;
+            margin-top: 8px; color: #fca5a5; font-size: .72rem; opacity: .85;
         }
 
+        /* -------------------------------------------------------------------
+           Keyframe Animations
+           ------------------------------------------------------------------- */
         @keyframes spinBorder { to { --spin: 360deg; } }
         @keyframes blink { 50% { opacity: 0; } }
-        @keyframes pulseDot { 50% { opacity: .35; transform: scale(.75); } }
+        @keyframes pulseDot { 50% { opacity: .35; transform: scale(.8); } }
         @keyframes dots {
             0%   { content: ""; }
             25%  { content: "."; }
@@ -535,26 +884,64 @@ def set_ui_style() -> None:
         }
         @keyframes barRun {
             0%   { transform: translateX(-120%); }
-            100% { transform: translateX(280%); }
+            100% { transform: translateX(260%); }
         }
         @keyframes orbFloat {
             0%,100% { transform: translate(0,0); }
-            50% { transform: translate(18px,-16px); }
+            50% { transform: translate(16px,-14px); }
         }
-        @keyframes twinkle { 50% { opacity: .45; } }
         @keyframes haloIn {
-            from { opacity: 0; transform: scale(.55); }
+            from { opacity: 0; transform: scale(.92) translateY(12px); }
             to { opacity: 1; transform: none; }
         }
         @keyframes logoPop {
-            from { opacity: 0; transform: scale(.4); filter: blur(8px); }
+            from { opacity: 0; transform: scale(.5); filter: blur(6px); }
             to { opacity: 1; transform: none; filter: none; }
         }
-        @keyframes rise {
-            from { opacity: 0; transform: translateY(14px); }
+        @keyframes bootLine { to { opacity: 1; transform: none; } }
+        @keyframes bubbleFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: none; }
         }
-        @keyframes bootLine { to { opacity: 1; transform: none; } }
+
+        /* -------------------------------------------------------------------
+           Responsive Adjustments (Mobile & Tablet)
+           ------------------------------------------------------------------- */
+        @media (max-width: 640px) {
+            [data-testid="stMainBlockContainer"] {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+                padding-bottom: 6.5rem !important;
+            }
+            .app-head {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 12px 14px;
+            }
+            .app-head-status {
+                align-self: flex-start;
+            }
+            .wa-bubble {
+                max-width: 88%;
+                font-size: 0.91rem;
+                padding: 11px 14px;
+            }
+            .splash-card {
+                padding: 26px 18px 24px;
+            }
+            .splash-halo {
+                width: 140px;
+                height: 140px;
+            }
+            .splash-logo {
+                font-size: 2.3rem;
+            }
+            .boot {
+                font-size: 0.72rem;
+                padding: 10px 12px;
+            }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .pcb-glow, [data-testid="stChatInput"]::before,
@@ -687,8 +1074,8 @@ def _build_pcb() -> str:
         parts.append(f'<path class="pcb-glow {kind}" d="{_d(x, y, spec)}"/>')
     for vx, vy in vias[::3]:
         if -20 < vx < 1620 and -20 < vy < 920:
-            parts.append(f'<circle class="pcb-pad" cx="{vx}" cy="{vy}" r="4.6"/>')
-            parts.append(f'<circle class="pcb-hole" cx="{vx}" cy="{vy}" r="1.5"/>')
+            parts.append(f'<circle class="pcb-pad" cx="{vx}" cy="{vy}" r="4.2"/>')
+            parts.append(f'<circle class="pcb-hole" cx="{vx}" cy="{vy}" r="1.4"/>')
     parts.append("</svg>")
     return "".join(parts)
 
@@ -710,13 +1097,13 @@ WELCOME_TEXT = (
     "Hai, aku **Aira**. Asisten AI-Chatbot By Ampera · Chatbot AI pintar siap bantu—mulai dari "
     "error Android, APK bandel, RAM mepet, sampai pertanyaan sehari-hari.\n\n"
     "Tulis aja keluhannya, atau pilih salah satu contoh di sidebar. Percakapan "
-    "kita jalan di perangkatmu, bukan di cloud."
+    "kita jalan privat di perangkatmu."
 )
 IDENTITY_REPLY = (
     "Aku **Aira**. Asisten AI-Chatbot Buatan Ampera.ai, santai, dan siap bantu. "
     "Aku dirancang untuk berjalan privat di perangkatmu.\n\n"
     "Bisa aku bantu urusan teknis (terutama Android), penjelasan sistem, "
-    "atau pertanyaan umum. Panggil aja Aira kapan pun kamu butuhya...."
+    "atau pertanyaan umum. Panggil aja Aira kapan pun kamu butuh!"
 )
 EXAMPLE_PROMPTS = [
     "Siapa kamu?",
@@ -802,8 +1189,8 @@ def _greeting_reply(normalized: str) -> str:
     if "malam" in normalized:
         return "Selamat malam! Aku Aira. Masih semangat—mau dibantu apa?"
     if "kabar" in normalized:
-        return "Kabar ya..? Alahmdulillah... Aira sehat, Aira siap sedia bantu kamu. Ada kendala atau pertanyaan?"
-    return f"Halo, selamat {waktu}! Aku Aira, asisten AI-Chatbot Dari Ampera. Mau tanya sesuatu atau mau ngobrol santai"
+        return "Kabar baik! Aira sehat dan siap sedia bantu kamu. Ada kendala sistem atau mau tanya-tanya?"
+    return f"Halo, selamat {waktu}! Aku Aira, asisten AI-Chatbot dari Ampera. Mau tanya sesuatu atau ngobrol santai?"
 
 
 def detect_intent_bypass(user_input: str) -> Optional[str]:
@@ -839,7 +1226,7 @@ def history_for_llm(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
 
 
 # ---------------------------------------------------------------------------
-# Gambar
+# Gambar & Media
 # ---------------------------------------------------------------------------
 
 def _asset_roots() -> List[str]:
@@ -927,11 +1314,119 @@ def inject_media_css(photo: Dict[str, str], logo: Dict[str, str]) -> None:
         st.markdown(f"<style>{''.join(rules)}</style>", unsafe_allow_html=True)
 
 
+# ---------------------------------------------------------------------------
+# Markdown to HTML Formatter (Clean, Rich & Safe)
+# ---------------------------------------------------------------------------
+
 def md_lite(text: str) -> str:
-    t = html.escape(text or "")
-    t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
-    t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
-    return t.replace("\n", "<br>")
+    if not text:
+        return ""
+    
+    code_blocks = []
+    def code_block_sub(match):
+        lang = match.group(1) or ""
+        code = match.group(2)
+        code_blocks.append((lang, code))
+        return f"@@@CODEBLOCK_{len(code_blocks)-1}@@@"
+    
+    processed = re.sub(r"```([a-zA-Z0-9_-]+)?\n?(.*?)```", code_block_sub, text, flags=re.DOTALL)
+    lines = processed.split("\n")
+    out_lines = []
+    in_ul = False
+    in_ol = False
+    
+    for line in lines:
+        stripped = line.strip()
+        
+        if "@@@CODEBLOCK_" in stripped:
+            if in_ul:
+                out_lines.append("</ul>")
+                in_ul = False
+            if in_ol:
+                out_lines.append("</ol>")
+                in_ol = False
+            out_lines.append(stripped)
+            continue
+            
+        ul_match = re.match(r"^[*-]\s+(.+)$", stripped)
+        if ul_match:
+            if in_ol:
+                out_lines.append("</ol>")
+                in_ol = False
+            if not in_ul:
+                out_lines.append("<ul class=\"wa-list\">")
+                in_ul = True
+            content = html.escape(ul_match.group(1))
+            content = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", content)
+            content = re.sub(r"`([^`]+)`", r"<code>\1</code>", content)
+            out_lines.append(f"<li>{content}</li>")
+            continue
+            
+        ol_match = re.match(r"^\d+\.\s+(.+)$", stripped)
+        if ol_match:
+            if in_ul:
+                out_lines.append("</ul>")
+                in_ul = False
+            if not in_ol:
+                out_lines.append("<ol class=\"wa-list\">")
+                in_ol = True
+            content = html.escape(ol_match.group(1))
+            content = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", content)
+            content = re.sub(r"`([^`]+)`", r"<code>\1</code>", content)
+            out_lines.append(f"<li>{content}</li>")
+            continue
+            
+        if in_ul:
+            out_lines.append("</ul>")
+            in_ul = False
+        if in_ol:
+            out_lines.append("</ol>")
+            in_ol = False
+            
+        if not stripped:
+            out_lines.append("<div class=\"wa-gap\"></div>")
+            continue
+            
+        if stripped.startswith("> "):
+            quote_text = html.escape(stripped[2:])
+            quote_text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", quote_text)
+            quote_text = re.sub(r"`([^`]+)`", r"<code>\1</code>", quote_text)
+            out_lines.append(f"<blockquote class=\"wa-quote\">{quote_text}</blockquote>")
+            continue
+            
+        if stripped.startswith("### "):
+            h_text = html.escape(stripped[4:])
+            h_text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", h_text)
+            out_lines.append(f"<h4 class=\"wa-h4\">{h_text}</h4>")
+            continue
+        elif stripped.startswith("## "):
+            h_text = html.escape(stripped[3:])
+            h_text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", h_text)
+            out_lines.append(f"<h3 class=\"wa-h3\">{h_text}</h3>")
+            continue
+            
+        esc = html.escape(line)
+        esc = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", esc)
+        esc = re.sub(r"`([^`]+)`", r"<code>\1</code>", esc)
+        out_lines.append(esc + "<br>")
+    
+    if in_ul:
+        out_lines.append("</ul>")
+    if in_ol:
+        out_lines.append("</ol>")
+        
+    result = "\n".join(out_lines)
+    result = re.sub(r"<br>\s*\n?(<ul|<ol|<blockquote|<div class=\"wa-gap\")", r"\n\1", result)
+    result = re.sub(r"(</ul>|</ol>|</blockquote>|</div>)\s*<br>", r"\1", result)
+    result = re.sub(r"<br>$", "", result.strip())
+    
+    for idx, (lang, code) in enumerate(code_blocks):
+        lang_label = f"<span class=\"code-lang\">{html.escape(lang)}</span>" if lang else ""
+        escaped_code = html.escape(code.strip())
+        block_html = f'<div class="wa-code-wrap">{lang_label}<pre class="wa-code-block"><code>{escaped_code}</code></pre></div>'
+        result = result.replace(f"@@@CODEBLOCK_{idx}@@@", block_html)
+        
+    return result
 
 
 def aira_avatar_html(photo: Dict[str, str]) -> str:
@@ -961,7 +1456,7 @@ def render_think_html(stage: str, done: List[str], detail: str = "") -> str:
     logs += f'<div class="wait">› {html.escape(stage)}<span class="think-dots"></span></div>'
     return (
         '<div class="think">'
-        '<div class="think-head"><span class="think-orb"></span>AIRA · PROSES</div>'
+        '<div class="think-head"><span class="think-orb"></span>AIRA · NEURAL PROCESSING</div>'
         f'<div class="think-now">sedang <b>{html.escape(stage.lower())}</b></div>'
         f'<div class="think-log">{logs}</div>'
         '<div class="think-bar"><i></i></div>'
@@ -985,7 +1480,7 @@ def show_think(
 
 
 def stream_reply(box: Any, photo: Dict[str, str], answer: str) -> None:
-    """Tampilkan jawaban perlahan, per beberapa kata — tidak nge-lag."""
+    """Tampilkan balasan perlahan dengan efek typewriter yang halus."""
     text = answer or ""
     tokens = re.findall(r"\S+\s*", text)
     if len(tokens) <= 4:
@@ -1003,16 +1498,16 @@ def stream_reply(box: Any, photo: Dict[str, str], answer: str) -> None:
                 unsafe_allow_html=True,
             )
             if i != len(tokens):
-                time.sleep(0.028 if step == 2 else 0.018)
+                time.sleep(0.022 if step == 2 else 0.014)
 
     box.markdown(build_wa_row("assistant", md_lite(text), photo), unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------------
-# Resource
+# Resource & State
 # ---------------------------------------------------------------------------
 
-@st.cache_resource(show_spinner="Memuat otak Aira...")
+@st.cache_resource(show_spinner="Menyiapkan Neural Engine Aira...")
 def get_cached_llm() -> Dict[str, Any]:
     payload: Dict[str, Any] = {"llm": None, "mode": "error", "error": "", "path": DEFAULT_MODEL_PATH}
     try:
@@ -1087,7 +1582,7 @@ def queue_example(prompt: str) -> None:
 
 
 # ---------------------------------------------------------------------------
-# RAG
+# RAG Pipeline
 # ---------------------------------------------------------------------------
 
 def run_rag_pipeline(user_input: str, last_bot_response: str, llm: Any) -> Tuple[str, str, str]:
@@ -1123,23 +1618,23 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
     stages = THINK_STAGES_FAST if bypass_reply else THINK_STAGES_RAG
     done: List[str] = []
 
-    # tahap 1–2 dulu, biar kelihatan "jeda berpikir"
-    show_think(box, photo, stages[0][0], done, 0.85)
+    # Animasi jeda berpikir neural
+    show_think(box, photo, stages[0][0], done, 0.45)
     done.append(stages[0][0])
-    show_think(box, photo, stages[1][0], done, 0.85)
+    show_think(box, photo, stages[1][0], done, 0.45)
     done.append(stages[1][0])
 
     if bypass_reply:
         answer = bypass_reply
         if len(stages) > 2:
-            show_think(box, photo, stages[2][0], done, 0.28)
+            show_think(box, photo, stages[2][0], done, 0.25)
         st.session_state.last_debug = {
             "bypass": True, "resolved_query": text, "context": "(dilewati — intent sapaan/identitas)"
         }
     else:
-        show_think(box, photo, stages[2][0], done, 0.85)
+        show_think(box, photo, stages[2][0], done, 0.45)
         done.append(stages[2][0])
-        show_think(box, photo, stages[3][0], done, 0.85)
+        show_think(box, photo, stages[3][0], done, 0.45)
         try:
             answer, resolved, context = run_rag_pipeline(text, last_bot, llm)
         except Exception as exc:
@@ -1149,7 +1644,7 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
         if not answer:
             answer = "Hmm, Aira belum tau jawabannya. Bisa coba tanyakan dengan kalimat lain?"
         done.append(stages[3][0])
-        show_think(box, photo, stages[4][0], done, 0.85)
+        show_think(box, photo, stages[4][0], done, 0.45)
         st.session_state.last_debug = {"bypass": False, "resolved_query": resolved, "context": context}
 
     stream_reply(box, photo, answer)
@@ -1157,7 +1652,7 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
 
 
 # ---------------------------------------------------------------------------
-# UI
+# UI Components
 # ---------------------------------------------------------------------------
 
 def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
@@ -1184,36 +1679,37 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
                 {ava}
                 <div class="side-ring"></div>
               </div>
-              <div class="side-name">Aira</div>
+              <div class="side-name">Aira AI</div>
               <div class="side-tag">Asisten AI · Ampera Official</div>
-              <div class="side-online"><i></i> online · A.ai</div>
+              <div class="side-online"><i></i> online · Neural Bus</div>
             </div>
             <div class="side-grid">
               <div class="tile {model_tile}"><em>MODEL</em><b>{html.escape(model_label)}</b></div>
               <div class="tile {mem_tile}"><em>MEMORI</em><b>{html.escape(mem_label)}</b></div>
             </div>
-            <div class="side-quote">Siap bantu masalah Android, APK, RAM, atau ngobrol santai — privat di perangkatmu.</div>
+            <div class="side-quote">Siap bantu masalah Android, APK, RAM, optimalisasi sistem, atau ngobrol santai.</div>
             <div class="side-panel">
-              <div class="side-panel-h">SISTEM</div>
-              <div class="kv"><span>Mode</span><b>{html.escape(str(mode))}</b></div>
-              <div class="kv"><span>Knowledge</span><b>{kb.get('count', 0)}</b></div>
+              <div class="side-panel-h">STATUS SISTEM</div>
+              <div class="kv"><span>Mode Engine</span><b>{html.escape(str(mode))}</b></div>
+              <div class="kv"><span>Knowledge Data</span><b>{kb.get('count', 0)} item</b></div>
+              <div class="kv"><span>Privasi</span><b>Lokal / Aman</b></div>
             </div>
             """,
             unsafe_allow_html=True,
         )
         if not photo.get("path"):
-            st.caption("Taruh `aira.jpg` di folder yang sama dengan `app.py`.")
+            st.caption("Taruh file `aira.jpg` di folder app untuk foto profil kustom.")
 
         if st.button("✦  Obrolan Baru", use_container_width=True, key="btn_reset"):
             reset_conversation()
             st.rerun()
 
         st.markdown(
-            '<div class="side-panel-h" style="margin:14px 0 8px;">PROMPT CEPAT</div>',
+            '<div class="side-panel-h" style="margin:16px 0 8px;">PROMPT CEPAT</div>',
             unsafe_allow_html=True,
         )
         for sample in EXAMPLE_PROMPTS:
-            if st.button(sample, use_container_width=True, key=f"ex_{sample}"):
+            if st.button(f"› {sample}", use_container_width=True, key=f"ex_{sample}"):
                 queue_example(sample)
                 st.rerun()
 
@@ -1227,10 +1723,15 @@ def render_header(logo: Dict[str, str]) -> None:
     st.markdown(
         f"""
         <div class="app-head">
-          {mark}
-          <div>
-            <h1>{html.escape(APP_TITLE.split(" - ")[0])}</h1>
-            <p>{html.escape(APP_TAGLINE)}</p>
+          <div class="app-head-left">
+            {mark}
+            <div>
+              <h1>Aira AI</h1>
+              <p>Asisten AI-Chatbot Pintar · Ampera Official</p>
+            </div>
+          </div>
+          <div class="app-head-status">
+            <i></i> Siap Bantu
           </div>
         </div>
         """,
@@ -1247,7 +1748,7 @@ def render_history(photo: Dict[str, str]) -> None:
 
 
 def render_footer() -> None:
-    st.markdown('<p class="aira-foot">Aira · Asisten AI-Chatbot By · Ampera Official</p>', unsafe_allow_html=True)
+    st.markdown('<p class="aira-foot">Aira · Asisten AI-Chatbot By Ampera Official · Obsidian Edition</p>', unsafe_allow_html=True)
 
 
 def render_splash(logo: Dict[str, str]) -> None:
@@ -1264,26 +1765,24 @@ def render_splash(logo: Dict[str, str]) -> None:
         [data-testid="stSidebar"],
         [data-testid="stSidebarCollapsedControl"],
         [data-testid="stHeader"] {{ display: none !important; }}
-        [data-testid="stMainBlockContainer"] {{ max-width: 720px; padding-top: 0 !important; }}
+        [data-testid="stMainBlockContainer"] {{ max-width: 740px; padding-top: 0 !important; }}
         </style>
         <div class="splash">
           <div class="splash-orb a"></div>
           <div class="splash-orb b"></div>
-          <div class="splash-stars"></div>
-          <div class="splash-scanlines"></div>
-          <div class="splash-core">
+          <div class="splash-card">
             <div class="splash-halo">{mark}</div>
             <div class="splash-brand">AMPERA OFFICIAL</div>
             <div class="boot">
-              <div>&gt; boot ampera.Engine .............. <b>OK</b></div>
-              <div>&gt; link neural bus ............... <b>OK</b></div>
-              <div>&gt; handshake aira.persona ........ <b>GRANTED</b></div>
-              <div>&gt; welcome sequence .............. <b>READY</b></div>
+              <div>&gt; initialize neural bus ......... <b>READY</b></div>
+              <div>&gt; load knowledge base .......... <b>OK</b></div>
+              <div>&gt; connect aira persona ......... <b>GRANTED</b></div>
+              <div>&gt; secure session status ........ <b>ONLINE</b></div>
             </div>
             <p class="splash-hello">
-              Selamat datang.... di salah satu app buatan<br><strong>Ampera Official</strong>
+              Selamat datang di asisten AI chatbot buatan<br><strong>Ampera Official</strong>
             </p>
-            <div class="splash-hint">KETUK UNTUK MASUK</div>
+            <div class="splash-hint">TEKAN TOMBOL DI BAWAH UNTUK MASUK</div>
             {miss}
           </div>
         </div>
@@ -1296,6 +1795,10 @@ def render_splash(logo: Dict[str, str]) -> None:
             st.session_state.entered_app = True
             st.rerun()
 
+
+# ---------------------------------------------------------------------------
+# Main Entrypoint
+# ---------------------------------------------------------------------------
 
 def main() -> None:
     set_ui_style()
