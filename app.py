@@ -532,12 +532,14 @@ def set_ui_style() -> None:
            Chat Input Styling (Ultra-Transparent Frosted Glass)
            ------------------------------------------------------------------- */
         [data-testid="stBottom"],
-        [data-testid="stBottom"] > div,
+        [data-testid="stBottom"] > *,
+        [data-testid="stBottom"] > * > *,
         [data-testid="stBottomBlockContainer"],
         [data-testid="stChatInputContainer"],
         .stChatFloatingInputContainer,
         div[data-testid="stBottom"],
-        div[data-testid="stBottomBlockContainer"] {
+        div[data-testid="stBottomBlockContainer"],
+        footer {
             background: transparent !important;
             background-color: transparent !important;
             background-image: none !important;
@@ -546,22 +548,37 @@ def set_ui_style() -> None:
             overflow: visible !important;
         }
         
+        [data-testid="stChatInput"],
+        .stChatInput,
+        div:has(> [data-testid="stChatInput"]) {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+
         [data-testid="stChatInput"] {
-            background: rgba(255, 255, 255, 0.05) !important;
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            backdrop-filter: blur(24px) saturate(190%) !important;
-            -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-            border: 1px solid rgba(255, 255, 255, 0.16) !important;
-            border-radius: 22px !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            background-color: rgba(255, 255, 255, 0.04) !important;
+            backdrop-filter: blur(28px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            border-radius: 24px !important;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+            padding: 3px 6px !important;
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
-        [data-testid="stChatInput"]:focus-within {
-            background: rgba(255, 255, 255, 0.09) !important;
-            background-color: rgba(255, 255, 255, 0.09) !important;
-            border-color: rgba(129, 140, 248, 0.6) !important;
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.35), 0 12px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+        [data-testid="stChatInput"]:hover {
+            border-color: rgba(129, 140, 248, 0.45) !important;
+            background: rgba(255, 255, 255, 0.06) !important;
+            background-color: rgba(255, 255, 255, 0.06) !important;
         }
+        [data-testid="stChatInput"]:focus-within {
+            background: rgba(255, 255, 255, 0.08) !important;
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(129, 140, 248, 0.75) !important;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.38), 0 12px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        }
+        [data-testid="stChatInput"] div,
         [data-testid="stChatInput"] [data-baseweb="base-input"],
         [data-testid="stChatInput"] [data-baseweb="textarea"] {
             background: transparent !important;
@@ -574,26 +591,31 @@ def set_ui_style() -> None:
             background-color: transparent !important;
             color: #ffffff !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
-            font-size: 0.94rem !important;
-            line-height: 1.5 !important;
+            font-size: 0.95rem !important;
+            line-height: 1.55 !important;
+            padding: 8px 12px !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
         }
         [data-testid="stChatInput"] textarea::placeholder { 
-            color: rgba(203, 213, 225, 0.65) !important; 
+            color: rgba(203, 213, 225, 0.6) !important; 
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         [data-testid="stChatInput"] button {
-            background: rgba(99, 102, 241, 0.22) !important;
-            border: 1px solid rgba(129, 140, 248, 0.35) !important;
+            background: rgba(99, 102, 241, 0.25) !important;
+            border: 1px solid rgba(129, 140, 248, 0.4) !important;
             border-radius: 50% !important;
             color: #c7d2fe !important;
+            margin: auto 4px !important;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
         [data-testid="stChatInput"] button:hover {
             background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
             color: #ffffff !important;
-            transform: scale(1.08) !important;
-            box-shadow: 0 0 16px rgba(99, 102, 241, 0.55) !important;
+            transform: scale(1.1) !important;
+            box-shadow: 0 0 18px rgba(99, 102, 241, 0.6) !important;
         }
 
         /* -------------------------------------------------------------------
