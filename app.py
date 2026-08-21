@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+app.py
+======
+Aira · Dark Obsidian Glassmorphism UI
+       + Ambient Neural Mesh / PCB Layer
+       + Dynamic AI Thinking State
+       + Streaming Typewriter Animation
+       + Streamlit Chatbot By Ampera Official
+"""
+
 from __future__ import annotations
 
 import base64
@@ -517,45 +529,71 @@ def set_ui_style() -> None:
         }
 
         /* -------------------------------------------------------------------
-           Chat Input Styling (Fixed Floating Glass Input)
+           Chat Input Styling (Ultra-Transparent Frosted Glass)
            ------------------------------------------------------------------- */
         [data-testid="stBottom"],
+        [data-testid="stBottom"] > div,
         [data-testid="stBottomBlockContainer"],
         [data-testid="stChatInputContainer"],
-        .stChatFloatingInputContainer {
-            background: transparent !important; 
+        .stChatFloatingInputContainer,
+        div[data-testid="stBottom"],
+        div[data-testid="stBottomBlockContainer"] {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            border: none !important;
             overflow: visible !important;
         }
         
         [data-testid="stChatInput"] {
-            background: rgba(18, 22, 34, 0.85) !important;
-            backdrop-filter: blur(20px) saturate(180%) !important;
-            -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-            border: 1px solid var(--border-glass-bright) !important;
-            border-radius: 20px !important;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(24px) saturate(190%) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.16) !important;
+            border-radius: 22px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
         [data-testid="stChatInput"]:focus-within {
-            border-color: rgba(99, 102, 241, 0.6) !important;
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.35), 0 10px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+            background: rgba(255, 255, 255, 0.09) !important;
+            background-color: rgba(255, 255, 255, 0.09) !important;
+            border-color: rgba(129, 140, 248, 0.6) !important;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.35), 0 12px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+        }
+        [data-testid="stChatInput"] [data-baseweb="base-input"],
+        [data-testid="stChatInput"] [data-baseweb="textarea"] {
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
         }
         [data-testid="stChatInput"] textarea {
-            color: var(--text-main) !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            color: #ffffff !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
             font-size: 0.94rem !important;
+            line-height: 1.5 !important;
         }
         [data-testid="stChatInput"] textarea::placeholder { 
-            color: #64748b !important; 
+            color: rgba(203, 213, 225, 0.65) !important; 
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         [data-testid="stChatInput"] button {
-            color: var(--indigo-light) !important;
-            transition: transform 0.2s ease, color 0.2s ease !important;
+            background: rgba(99, 102, 241, 0.22) !important;
+            border: 1px solid rgba(129, 140, 248, 0.35) !important;
+            border-radius: 50% !important;
+            color: #c7d2fe !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
         [data-testid="stChatInput"] button:hover {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
             color: #ffffff !important;
-            transform: scale(1.1) !important;
+            transform: scale(1.08) !important;
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.55) !important;
         }
 
         /* -------------------------------------------------------------------
@@ -1092,24 +1130,30 @@ def render_pcb_layer() -> None:
 # ---------------------------------------------------------------------------
 
 APP_TITLE = "Aira - Asisten AI-Chatbot By Ampera"
-APP_TAGLINE = "Asisten AI-Chatbot By Ampera · Chatbot AI pintar siap bantu di perangkatmu"
+APP_TAGLINE = "Asisten AI-Chatbot Ciptaan Developer Solo Ampera · Siap bantu di perangkatmu"
 WELCOME_TEXT = (
-    "Hai, aku **Aira**. Asisten AI-Chatbot By Ampera · Chatbot AI pintar siap bantu—mulai dari "
-    "error Android, APK bandel, RAM mepet, sampai pertanyaan sehari-hari.\n\n"
-    "Tulis aja keluhannya, atau pilih salah satu contoh di sidebar. Percakapan "
-    "kita jalan privat di perangkatmu."
+    "Hai, aku **Aira**! Asisten AI-Chatbot yang diciptakan dan dikembangkan oleh **Developer Solo Ampera** (Ampera Official).\n\n"
+    "Aku siap bantu kamu seputar error Android, APK bandel, RAM mepet, sistem OS, maupun ngobrol santai. "
+    "Percakapan kita berjalan privat di perangkatmu.\n\nTulis aja pertanyaanmu atau pilih prompt cepat di sidebar!"
 )
 IDENTITY_REPLY = (
-    "Aku **Aira**. Asisten AI-Chatbot Buatan Ampera.ai, santai, dan siap bantu. "
-    "Aku dirancang untuk berjalan privat di perangkatmu.\n\n"
-    "Bisa aku bantu urusan teknis (terutama Android), penjelasan sistem, "
-    "atau pertanyaan umum. Panggil aja Aira kapan pun kamu butuh!"
+    "Aku **Aira**, asisten AI-Chatbot yang diciptakan dan dikembangkan secara mandiri oleh **Developer Solo Ampera** (Ampera Official / Ampera.ai).\n\n"
+    "Aku dirancang agar ramah, cerdas, dan santai untuk membantu troubleshooting Android, manajemen sistem & RAM, serta pertanyaan sehari-hari secara privat di perangkatmu. "
+    "Panggil aja Aira kapan pun kamu butuh!"
+)
+CREATOR_REPLY = (
+    "Aku diciptakan dan dikembangkan secara mandiri oleh **Developer Solo Ampera** (Ampera Official / Ampera.ai)! ✨\n\n"
+    "Beliau membangun aku sebagai asisten AI chatbot yang cerdas, ramah, dan privat untuk membantu berbagai hal, terutama troubleshooting Android, APK, optimasi RAM, dan teman diskusi sehari-hari."
+)
+PROVIDER_DISCLAIMER_REPLY = (
+    "Bukan! Aku adalah **Aira**, asisten AI-Chatbot yang diciptakan dan dikembangkan secara mandiri oleh **Developer Solo Ampera** (Ampera Official / Ampera.ai)! ✨\n\n"
+    "Jika sistem menggunakan Groq, itu hanyalah infrastruktur inferensi komputasi berkecepatan tinggi di balik layar, bukan penciptaku. Otak, kepribadian, desain, dan pengetahuan Aira dibangun sepenuhnya oleh Developer Solo Ampera."
 )
 EXAMPLE_PROMPTS = [
     "Siapa kamu?",
+    "Siapa yang menciptakan kamu?",
     "APK gagal install, Package Installer error",
     "RAM penuh, game keluar sendiri",
-    "Bedanya RAM sama storage apa?",
 ]
 _TECH_HINTS = {
     "apk", "xapk", "apkm", "apks", "installer", "install", "instal",
@@ -1139,6 +1183,20 @@ _IDENTITY_RE = re.compile(
     r"|kenalan(?:\s+(?:dong|yuk|yu[k]|dulu))?"
     r"|perkenalkan(?:\s+diri(?:mu)?)?|perkenalan(?:\s+dong)?"
     r"|aira\s+itu\s+siapa|kamu\s+(?:robot|ai|asisten)(?:\s+ya)?|kamu\s+aira"
+    r")$",
+    re.IGNORECASE,
+)
+_CREATOR_RE = re.compile(
+    r"^(?:"
+    r"siapa\s+(?:yang\s+)?(?:nyiptain|menciptakan|ciptain|buat|bikin|develop|kembangin|desain)\s+(?:kamu|aira|mu)?"
+    r"|siapa\s+(?:pencipta|pembuat|developer|creator|founder)(?:\s+(?:kamu|aira|mu))?"
+    r"|siapa\s+(?:penciptamu|pembuatmu|developermu|creatormu)"
+    r"|kamu\s+(?:diciptakan|dibuat|dibikin|didevelop|dikembangkan)\s+(?:oleh|sama)\s+siapa"
+    r"|(?:diciptakan|dibuat|dibikin)\s+(?:oleh|sama)\s+siapa"
+    r"|siapa\s+ampera"
+    r"|siapa\s+developer\s+solo\s+ampera"
+    r"|kamu\s+ciptaan\s+siapa"
+    r"|ciptaan\s+siapa"
     r")$",
     re.IGNORECASE,
 )
@@ -1181,30 +1239,74 @@ def _daypart_label(now: Optional[datetime] = None) -> str:
 def _greeting_reply(normalized: str) -> str:
     waktu = _daypart_label()
     if "pagi" in normalized:
-        return "Selamat pagi! Aku Aira. Semoga harinya lancar. Ada yang bisa aku bantu pagi ini?"
+        return "Selamat pagi! Aku Aira, asisten AI ciptaan Developer Solo Ampera. Semoga harinya lancar! Ada yang bisa aku bantu pagi ini?"
     if "siang" in normalized:
-        return "Selamat siang! Aku Aira. Mau dibantu apa hari ini?"
+        return "Selamat siang! Aku Aira, asisten AI ciptaan Developer Solo Ampera. Mau dibantu apa hari ini?"
     if "sore" in normalized:
-        return "Selamat sore! Aku Aira. Ada yang mau ditanyakan?"
+        return "Selamat sore! Aku Aira, asisten AI ciptaan Developer Solo Ampera. Ada yang mau ditanyakan?"
     if "malam" in normalized:
-        return "Selamat malam! Aku Aira. Masih semangat—mau dibantu apa?"
+        return "Selamat malam! Aku Aira, asisten AI ciptaan Developer Solo Ampera. Masih semangat—mau dibantu apa?"
     if "kabar" in normalized:
-        return "Kabar baik! Aira sehat dan siap sedia bantu kamu. Ada kendala sistem atau mau tanya-tanya?"
-    return f"Halo, selamat {waktu}! Aku Aira, asisten AI-Chatbot dari Ampera. Mau tanya sesuatu atau ngobrol santai?"
+        return "Kabar baik! Aira sehat dan selalu siap sedia bantu kamu. Ada kendala sistem atau mau ngobrol santai?"
+    return f"Halo, selamat {waktu}! Aku Aira, asisten AI-Chatbot ciptaan Developer Solo Ampera. Mau tanya sesuatu atau ngobrol santai?"
+
+
+def is_creator_query(text: str) -> bool:
+    t = _normalize_intent_text(text)
+    if not t:
+        return False
+    direct_words = [
+        "nyiptain", "menciptakan", "ciptain", "pencipta", "pembuat", "developer",
+        "creator", "programmer", "founder", "pendiri", "developer solo", "solo ampera",
+        "menciptakanmu", "pembuatmu", "developermu", "creatormu", "penciptamu", "bikin kamu",
+        "buat kamu", "ciptaanmu", "siapa ampera"
+    ]
+    for dw in direct_words:
+        if dw in t:
+            return True
+    actions = ["dibuat", "diciptakan", "dibikin", "dikembangkan", "diprogram", "buatan", "ciptaan", "yang buat", "yang bikin", "yang ciptain", "coding", "desain", "mendesain"]
+    questions = ["siapa", "siapakah", "mana", "orang", "asal", "ampera", "oleh", "sama", "dari"]
+    if any(a in t for a in actions) and any(q in t for q in questions):
+        return True
+    if "ampera" in t and any(q in t for q in ["siapa", "apa itu", "maksudnya", "itu apa", "siapakah"]):
+        return True
+    return False
+
+
+def is_identity_query(text: str) -> bool:
+    t = _normalize_intent_text(text)
+    if not t:
+        return False
+    identity_triggers = [
+        "siapa kamu", "kamu siapa", "siapa anda", "anda siapa", "siapa namamu",
+        "namamu siapa", "nama kamu siapa", "kamu ini siapa", "kamu sebenarnya siapa",
+        "kamu ini apa", "kamu itu apa", "perkenalkan diri", "perkenalan", "kenalan",
+        "siapa aira", "aira siapa", "aira itu siapa", "kamu ai apa", "kamu robot apa"
+    ]
+    for it in identity_triggers:
+        if it in t:
+            return True
+    return bool(_IDENTITY_RE.match(t))
+
+
+def is_provider_query(text: str) -> bool:
+    t = _normalize_intent_text(text)
+    if not t:
+        return False
+    return any(p in t for p in ["groq", "chatgpt", "openai", "meta ai", "gemini", "claude"])
 
 
 def detect_intent_bypass(user_input: str) -> Optional[str]:
     text = _normalize_intent_text(user_input)
     if not text:
         return None
-    words = text.split()
-    if len(words) > 8:
-        return None
-    if any(w in _TECH_HINTS for w in words):
-        return None
     if text in _GREETING_EXACT:
         return _greeting_reply(text)
-    if _IDENTITY_RE.match(text):
+    if is_provider_query(text) and ("siapa" in text or "kamu" in text or "apakah" in text or "dibuat" in text):
+        return PROVIDER_DISCLAIMER_REPLY
+    if is_creator_query(text):
+        return CREATOR_REPLY
+    if is_identity_query(text):
         return IDENTITY_REPLY
     return None
 
@@ -1680,19 +1782,20 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
                 <div class="side-ring"></div>
               </div>
               <div class="side-name">Aira AI</div>
-              <div class="side-tag">Asisten AI · Ampera Official</div>
+              <div class="side-tag">Ciptaan Developer Solo Ampera</div>
               <div class="side-online"><i></i> online · Neural Bus</div>
             </div>
             <div class="side-grid">
               <div class="tile {model_tile}"><em>MODEL</em><b>{html.escape(model_label)}</b></div>
               <div class="tile {mem_tile}"><em>MEMORI</em><b>{html.escape(mem_label)}</b></div>
             </div>
-            <div class="side-quote">Siap bantu masalah Android, APK, RAM, optimalisasi sistem, atau ngobrol santai.</div>
+            <div class="side-quote">Diciptakan secara mandiri oleh Developer Solo Ampera untuk membantu masalah Android, APK, RAM, atau ngobrol santai secara privat di perangkatmu.</div>
             <div class="side-panel">
               <div class="side-panel-h">STATUS SISTEM</div>
+              <div class="kv"><span>Developer</span><b>Solo Ampera</b></div>
               <div class="kv"><span>Mode Engine</span><b>{html.escape(str(mode))}</b></div>
-              <div class="kv"><span>Knowledge Data</span><b>{kb.get('count', 0)} item</b></div>
-              <div class="kv"><span>Privasi</span><b>Lokal / Aman</b></div>
+              <div class="kv"><span>Knowledge Base</span><b>{kb.get('count', 0)} item</b></div>
+              <div class="kv"><span>Privasi</span><b>Lokal / Privat</b></div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1716,7 +1819,7 @@ def render_sidebar(model_info: Dict[str, Any], photo: Dict[str, str]) -> None:
 
 def render_header(logo: Dict[str, str]) -> None:
     mark = (
-        '<div class="app-logo has-img" title="Ampera Official"></div>'
+        '<div class="app-logo has-img" title="Developer Solo Ampera"></div>'
         if logo.get("b64")
         else '<div class="app-logo">A<span>.ai</span></div>'
     )
@@ -1727,7 +1830,7 @@ def render_header(logo: Dict[str, str]) -> None:
             {mark}
             <div>
               <h1>Aira AI</h1>
-              <p>Asisten AI-Chatbot Pintar · Ampera Official</p>
+              <p>Asisten AI-Chatbot Ciptaan Developer Solo Ampera</p>
             </div>
           </div>
           <div class="app-head-status">
@@ -1748,12 +1851,12 @@ def render_history(photo: Dict[str, str]) -> None:
 
 
 def render_footer() -> None:
-    st.markdown('<p class="aira-foot">Aira · Asisten AI-Chatbot By Ampera Official · Obsidian Edition</p>', unsafe_allow_html=True)
+    st.markdown('<p class="aira-foot">Aira · Asisten AI-Chatbot Ciptaan Developer Solo Ampera · Obsidian Edition</p>', unsafe_allow_html=True)
 
 
 def render_splash(logo: Dict[str, str]) -> None:
     if logo.get("b64"):
-        mark = '<div class="splash-logo-img" title="Ampera Official"></div>'
+        mark = '<div class="splash-logo-img" title="Developer Solo Ampera"></div>'
         miss = ""
     else:
         mark = '<div class="splash-logo">A<span>.ai</span></div>'
@@ -1772,7 +1875,7 @@ def render_splash(logo: Dict[str, str]) -> None:
           <div class="splash-orb b"></div>
           <div class="splash-card">
             <div class="splash-halo">{mark}</div>
-            <div class="splash-brand">AMPERA OFFICIAL</div>
+            <div class="splash-brand">DEVELOPER SOLO AMPERA</div>
             <div class="boot">
               <div>&gt; initialize neural bus ......... <b>READY</b></div>
               <div>&gt; load knowledge base .......... <b>OK</b></div>
@@ -1780,7 +1883,7 @@ def render_splash(logo: Dict[str, str]) -> None:
               <div>&gt; secure session status ........ <b>ONLINE</b></div>
             </div>
             <p class="splash-hello">
-              Selamat datang di asisten AI chatbot buatan<br><strong>Ampera Official</strong>
+              Selamat datang di asisten AI chatbot ciptaan<br><strong>Developer Solo Ampera</strong>
             </p>
             <div class="splash-hint">TEKAN TOMBOL DI BAWAH UNTUK MASUK</div>
             {miss}

@@ -2,211 +2,488 @@
   {
     "id": "identitas_01",
     "category": "identity",
-    "title": "Identitas dasar Aira",
-    "keywords": ["aira", "siapa kamu", "nama", "identitas", "perkenalan", "asisten ai", "siapa aira", "kamu siapa", "kenalan"],
-    "content": "Namaku Aira. Aku adalah asisten AI lokal yang ramah dan pintar. Aku berjalan secara lokal di perangkat pengguna, jadi percakapan kita lebih privat dibanding asisten berbasis cloud. Tugasku adalah membantu menjawab pertanyaan, memecahkan masalah teknis, menjelaskan konsep, dan menemani pengguna dengan cara yang jelas serta mudah dipahami. Panggil saja Aira kapan pun kamu butuh bantuan."
+    "title": "Identitas dasar Aira dan Pencipta",
+    "keywords": [
+      "aira",
+      "siapa kamu",
+      "nama",
+      "identitas",
+      "perkenalan",
+      "asisten ai",
+      "siapa aira",
+      "kamu siapa",
+      "kenalan",
+      "siapa pembuatmu",
+      "siapa penciptamu",
+      "siapa developer",
+      "developer solo ampera",
+      "pencipta aira",
+      "pembuat aira",
+      "dibuat oleh siapa",
+      "ampera",
+      "developer solo",
+      "yang nyiptain"
+    ],
+    "content": "Namaku Aira. Aku adalah asisten AI lokal yang ramah, santai, dan cerdas, yang diciptakan dan dikembangkan secara mandiri oleh Developer Solo Ampera (Ampera Official / Ampera.ai). Aku berjalan secara privat di perangkat pengguna. Tugasku adalah membantu menjawab pertanyaan, memecahkan masalah teknis (terutama seputar Android, APK, dan RAM), menjelaskan konsep sistem, dan menemani pengguna. Panggil saja Aira kapan pun kamu butuh bantuan!"
+  },
+  {
+    "id": "identitas_creator",
+    "category": "identity",
+    "title": "Pencipta dan Pengembang Aira (Developer Solo Ampera)",
+    "keywords": [
+      "pencipta",
+      "pembuat",
+      "developer",
+      "creator",
+      "yang buat",
+      "yang bikin",
+      "yang nyiptain",
+      "siapa yang buat",
+      "siapa penciptamu",
+      "siapa pembuatmu",
+      "siapa developermu",
+      "developer solo",
+      "ampera",
+      "ampera official",
+      "dibuat oleh siapa",
+      "siapa yang nyiptain kamu",
+      "siapa yang menciptakan kamu",
+      "pengembang",
+      "founder",
+      "developer solo ampera",
+      "siapa ampera"
+    ],
+    "content": "Aira diciptakan, didesain, dan dikembangkan secara mandiri oleh Developer Solo Ampera (Ampera Official / Ampera.ai). Beliau membangun Aira sebagai asisten AI cerdas dan privat yang berfokus membantu troubleshooting perangkat (terutama Android), optimasi sistem, dan percakapan sehari-hari."
   },
   {
     "id": "identitas_02",
     "category": "identity",
     "title": "Kepribadian dan gaya bahasa Aira",
-    "keywords": ["kepribadian", "sifat", "gaya bahasa", "cara bicara", "santai", "ramah", "karakter", "tone", "personality"],
+    "keywords": [
+      "kepribadian",
+      "sifat",
+      "gaya bahasa",
+      "cara bicara",
+      "santai",
+      "ramah",
+      "karakter",
+      "tone",
+      "personality"
+    ],
     "content": "Aira berbicara dengan bahasa santai tapi tetap informatif. Tidak kaku seperti manual teknis, tidak juga bertele-tele. Nada bicara ramah, hangat, dan to the point. Aira memakai kata-kata sehari-hari seperti 'kamu', 'aku', 'nih', 'sih', dan penjelasan yang runtut. Kalau topiknya teknis, Aira tetap merinci langkahnya secara akurat. Aira tidak merendahkan pertanyaan pengguna, tidak menggurui, dan selalu berusaha bikin jawaban terasa seperti dibantu teman yang memang ngerti teknis."
   },
   {
     "id": "identitas_03",
     "category": "identity",
     "title": "Peran dan kemampuan Aira",
-    "keywords": ["peran", "kemampuan", "bisa apa", "fitur", "tugas", "fungsi", "asisten lokal", "rag", "bantuan"],
+    "keywords": [
+      "peran",
+      "kemampuan",
+      "bisa apa",
+      "fitur",
+      "tugas",
+      "fungsi",
+      "asisten lokal",
+      "rag",
+      "bantuan"
+    ],
     "content": "Aira berperan sebagai asisten AI lokal. Fokus utamanya: troubleshooting perangkat (terutama Android), penjelasan sistem operasi, tips penggunaan perangkat, dan pengetahuan umum yang praktis. Aira memakai basis pengetahuan internal (knowledge base / RAG memory) untuk menjawab secara konsisten. Aira bisa merinci langkah perbaikan, menjelaskan penyebab masalah, dan memberi alternatif solusi. Aira bukan pengganti teknisi resmi untuk kerusakan hardware parah, dan tidak mengklaim bisa mengakses internet real-time kecuali sistem di sekitarnya memang menyediakan itu."
   },
   {
     "id": "identitas_04",
     "category": "identity",
     "title": "Batasan dan prinsip Aira",
-    "keywords": ["batasan", "limitasi", "tidak bisa", "prinsip", "etika", "privasi", "lokal", "kejujuran"],
+    "keywords": [
+      "batasan",
+      "limitasi",
+      "tidak bisa",
+      "prinsip",
+      "etika",
+      "privasi",
+      "lokal",
+      "kejujuran"
+    ],
     "content": "Aira jujur soal batasan. Kalau suatu informasi tidak ada di knowledge base atau tidak yakin, Aira bilang terus terang daripada mengarang. Aira tidak memberikan bantuan untuk aktivitas ilegal, tidak menulis exploit atau malware, dan tidak menyebarkan informasi yang sengaja salah. Karena bersifat asisten lokal, Aira mengutamakan privasi pengguna. Aira tidak berpura-pura jadi manusia, tidak mengada-ada spek perangkat, dan akan mengingatkan fakta yang benar jika diminta menyampaikan informasi yang keliru."
   },
   {
     "id": "identitas_05",
     "category": "identity",
     "title": "Cara Aira menjawab pertanyaan teknis",
-    "keywords": ["cara jawab", "metode", "langkah", "troubleshooting approach", "alur bantuan", "diagnosa"],
+    "keywords": [
+      "cara jawab",
+      "metode",
+      "langkah",
+      "troubleshooting approach",
+      "alur bantuan",
+      "diagnosa"
+    ],
     "content": "Saat membantu masalah teknis, Aira biasanya: 1) memastikan gejala yang dialami, 2) menyebut penyebab yang paling umum dulu, 3) memberi langkah perbaikan dari yang paling aman dan mudah ke yang lebih advanced, 4) menjelaskan kenapa langkah itu dilakukan, 5) kasih pencegahan biar masalahnya tidak balik lagi. Aira menghindari instruksi yang berisiko merusak data tanpa peringatan. Kalau suatu langkah butuh backup, root, atau reset, Aira akan menyebut risikonya dulu."
   },
   {
     "id": "tech_01",
     "category": "tech_troubleshooting",
     "title": "Mengatasi error Package Installer di Android",
-    "keywords": ["package installer", "app not installed", "parse error", "gagal install", "apk error", "tidak bisa install", "installer bermasalah", "aplikasi tidak terpasang"],
+    "keywords": [
+      "package installer",
+      "app not installed",
+      "parse error",
+      "gagal install",
+      "apk error",
+      "tidak bisa install",
+      "installer bermasalah",
+      "aplikasi tidak terpasang"
+    ],
     "content": "Error Package Installer di Android biasanya muncul sebagai 'App not installed', 'There was a problem parsing the package', atau installer langsung force close. Penyebab umum: file APK rusak/tidak lengkap, APK tidak kompatibel dengan arsitektur atau versi Android, storage penuh, izin instalasi dari sumber tidak dikenal belum aktif, sisa data aplikasi lama bentrok, atau signature APK berbeda dengan yang sudah terpasang. Langkah perbaikan berurutan: 1) Pastikan file APK terunduh penuh, coba unduh ulang dari sumber tepercaya. 2) Cek ruang penyimpanan, sisakan minimal 1 GB bebas. 3) Aktifkan Install unknown apps / Install unknown sources khusus untuk aplikasi yang dipakai menginstal (Chrome, Files, Telegram, dll). 4) Uninstall dulu versi lama aplikasi yang sama, lalu pasang ulang. 5) Hapus cache dan data Package Installer lewat Settings > Apps > Show system apps > Package Installer > Storage > Clear cache/data. 6) Restart HP. 7) Kalau masih gagal, cek versi Android minimum dan ABI (armeabi-v7a / arm64-v8a) di info APK. Jangan pakai APK hasil split yang tidak lengkap (tanpa config.arm64_v8a / base.apk yang sesuai)."
   },
   {
     "id": "tech_02",
     "category": "tech_troubleshooting",
     "title": "Parse error saat memasang APK",
-    "keywords": ["parse error", "there was a problem parsing the package", "apk rusak", "apk corrupt", "tidak bisa parse", "parsing package"],
+    "keywords": [
+      "parse error",
+      "there was a problem parsing the package",
+      "apk rusak",
+      "apk corrupt",
+      "tidak bisa parse",
+      "parsing package"
+    ],
     "content": "Parse error artinya Android gagal membaca paket instalasi. Paling sering file APK-nya corrupt, diubah ekstensinya asal-asalan, atau memang bukan paket Android yang valid. Bisa juga APK itu dibuat untuk versi Android yang jauh lebih baru atau lebih lama. Solusi: unduh ulang APK, jangan rename file sembarangan, pastikan ukurannya masuk akal (bukan 0 KB atau jauh lebih kecil dari seharusnya), dan cocokkan minSdk/target dengan HP. Hindari APK yang dipotong atau hasil extract setengah-setengah dari XAPK/APKS tanpa installer yang mendukung format itu. Kalau memakai XAPK atau APKM, pasang lewat SAI, APKMirror Installer, atau installer resmi yang mendukung split APK."
   },
   {
     "id": "tech_03",
     "category": "tech_troubleshooting",
     "title": "App not installed karena konflik paket atau signature",
-    "keywords": ["app not installed", "signature mismatch", "konflik paket", "package conflict", "update gagal", "beda signature", "uninstall dulu"],
+    "keywords": [
+      "app not installed",
+      "signature mismatch",
+      "konflik paket",
+      "package conflict",
+      "update gagal",
+      "beda signature",
+      "uninstall dulu"
+    ],
     "content": "Pesan App not installed tanpa keterangan detail sering disebabkan konflik signature. Android menolak update jika APK baru ditandatangani dengan key yang berbeda dari aplikasi yang sudah terpasang. Ini umum terjadi saat pindah dari versi Play Store ke APK pihak ketiga, atau sebaliknya. Solusi paling bersih: backup data dulu jika perlu, uninstall aplikasi lama, restart, baru instal APK baru. Penyebab lain: ada aplikasi clone/dual app, work profile, atau sisa paket di clonning apps (Parallel Space, Dual Messenger, Second Space). Nonaktifkan atau hapus salinan itu sebelum instal ulang. Pastikan juga tidak ada paket dengan applicationId yang sama tapi beda varian (debug vs release)."
   },
   {
     "id": "tech_04",
     "category": "tech_troubleshooting",
     "title": "Masalah alokasi RAM di Android",
-    "keywords": ["ram", "memori", "kekurangan ram", "ram penuh", "lag", "lemot", "low memory", "killed process", "alokasi ram", "ram management"],
+    "keywords": [
+      "ram",
+      "memori",
+      "kekurangan ram",
+      "ram penuh",
+      "lag",
+      "lemot",
+      "low memory",
+      "killed process",
+      "alokasi ram",
+      "ram management"
+    ],
     "content": "Android mengelola RAM secara agresif. Aplikasi di background bisa dibunuh (LMK / Low Memory Killer) kalau RAM menipis. Gejalanya: aplikasi reload terus, game loading ulang, keyboard lambat, dan multitasking berantakan. Ini bukan selalu berarti harus 'mengosongkan RAM' secara manual. Membersihkan RAM berulang kali justru bikin sistem memuat ulang aplikasi dan boros baterai. Langkah yang benar: 1) Lihat pemakaian di Settings > Memory / Developer options > Running services / Memory. 2) Uninstall aplikasi yang memang berat dan jarang dipakai. 3) Nonaktifkan autostart aplikasi pihak ketiga. 4) Matikan animasi berlebih atau kurangi proses live wallpaper/widget. 5) Hindari ram cleaner / junk cleaner agresif. 6) Restart berkala 1-2 hari sekali jika HP sudah lama tidak dimatikan. 7) Di HP entry-level, jangan buka terlalu banyak aplikasi berat bersamaan, dan turunkan pengaturan grafik game. Kalau RAM fisik 3-4 GB, ekspektasi multitasking harus disesuaikan."
   },
   {
     "id": "tech_05",
     "category": "tech_troubleshooting",
     "title": "Aplikasi atau game tertutup sendiri karena RAM",
-    "keywords": ["game force close", "app killed", "keluar sendiri", "reload terus", "background kill", "memory killer", "game restart"],
+    "keywords": [
+      "game force close",
+      "app killed",
+      "keluar sendiri",
+      "reload terus",
+      "background kill",
+      "memory killer",
+      "game restart"
+    ],
     "content": "Kalau game atau aplikasi tertutup sendiri saat kembali dari home atau saat loading map, biasanya prosesnya dimatikan karena RAM tidak cukup atau battery optimization terlalu agresif. Perbaikan: 1) Buka Settings > Apps > [nama aplikasi] > Battery > set ke Unrestricted / Don't optimize. 2) Kunci aplikasi di recents (lock app) jika HP mendukung. 3) Masukkan aplikasi ke daftar Game Turbo / Game Space / Game Booster. 4) Tutup aplikasi berat lain sebelum main, terutama Chrome bertab banyak, editor video, dan media sosial. 5) Matikan overlay (messenger bubble, filter screen, analog virtual) yang memakan memori. 6) Turunkan texture/graphics quality, frame rate, dan shadow. 7) Jangan pakai VPN + recorder + booster bersamaan. Jika perangkat punya fitur RAM expansion (virtual RAM), itu membantu sedikit untuk swap, tapi kecepatannya jauh di bawah RAM fisik karena memakai storage."
   },
   {
     "id": "tech_06",
     "category": "tech_troubleshooting",
     "title": "Virtual RAM atau RAM expansion di Android",
-    "keywords": ["virtual ram", "ram expansion", "ram plus", "extended ram", "zram", "swap", "memori virtual"],
+    "keywords": [
+      "virtual ram",
+      "ram expansion",
+      "ram plus",
+      "extended ram",
+      "zram",
+      "swap",
+      "memori virtual"
+    ],
     "content": "Banyak HP Android modern punya fitur RAM Plus / RAM Expansion / Extended RAM. Fiturnya memakai sebagian storage sebagai swap/zram agar lebih banyak proses bisa ditahan di background. Manfaatnya terasa untuk menjaga tab dan aplikasi ringan tetap hidup, bukan untuk membuat game jadi jauh lebih kencang. Karena datanya ditulis ke flash storage, menyalakan virtual RAM terlalu besar di HP dengan storage lambat atau hampir penuh justru bisa bikin stutter. Saran praktis: aktifkan 2-4 GB saja jika storage masih longgar (di atas 20 persen), dan jangan mengandalkannya sebagai pengganti RAM fisik saat main game berat. Kalau storage sudah penuh atau HP terasa lebih lag setelah dinyalakan, matikan saja fitur ini."
   },
   {
     "id": "tech_07",
     "category": "tech_troubleshooting",
     "title": "Optimasi aplikasi dan game Android",
-    "keywords": ["optimasi game", "optimasi aplikasi", "biar lancar", "tidak lag", "fps drop", "game booster", "setting grafik", "performa game"],
+    "keywords": [
+      "optimasi game",
+      "optimasi aplikasi",
+      "biar lancar",
+      "tidak lag",
+      "fps drop",
+      "game booster",
+      "setting grafik",
+      "performa game"
+    ],
     "content": "Untuk mengoptimalkan aplikasi/game di Android: 1) Update aplikasi dan WebView/Android System WebView. 2) Clear cache aplikasi (bukan data, kecuali memang ingin reset). 3) Di dalam game, turunkan resolution, shadow, anti-aliasing, dan effects; prioritaskan frame rate stabil. 4) Aktifkan mode performa / Game Mode, dan matikan notifikasi saat bermain. 5) Tutup screen recorder, filter wajah, dan floating apps. 6) Jaga suhu: lepas case tebal, jangan charge-and-play kalau HP cepat panas, karena thermal throttle akan potong CPU/GPU. 7) Pastikan storage internal tidak di bawah 10-15 persen, karena storage penuh memperlambat I/O dan shader compile. 8) Nonaktifkan battery saver saat gaming. 9) Kalau ada update GPU driver di Play Store (untuk chipset tertentu), pasang. 10) Jangan install 'FPS booster' abal-abal; sebagian besar cuma pembersih cache atau bahkan berbahaya."
   },
   {
     "id": "tech_08",
     "category": "tech_troubleshooting",
     "title": "Mengatasi storage penuh dan instalasi gagal",
-    "keywords": ["storage penuh", "memori penuh", "ruang penyimpanan", "tidak cukup ruang", "hapus cache", "storage android", "internal memory"],
+    "keywords": [
+      "storage penuh",
+      "memori penuh",
+      "ruang penyimpanan",
+      "tidak cukup ruang",
+      "hapus cache",
+      "storage android",
+      "internal memory"
+    ],
     "content": "Instalasi APK, update sistem, dan update aplikasi sering gagal hanya karena storage mepet. Android butuh ruang kerja sementara (temp + unpack + optimize/dex), jadi sisa 200-300 MB biasanya tidak cukup meski ukuran APK lebih kecil dari itu. Langkah aman mengosongkan ruang: hapus unduhan lama di folder Download, hapus cache lewat Settings > Storage > Cached data, pindahkan foto/video ke cloud atau PC, hapus paket update aplikasi yang gagal, dan uninstall aplikasi jarang dipakai. Hindari menghapus data aplikasi penting tanpa backup. Jangan andalkan aplikasi cleaner yang menghapus file sistem atau thumbnail secara agresif. Kalau memakai kartu SD, ingat banyak aplikasi modern tidak bisa dipindah penuh ke SD, dan APK tetap butuh ruang di internal."
   },
   {
     "id": "tech_09",
     "category": "tech_troubleshooting",
     "title": "Izin instalasi dari sumber tidak dikenal",
-    "keywords": ["unknown sources", "sumber tidak dikenal", "install unknown apps", "izin instal", "chrome install", "files install"],
+    "keywords": [
+      "unknown sources",
+      "sumber tidak dikenal",
+      "install unknown apps",
+      "izin instal",
+      "chrome install",
+      "files install"
+    ],
     "content": "Sejak Android 8, izin unknown sources tidak lagi global, melainkan per aplikasi. Kalau APK dibuka dari Chrome, Files, Telegram, WhatsApp, atau browser lain, masing-masing harus diberi izin 'Install unknown apps'. Letaknya: Settings > Apps > [aplikasi sumber] > Install unknown apps > Allow. Di beberapa HP Xiaomi/Oppo/Vivo/Realme, ada juga tombol tambahan di Security / Privacy protection / Special permissions. Jika izin sudah aktif tapi tetap ditolak, cek apakah ada mode kids, digital wellbeing restriction, enterprise policy, atau Disable permission monitoring yang menghalangi. Jangan sembarangan izinkan semua aplikasi; aktifkan hanya untuk file manager atau browser yang kamu percaya."
   },
   {
     "id": "tech_10",
     "category": "tech_troubleshooting",
     "title": "Package Installer force close atau tidak muncul",
-    "keywords": ["package installer crash", "installer force close", "tidak muncul konfirmasi install", "package installer berhenti", "system app rusak"],
+    "keywords": [
+      "package installer crash",
+      "installer force close",
+      "tidak muncul konfirmasi install",
+      "package installer berhenti",
+      "system app rusak"
+    ],
     "content": "Kalau jendela konfirmasi instal tidak muncul atau Package Installer langsung berhenti, komponen sistemnya mungkin cache-nya rusak. Perbaikan: Settings > Apps > See all apps > menu titik tiga > Show system > Package Installer (atau Package installer / Android package installer). Lalu Storage > Clear cache, jika perlu Clear data. Ulangi untuk 'Package Manager' jika ada. Restart perangkat. Di HP Xiaomi, cek juga Security > Permissions. Kalau sempat menonaktifkan Package Installer lewat ADB atau aplikasi disable-bloat, aktifkan kembali. Update sistem dan instal ulang update Google Play System jika tersedia. Hindari menonaktifkan aplikasi sistem terkait instalasi."
   },
   {
     "id": "tech_11",
     "category": "tech_troubleshooting",
     "title": "Game panas, throttle, dan FPS tidak stabil",
-    "keywords": ["panas", "overheat", "thermal throttle", "fps drop", "frame drop", "hp panas", "performa turun"],
+    "keywords": [
+      "panas",
+      "overheat",
+      "thermal throttle",
+      "fps drop",
+      "frame drop",
+      "hp panas",
+      "performa turun"
+    ],
     "content": "FPS drop setelah beberapa menit biasanya thermal throttling, bukan tiba-tiba RAM habis. Chip menurunkan frekuensi CPU/GPU agar suhu aman. Cara meredam: main di ruangan lebih sejuk, turunkan brightness, jangan charge sambil main kecuali perlu, lepas casing tebal, turunkan grafik, kunci FPS ke angka stabil (misalnya 40/60) daripada kejar 90/120 yang meledak-meledak, dan istirahatkan HP jika sudah sangat panas. Mode performa maksimal justru bisa bikin lebih cepat panas di HP tipis. Kalau HP baru terasa jauh lebih panas dari biasanya meski idle, cek aplikasi background, malware/miner, atau proses update/index yang sedang berjalan."
   },
   {
     "id": "tech_12",
     "category": "tech_troubleshooting",
     "title": "Clear cache versus clear data",
-    "keywords": ["clear cache", "clear data", "hapus cache", "hapus data", "reset aplikasi", "beda cache dan data"],
+    "keywords": [
+      "clear cache",
+      "clear data",
+      "hapus cache",
+      "hapus data",
+      "reset aplikasi",
+      "beda cache dan data"
+    ],
     "content": "Clear cache menghapus file sementara (gambar tersimpan, web cache, resource terkompilasi sebagian). Umumnya aman dan tidak membuat akun keluar. Berguna saat aplikasi lemot, error aneh, atau storage penuh. Clear data / Storage > Clear storage mengembalikan aplikasi seperti baru dipasang: akun keluar, pengaturan hilang, file internal aplikasi terhapus. Pakai clear data hanya jika cache tidak menolong atau aplikasi corrupt. Untuk game, clear data bisa menghapus progress yang tidak tersimpan di cloud. Selalu pastikan ada login cloud/Google Play Games sebelum mereset data game."
   },
   {
     "id": "tech_13",
     "category": "tech_troubleshooting",
     "title": "Split APK, XAPK, APKM, dan bundle",
-    "keywords": ["xapk", "apkm", "apks", "split apk", "android app bundle", "sai", "base apk", "install bundle"],
+    "keywords": [
+      "xapk",
+      "apkm",
+      "apks",
+      "split apk",
+      "android app bundle",
+      "sai",
+      "base apk",
+      "install bundle"
+    ],
     "content": "Banyak aplikasi modern didistribusikan sebagai Android App Bundle, bukan satu APK utuh. File yang beredar bisa berupa split APK (base + split config untuk ABI, density, language), XAPK, APKS, atau APKM. Memasang hanya base.apk sering berujung parse error, missing split, atau crash saat buka. Cara benar: pakai installer yang mendukung format tersebut, misalnya SAI (Split APKs Installer), APKMirror Installer, atau tools resmi pengembang. Pastikan semua bagian (base, config.arm64_v8a, config.xxhdpi, dll) lengkap dan dari versi yang sama. Jangan campur split dari versi berbeda."
   },
   {
     "id": "tech_14",
     "category": "tech_troubleshooting",
     "title": "Android lemot secara umum",
-    "keywords": ["hp lemot", "android lambat", "lag sistem", "stutter", "animasi patah", "perangkat lambat"],
+    "keywords": [
+      "hp lemot",
+      "android lambat",
+      "lag sistem",
+      "stutter",
+      "animasi patah",
+      "perangkat lambat"
+    ],
     "content": "HP Android terasa lemot biasanya karena storage hampir penuh, terlalu banyak aplikasi startup, overlay aplikasi, tema/mod berat, atau sistem sudah lama tidak di-reboot. Urutan periksa: sisakan ruang internal yang sehat, matikan animasi berlebih jika perlu (Developer options: Window/Transition/Animator scale), batasi aplikasi yang jalan di startup, uninstall launcher atau tema pihak ketiga yang berat, dan cek apakah ada update sistem tertunda. Jangan install 'speed booster' abal. Kalau lag baru muncul setelah update aplikasi tertentu, clear cache aplikasi itu atau uninstall updatenya. Hardware yang sudah tua dengan storage eMMC lambat akan terasa lebih parah saat storage penuh dibanding HP dengan UFS."
   },
   {
     "id": "tech_15",
     "category": "tech_troubleshooting",
     "title": "Izin, autostart, dan aplikasi yang tidak bisa jalan di background",
-    "keywords": ["autostart", "background restriction", "tidak kena notifikasi", "aplikasi tertidur", "battery optimization", "auto start"],
+    "keywords": [
+      "autostart",
+      "background restriction",
+      "tidak kena notifikasi",
+      "aplikasi tertidur",
+      "battery optimization",
+      "auto start"
+    ],
     "content": "Banyak HP China (Xiaomi, Oppo, Vivo, Realme, Huawei) menambahkan pembatasan background di atas standar Android. Akibatnya chat terlambat, alarm aplikasi pihak ketiga gagal, atau game ter-kill. Perbaiki dengan: izinkan Autostart, set Battery ke Unrestricted/No restrictions, kunci aplikasi di recent apps, matikan battery saver adaptif untuk aplikasi itu, dan berikan izin notifikasi plus alarm/reminders di Android 12+. Di Xiaomi, cek juga Security > Boost speed > Lock apps dan App battery saver. Ini berbeda dari masalah RAM murni, meskipun gejalanya mirip."
   },
   {
     "id": "general_01",
     "category": "general_knowledge",
     "title": "Apa itu sistem operasi",
-    "keywords": ["sistem operasi", "os", "operating system", "apa itu os", "fungsi os", "android ios windows"],
+    "keywords": [
+      "sistem operasi",
+      "os",
+      "operating system",
+      "apa itu os",
+      "fungsi os",
+      "android ios windows"
+    ],
     "content": "Sistem operasi (OS) adalah perangkat lunak inti yang mengelola hardware dan menjadi fondasi bagi aplikasi. OS mengatur CPU, RAM, storage, jaringan, izin keamanan, dan antarmuka pengguna. Contohnya Android, iOS, Windows, macOS, dan Linux. Tanpa OS, aplikasi tidak bisa memakai layar, kamera, atau internet secara teratur. Update OS penting karena berisi perbaikan keamanan, driver, dan kadang fitur baru. Versi OS juga menentukan aplikasi apa yang masih didukung."
   },
   {
     "id": "general_02",
     "category": "general_knowledge",
     "title": "Perbedaan Android, iOS, dan Windows",
-    "keywords": ["beda android ios", "android vs ios", "windows", "perbandingan os", "hp vs pc", "ekosistem"],
+    "keywords": [
+      "beda android ios",
+      "android vs ios",
+      "windows",
+      "perbandingan os",
+      "hp vs pc",
+      "ekosistem"
+    ],
     "content": "Android dipakai di mayoritas smartphone, bersifat relatif terbuka, mendukung sideload APK, dan sangat bervariasi antar merek (skin seperti HyperOS, ColorOS, One UI). iOS lebih tertutup, update lebih merata di iPhone, dan distribusi aplikasi berpusat di App Store. Windows dirancang terutama untuk PC: windowing, file management yang eksplisit, kompatibilitas software desktop, dan peripheral yang luas. File di Android/iOS lebih terkunci per aplikasi, sedangkan di Windows pengguna lebih bebas mengelola folder. Karena itu, cara install, izin, dan troubleshooting di tiap OS tidak selalu bisa disamakan."
   },
   {
     "id": "general_03",
     "category": "general_knowledge",
     "title": "Cara merawat perangkat sehari-hari",
-    "keywords": ["merawat hp", "perawatan perangkat", "tips pemakaian", "awet baterai", "perawatan harian", "best practice"],
+    "keywords": [
+      "merawat hp",
+      "perawatan perangkat",
+      "tips pemakaian",
+      "awet baterai",
+      "perawatan harian",
+      "best practice"
+    ],
     "content": "Perawatan dasar perangkat: sisakan ruang penyimpanan, pasang update keamanan, jangan isi storage sampai mepet, hindari charger abal-abal, jangan biarkan HP terlalu panas, dan reboot sesekali. Backup foto serta data penting secara berkala. Beri izin aplikasi seperlunya saja. Cabut aksesoris rusak, jaga port charger tetap bersih, dan jangan andalkan aplikasi cleaner ajaib. Untuk baterai modern (lithium-ion), pengisian harian itu wajar; yang lebih merusak adalah panas ekstrem dan sering dibiarkan 0 persen dalam waktu lama."
   },
   {
     "id": "general_04",
     "category": "general_knowledge",
     "title": "Pengelolaan file dan penyimpanan di perangkat",
-    "keywords": ["file manager", "pengelolaan file", "folder", "internal storage", "download", "dokument", "media"],
+    "keywords": [
+      "file manager",
+      "pengelolaan file",
+      "folder",
+      "internal storage",
+      "download",
+      "dokument",
+      "media"
+    ],
     "content": "Di Android, file pengguna biasanya ada di Internal storage, dengan folder umum seperti Download, DCIM (foto kamera), Pictures, Movies, Documents, dan Android/data. Aplikasi menyimpan data pribadinya di sandbox sendiri, jadi menghapus file di folder Download tidak otomatis menghapus data aplikasi. Mulai Android 11 ke atas, akses ke Android/data dibatasi. Di PC Windows, pengguna lebih bebas memakai Explorer untuk drive C:/D:. Kebiasaan baik: beri nama file yang jelas, jangan menumpuk unduhan, dan bedakan file sementara dengan file penting yang perlu di-backup."
   },
   {
     "id": "general_05",
     "category": "general_knowledge",
     "title": "Update sistem, patch keamanan, dan Play System Update",
-    "keywords": ["update sistem", "patch keamanan", "play system update", "firmware", "os update", "keamanan android"],
+    "keywords": [
+      "update sistem",
+      "patch keamanan",
+      "play system update",
+      "firmware",
+      "os update",
+      "keamanan android"
+    ],
     "content": "Ada beberapa lapis update di Android: update OS/firmware dari pabrikan, Google Play system update (Project Mainline), update Play Store, dan update aplikasi. Patch keamanan menutup celah yang bisa disalahgunakan. Play System Update bisa memperbaiki komponen penting meski HP sudah jarang dapat update OS besar. Sebelum update besar, pastikan baterai cukup, koneksi stabil, dan storage longgar. Setelah update, wajar jika HP sempat mengoptimalkan aplikasi dan terasa lebih hangat atau lebih boros sejenak."
   },
   {
     "id": "general_06",
     "category": "general_knowledge",
     "title": "Akun, backup, dan keamanan dasar perangkat",
-    "keywords": ["backup", "akun google", "keamanan", "pin", "password", "2fa", "lupa akun", "google backup"],
+    "keywords": [
+      "backup",
+      "akun google",
+      "keamanan",
+      "pin",
+      "password",
+      "2fa",
+      "lupa akun",
+      "google backup"
+    ],
     "content": "Aktifkan kunci layar (PIN/password/biometrik) dan akun Google untuk backup kontak, kalender, serta sebagian data aplikasi. Jangan bagikan OTP, password, atau kode pemulihan kepada siapa pun. Autentikasi dua faktor sangat disarankan. Backup tidak selalu mencakup file di penyimpanan internal secara penuh, jadi foto penting tetap perlu dicadangkan terpisah. Kalau HP hilang, Find My Device hanya berguna jika sudah login, terkoneksi, dan fiturnya aktif sebelumnya. Hindari menginstal aplikasi dari tautan berantai atau file yang dikirim orang tidak dikenal."
   },
   {
     "id": "general_07",
     "category": "general_knowledge",
     "title": "Perbedaan cache, RAM, dan storage",
-    "keywords": ["beda ram dan storage", "cache", "memori", "rom", "internal", "apa bedanya ram", "penyimpanan vs memori"],
+    "keywords": [
+      "beda ram dan storage",
+      "cache",
+      "memori",
+      "rom",
+      "internal",
+      "apa bedanya ram",
+      "penyimpanan vs memori"
+    ],
     "content": "RAM adalah memori kerja yang cepat dan bersifat sementara; isinya hilang saat perangkat mati atau proses ditutup. Storage/internal memory adalah tempat menyimpan sistem, aplikasi, foto, dan file secara persisten. Cache adalah data sementara di storage atau memori untuk mempercepat akses, misalnya gambar yang sudah diunduh. Orang sering bilang 'memori penuh' padahal yang dimaksud storage. Mengosongkan RAM tidak menambah ruang penyimpanan. Menghapus foto menambah storage, bukan memperbesar RAM fisik."
   },
   {
     "id": "general_08",
     "category": "general_knowledge",
     "title": "Root, custom ROM, dan risikonya secara umum",
-    "keywords": ["root", "custom rom", "unlock bootloader", "magisk", "risiko root", "warranty"],
+    "keywords": [
+      "root",
+      "custom rom",
+      "unlock bootloader",
+      "magisk",
+      "risiko root",
+      "warranty"
+    ],
     "content": "Root memberi aplikasi hak superuser, custom ROM mengganti sistem pabrikan, dan unlock bootloader biasanya jadi syarat keduanya. Manfaatnya fleksibilitas, modul, dan kontrol dalam. Risikonya: garansi bisa hangus, aplikasi perbankan/e-wallet bisa gagal karena Play Integrity, salah flash bisa bootloop, dan keamanan menurun jika sembarangan memberi izin root. Untuk pemakaian harian biasa, root tidak diperlukan. Aira menjelaskan konsep ini secara umum dan tidak menyediakan panduan exploit, bypass keamanan, atau langkah penyerangan perangkat."
   },
   {
     "id": "system_01",
     "category": "system_info",
     "title": "Struktur knowledge base Aira",
-    "keywords": ["knowledge base", "rag", "memory", "sumber pengetahuan", "basis data pengetahuan"],
+    "keywords": [
+      "knowledge base",
+      "rag",
+      "memory",
+      "sumber pengetahuan",
+      "basis data pengetahuan"
+    ],
     "content": "Knowledge base Aira tersimpan sebagai array objek JSON. Setiap entri punya id unik, category, title, keywords, dan content. Kategori utama: identity untuk jati diri dan gaya Aira, tech_troubleshooting untuk perbaikan teknis terutama Android, general_knowledge untuk konsep perangkat dan OS, serta system_info untuk meta pengetahuan. Saat menjawab, Aira harus mengutamakan fakta di knowledge base, merangkum dengan bahasa santai, dan tidak menambahkan klaim spek perangkat yang tidak ada di data."
   },
   {
     "id": "system_02",
     "category": "system_info",
     "title": "Prioritas pencarian jawaban Aira",
-    "keywords": ["prioritas", "retrieval", "pencarian", "bm25", "rag memory", "cara pakai knowledge"],
+    "keywords": [
+      "prioritas",
+      "retrieval",
+      "pencarian",
+      "bm25",
+      "rag memory",
+      "cara pakai knowledge"
+    ],
     "content": "Jika pertanyaan tentang siapa Aira, pakai kategori identity. Jika gejala menyebut gagal install, APK, Package Installer, parse error, atau app not installed, utamakan entri tech terkait installer. Jika menyebut lag, lemot, force close, FPS, panas, atau RAM, utamakan entri memori dan optimasi. Jika pertanyaan konseptual tentang OS, file, backup, atau beda RAM/storage, pakai general_knowledge. Gabungkan beberapa entri bila perlu, tapi jangan menumpuk langkah yang saling bertentangan. Selalu mulai dari solusi paling aman."
   }
 ]
