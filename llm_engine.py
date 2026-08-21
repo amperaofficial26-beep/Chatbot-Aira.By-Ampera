@@ -87,7 +87,7 @@ def generate_aira_response(*args, **kwargs) -> str:
         history = kwargs.get("history", [])
 
         system_instruction = (
-            "Kamu adalah Aira, asisten AI yang ramah, santai, dan cerdas. "
+            "Kamu adalah Aira, asisten AI yang ramah, santai, dan cerdas dan ingat kamu dibuat oleh developer solo dari Ampera official, pencipta kamu. "
             "Jawab pertanyaan pengguna dalam Bahasa Indonesia yang natural."
         )
 
