@@ -925,7 +925,71 @@ def set_ui_style(theme_key: str = "violet") -> None:
             background: rgba(30, 38, 58, 0.8) !important;
             box-shadow: 0 6px 20px var(--theme-accent-glow) !important;
         }}
+# Di dalam fungsi set_ui_style()
+def set_ui_style(theme_key: str = "violet") -> None:
+    pal = THEMES.get(theme_key, THEMES["violet"])
 
+    st.markdown(
+        f"""
+        <style>
+        /* CSS diletakkan di dalam tanda <style> ini */
+        .diag-box {{
+            background: rgba(14, 18, 28, 0.75);
+            border: 1px solid var(--border-glass-bright);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin: 10px 0 8px;
+            backdrop-filter: blur(14px);
+        }}
+        .diag-score-wrap {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }}
+        .diag-score-num {{
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+        }}
+        .diag-score-num.ok {{ color: #6ee7b7; }}
+        .diag-score-num.warn {{ color: #fcd34d; }}
+        .diag-score-num.err {{ color: #fca5a5; }}
+
+        .diag-bar-bg {{
+            height: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }}
+        .diag-bar-fill {{
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.4s ease;
+        }}
+        .diag-bar-fill.ok {{ background: linear-gradient(90deg, #10b981, #34d399); }}
+        .diag-bar-fill.warn {{ background: linear-gradient(90deg, #f59e0b, #fbbf24); }}
+        .diag-bar-fill.err {{ background: linear-gradient(90deg, #ef4444, #f87171); }}
+
+        .diag-item {{
+            font-size: 0.76rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }}
+        .diag-item::before {{
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--theme-accent-light);
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
         /* Generic Buttons & Action Button */
         .stButton > button {{
             background: rgba(18, 22, 34, 0.8) !important; 
