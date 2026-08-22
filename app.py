@@ -1943,6 +1943,60 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
     stages = THINK_STAGES_FAST if bypass_reply else THINK_STAGES_RAG
     done: List[str] = []
 
+        /* RAM Diagnostic Widget Styling */
+        .diag-box {
+            background: rgba(14, 18, 28, 0.75);
+            border: 1px solid var(--border-glass-bright);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin: 10px 0 8px;
+            backdrop-filter: blur(14px);
+        }
+        .diag-score-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .diag-score-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+        .diag-score-num.ok { color: #6ee7b7; }
+        .diag-score-num.warn { color: #fcd34d; }
+        .diag-score-num.err { color: #fca5a5; }
+
+        .diag-bar-bg {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .diag-bar-fill {
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.4s ease;
+        }
+        .diag-bar-fill.ok { background: linear-gradient(90deg, #10b981, #34d399); }
+        .diag-bar-fill.warn { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .diag-bar-fill.err { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+        .diag-item {
+            font-size: 0.76rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+        .diag-item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--theme-accent-light);
+        }       
     # Animasi jeda berpikir neural
     show_think(box, photo, stages[0][0], done, 0.35)
     done.append(stages[0][0])
