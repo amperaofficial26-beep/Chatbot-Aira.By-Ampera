@@ -1943,7 +1943,6 @@ def handle_user_message(user_input: str, llm: Any, photo: Dict[str, str]) -> Non
     stages = THINK_STAGES_FAST if bypass_reply else THINK_STAGES_RAG
     done: List[str] = []
 
-   /* RAM Diagnostic Widget Styling */
    .diag-box {
          background: rgba(14, 18, 28, 0.75);
          border: 1px solid var(--border-glass-bright);
